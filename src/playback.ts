@@ -154,11 +154,18 @@ export function attachPlayback(
     },
     seek(elapsed: number): void {
       if (!bounds || disposed || !Number.isFinite(elapsed)) return;
-      completed = false;
-      video.currentTime =
+      const position =
         bounds.start +
         Math.max(0, Math.min(elapsed, bounds.end - bounds.start));
-      sync();
+      // An endpoint scrub stops here without advancing the tour, including
+      // when the browser later delivers seeking, timeupdate, or ended events.
+      completed = position >= bounds.end;
+      if (completed) {
+        ++playRequest;
+        video.pause();
+      }
+      video.currentTime = position;
+      emit();
     },
     dispose(): void {
       disposed = true;

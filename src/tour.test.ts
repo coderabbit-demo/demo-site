@@ -109,6 +109,20 @@ describe("tour configuration", () => {
       parseTour({ ...config(), media: { demo: { src } } }),
     ).toThrow();
   });
+  it.each(["src", "poster", "captions"])(
+    "reports the field path for a malformed %s URL",
+    (field) => {
+      expect(() =>
+        parseTour({
+          ...config(),
+          media: { demo: { src: "/demo.mp4", [field]: "https://" } },
+        }),
+      ).toThrow(
+        `media.demo.${field}: use a root-relative path or an HTTPS URL without credentials.`,
+      );
+    },
+  );
+
   it("limits nesting and total entries", () => {
     let navigation: unknown[] = [feature];
     for (let i = 0; i < 9; i += 1)

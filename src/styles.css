@@ -180,9 +180,6 @@ p {
 .search input::placeholder {
   color: var(--muted);
 }
-.search kbd {
-  display: none;
-}
 .feature-list {
   list-style: none;
   padding: 0;

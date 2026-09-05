@@ -300,7 +300,6 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
             setQuery(event.currentTarget.value);
           }}
         />
-        <kbd>/</kbd>
       </label>
       <nav aria-label="Features">
         <Navigation

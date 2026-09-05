@@ -58,7 +58,13 @@ function identifier(value: unknown, path: string): string {
 
 function source(value: unknown, path: string): string {
   const result = text(value, path);
-  const url = new URL(result, "https://tour.invalid");
+  const message = `${path}: use a root-relative path or an HTTPS URL without credentials.`;
+  let url: URL;
+  try {
+    url = new URL(result, "https://tour.invalid");
+  } catch {
+    throw new Error(message);
+  }
   const local =
     result.startsWith("/") &&
     !result.startsWith("//") &&
@@ -69,9 +75,7 @@ function source(value: unknown, path: string): string {
     url.username ||
     url.password
   ) {
-    throw new Error(
-      `${path}: use a root-relative path or an HTTPS URL without credentials.`,
-    );
+    throw new Error(message);
   }
   return result;
 }

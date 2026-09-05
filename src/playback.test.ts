@@ -144,6 +144,34 @@ describe("clip playback", () => {
     expect(f.video.currentTime).toBe(13);
   });
 
+  it.each([false, true])(
+    "does not complete an endpoint scrub while playing=%s, and can replay",
+    (playing) => {
+      const f = fixture();
+      f.event("loadedmetadata");
+      if (playing) f.controller.toggle();
+      f.controller.seek(10);
+      f.event("seeking");
+      f.event("timeupdate");
+      f.event("ended");
+      expect(f.video.currentTime).toBe(20);
+      expect(f.states.at(-1)).toMatchObject({
+        playing: false,
+        ended: true,
+        elapsed: 10,
+      });
+      expect(f.onComplete).not.toHaveBeenCalled();
+      f.controller.toggle();
+      expect(f.video.currentTime).toBe(10);
+      expect(f.states.at(-1)).toMatchObject({ playing: true, ended: false });
+      f.video.currentTime = 20;
+      f.event("timeupdate");
+      f.event("ended");
+      expect(f.onComplete).toHaveBeenCalledOnce();
+      f.controller.dispose();
+    },
+  );
+
   it("keeps the play control usable after autoplay rejection", async () => {
     const f = fixture(10, 20, true);
     f.play.mockRejectedValue(new DOMException("Blocked", "NotAllowedError"));
