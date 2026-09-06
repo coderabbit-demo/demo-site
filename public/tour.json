@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "title": "Feature tour",
+  "description": "Four features. One better pull request.",
+  "media": {
+    "review-demo": { "src": null },
+    "path-demo": { "src": null },
+    "chat-demo": { "src": null }
+  },
+  "navigation": [
+    {
+      "id": "pull-request-review",
+      "title": "Pull request review",
+      "children": [
+        {
+          "id": "inline-comments",
+          "title": "Inline review comments",
+          "description": "Go from a line-level finding to a committable fix, right in your pull request.",
+          "mediaId": "review-demo"
+        },
+        {
+          "id": "pre-merge-checks",
+          "title": "Pre-merge checks",
+          "description": "See review checks re-run with each push, before your changes reach the main branch.",
+          "mediaId": "review-demo"
+        }
+      ]
+    },
+    {
+      "id": "your-review-workflow",
+      "title": "Your review workflow",
+      "children": [
+        {
+          "id": "path-instructions",
+          "title": "Path instructions",
+          "description": "Give CodeRabbit your review rules, scoped to the files and paths that matter.",
+          "mediaId": "path-demo"
+        },
+        {
+          "id": "pr-chat",
+          "title": "Chat on the pull request",
+          "description": "Ask questions about the diff and get answers without leaving the conversation.",
+          "mediaId": "chat-demo"
+        }
+      ]
+    }
+  ]
+}
