@@ -209,7 +209,7 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
 
   /** Selects a known clip, reveals its ancestors, and synchronizes browser history. */
   const select = useCallback(
-    (id: string, play = true, replace = false): void => {
+    (id: string, play = false, replace = false): void => {
       const entry = entries.find((item) => item.feature.id === id);
       if (!entry) return;
       setExpanded(
@@ -421,7 +421,7 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
                 onProgress={setProgress}
                 onComplete={() => {
                   const next = entries[index + 1];
-                  if (advance && next) select(next.feature.id);
+                  if (advance && next) select(next.feature.id, true);
                 }}
               />
             </section>

@@ -154,13 +154,19 @@ function ReadyPlayer({
             <button onClick={retry}>Retry recording</button>
           </div>
         )}
-        {ready && !playing && (
+        {ready && (
           <button
-            className="big-play"
-            aria-label={state.ended ? "Replay demo" : "Play demo"}
+            className="video-toggle"
+            aria-label={
+              playing ? "Pause demo" : state.ended ? "Replay demo" : "Play demo"
+            }
             onClick={() => controllerRef.current?.toggle()}
           >
-            {state.ended ? "↻" : "▶"}
+            {!playing && (
+              <span className="big-play" aria-hidden="true">
+                {state.ended ? "↻" : "▶"}
+              </span>
+            )}
           </button>
         )}
       </div>

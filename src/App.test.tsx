@@ -351,6 +351,40 @@ async function renderPlayer(media = source) {
 }
 
 describe("video controls", () => {
+  it("toggles playback from the video surface without toggling when controls are clicked", async () => {
+    const { video } = await renderPlayer();
+    await click(element(".video-toggle", HTMLButtonElement));
+    expect(video.paused).toBe(false);
+    expect(button("Pause demo")).toBeTruthy();
+    await click(button("Mute"));
+    expect(video.paused).toBe(false);
+    await click(element(".video-toggle", HTMLButtonElement));
+    expect(video.paused).toBe(true);
+    expect(button("Play demo")).toBeTruthy();
+    await click(element(".video-toggle", HTMLButtonElement));
+    expect(video.paused).toBe(false);
+  });
+
+  it("keeps initial and manually selected recordings paused until Play", async () => {
+    const play = vi.spyOn(HTMLMediaElement.prototype, "play");
+    await load(manifest("/demo.mp4"));
+    const first = element("video", HTMLVideoElement);
+    Object.defineProperty(first, "duration", { value: 60 });
+    await event(first, "loadedmetadata");
+    expect(play).not.toHaveBeenCalled();
+    await click(button("Next feature"));
+    const next = element("video", HTMLVideoElement);
+    Object.defineProperty(next, "duration", { value: 60 });
+    await event(next, "loadedmetadata");
+    await click(button("First feature"));
+    const selected = element("video", HTMLVideoElement);
+    Object.defineProperty(selected, "duration", { value: 60 });
+    await event(selected, "loadedmetadata");
+    expect(play).not.toHaveBeenCalled();
+    await click(button("Play demo"));
+    expect(play).toHaveBeenCalledOnce();
+  });
+
   it("plays, pauses, seeks, replays and displays relative progress", async () => {
     const { video, onComplete, onProgress } = await renderPlayer();
     await click(button("Play demo"));

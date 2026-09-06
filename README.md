@@ -17,7 +17,7 @@ Open the local URL printed by Vite. See [AGENTS.md](AGENTS.md) for the mandatory
 
 Edit [public/tour.json](public/tour.json). Array order controls display and playback order; `children` creates a category. Move objects between arrays to reorganize the menu. Keep IDs stable when renaming or moving features so shared links keep working.
 
-The initial four features come from the supplied mockup. **Clean recordings are pending from the maintainer.** `src: null` intentionally displays “Demo coming soon.” The supplied mockup video is not included or cropped into production assets.
+The tour contains 11 maintainer-supplied recordings, from the introduction through the summary, stored in `public/media/`. Set a future recording's `src` to `null` to display “Demo coming soon.”
 
 See [the content guide](docs/content.md) for the full manifest format and publishing steps.
 
@@ -36,13 +36,13 @@ npm run security:check
 
 Import `coderabbit-demo/demo-site` as a Vite project. Set Node.js to 24, the install command to `npm ci`, the build command to `npm run build`, and the output directory to `dist`. Review changes in a Vercel preview before promoting to production. This repository does not create a Vercel project or deploy automatically until that connection is configured.
 
-Feature links use `/?feature=inline-comments`, so static hosting does not need a catch-all route rewrite. The browser fetches `tour.json` with revalidation; a repository content change takes effect after its reviewed deployment. No database or API credentials are needed.
+Feature links use `/?feature=introduction`, so static hosting does not need a catch-all route rewrite. The browser fetches `tour.json` with revalidation; a repository content change takes effect after its reviewed deployment. No database or API credentials are needed.
 
 Large recordings should live on HTTPS media storage with byte-range support and CORS for the site's origin. Small approved recordings can also be placed under `public/media/`. Supply readable recordings and caption files; avoid real credentials or private customer data in demo footage.
 
 ## Playback behavior
 
-- Initial links wait for a play action. Selecting a feature attempts playback and leaves play controls available if the browser blocks it.
+- Initial links and manual feature selection wait for a play action. Click the video area to toggle playback, or focus it and use Enter/Space. The separate playback controls remain available.
 - Segment times and seeking are relative to the selected feature. The controller validates boundaries against the recording's loaded duration.
 - Playback pauses at the segment end. “Play next automatically” advances in menu order, independent of search filtering.
 - Each feature change tears down the previous media listeners and pending playback. A fresh player is mounted; repeat use of a recording relies on normal browser caching.
