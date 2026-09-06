@@ -1,11 +1,41 @@
 {
   "version": 1,
-  "title": "Feature tour",
-  "description": "Four features. One better pull request.",
+  "title": "CodeRabbit product tour",
+  "description": "Four capabilities, one control layer — from the pull request author's seat.",
   "media": {
-    "review-demo": { "src": null },
-    "path-demo": { "src": null },
-    "chat-demo": { "src": null }
+    "introduction": {
+      "src": "/media/01-introduction.mp4"
+    },
+    "reviewing-local-changes": {
+      "src": "/media/02-reviewing-local-changes.mp4"
+    },
+    "walkthroughs": {
+      "src": "/media/03-walkthroughs.mp4"
+    },
+    "pre-merge-checks": {
+      "src": "/media/04-pre-merge-checks.mp4"
+    },
+    "anatomy-of-a-finding": {
+      "src": "/media/05-anatomy-of-a-finding.mp4"
+    },
+    "chat": {
+      "src": "/media/06-chat.mp4"
+    },
+    "learnings": {
+      "src": "/media/07-learnings.mp4"
+    },
+    "issue-validation": {
+      "src": "/media/08-issue-validation.mp4"
+    },
+    "coding-guidelines": {
+      "src": "/media/09-coding-guidelines.mp4"
+    },
+    "cross-repo": {
+      "src": "/media/10-cross-repo.mp4"
+    },
+    "summary": {
+      "src": "/media/11-summary.mp4"
+    }
   },
   "navigation": [
     {
@@ -13,34 +43,70 @@
       "title": "Pull request review",
       "children": [
         {
-          "id": "inline-comments",
-          "title": "Inline review comments",
-          "description": "Go from a line-level finding to a committable fix, right in your pull request.",
-          "mediaId": "review-demo"
+          "id": "introduction",
+          "title": "Introduction",
+          "description": "Four capabilities, one control layer — and where the PR Author fits.",
+          "mediaId": "introduction"
+        },
+        {
+          "id": "reviewing-local-changes",
+          "title": "Reviewing local changes",
+          "description": "Catch issues in your editor and from Claude Code, before you open a pull request.",
+          "mediaId": "reviewing-local-changes"
+        },
+        {
+          "id": "walkthroughs",
+          "title": "Walkthroughs",
+          "description": "A plain-English summary, a layered file walkthrough, an effort estimate, and a sequence diagram.",
+          "mediaId": "walkthroughs"
         },
         {
           "id": "pre-merge-checks",
           "title": "Pre-merge checks",
-          "description": "See review checks re-run with each push, before your changes reach the main branch.",
-          "mediaId": "review-demo"
-        }
-      ]
-    },
-    {
-      "id": "your-review-workflow",
-      "title": "Your review workflow",
-      "children": [
-        {
-          "id": "path-instructions",
-          "title": "Path instructions",
-          "description": "Give CodeRabbit your review rules, scoped to the files and paths that matter.",
-          "mediaId": "path-demo"
+          "description": "Automated quality gates that block the merge until your rules pass.",
+          "mediaId": "pre-merge-checks"
         },
         {
-          "id": "pr-chat",
-          "title": "Chat on the pull request",
-          "description": "Ask questions about the diff and get answers without leaving the conversation.",
-          "mediaId": "chat-demo"
+          "id": "anatomy-of-a-finding",
+          "title": "The anatomy of a finding",
+          "description": "Every finding explained — category, severity, static analysis, a repro script, and a fix. Even for Terraform.",
+          "mediaId": "anatomy-of-a-finding"
+        },
+        {
+          "id": "chat",
+          "title": "Chat is your friend",
+          "description": "Delegate to the bot — ask it to generate unit tests in their own pull request.",
+          "mediaId": "chat"
+        },
+        {
+          "id": "learnings",
+          "title": "Learnings",
+          "description": "Turn a review thread into durable, attributed rules your future reviews apply.",
+          "mediaId": "learnings"
+        },
+        {
+          "id": "issue-validation",
+          "title": "Issue validation",
+          "description": "Check the change against its linked issue's acceptance criteria, and flag out-of-scope work.",
+          "mediaId": "issue-validation"
+        },
+        {
+          "id": "coding-guidelines",
+          "title": "Coding guidelines & standards",
+          "description": "Enforce a shared standard from another repo, citing the exact rule you violated.",
+          "mediaId": "coding-guidelines"
+        },
+        {
+          "id": "cross-repo",
+          "title": "Avoiding cross-repo breaking changes",
+          "description": "Follow the contract across repos and name the exact call site that breaks.",
+          "mediaId": "cross-repo"
+        },
+        {
+          "id": "summary",
+          "title": "Summary",
+          "mediaId": "summary",
+          "description": "A recap of the review that rides with your code from editor to merge gate — and a look ahead to the reviewer's seat."
         }
       ]
     }
