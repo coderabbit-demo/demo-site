@@ -26,4 +26,4 @@ Clear, practical, approachable. Preserve the supplied video reference's nested n
 
 ## Accessibility & Inclusion
 
-Target WCAG AA with semantic controls, visible keyboard focus, reduced-motion support, captions when provided, and a native mobile dialog. Verify final recordings and captions separately when supplied.
+Target WCAG AA with semantic controls, visible keyboard focus, reduced-motion support, and a native mobile dialog. Require captions for prerecorded audio in every applicable video. The exception is a video that presents no information beyond existing text and is clearly labeled as a media alternative for that text, as defined by [WCAG 1.2.2](https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html). Verify final recordings and captions separately when supplied, before publication.

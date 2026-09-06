@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { attachPlayback } from "./playback";
 import type { PlaybackState } from "./playback";
 
+/** Attaches the controller to controlled media state and records emitted updates. */
 function fixture(
   start = 10,
   end: number | null = 20,

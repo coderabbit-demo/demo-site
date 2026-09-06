@@ -50,6 +50,7 @@ interface ReadyPlayerProps extends PlayerProps {
   readonly retry: () => void;
 }
 
+/** Owns a loaded source's media lifecycle and renders accessible playback controls. */
 function ReadyPlayer({
   feature,
   media,
@@ -79,11 +80,13 @@ function ReadyPlayer({
       start: feature.start,
       end: feature.end,
       autoplay,
+      /** Mirrors playback state and forwards normalized progress to the current callback. */
       update(next): void {
         setState(next);
         if (next.status === "ready")
           callbacks.current.onProgress(next.elapsed / next.duration);
       },
+      /** Forwards natural completion without retaining an outdated parent callback. */
       onComplete(): void {
         callbacks.current.onComplete();
       },
@@ -95,6 +98,7 @@ function ReadyPlayer({
     };
   }, [feature.start, feature.end, autoplay]);
 
+  /** Requests fullscreen for the stage and reports unsupported or rejected requests. */
   function fullscreen(): void {
     const stage = stageRef.current;
     if (!stage?.requestFullscreen) {
@@ -106,6 +110,7 @@ function ReadyPlayer({
     });
   }
 
+  /** Toggles available text tracks and keeps the captions button state synchronized. */
   function toggleCaptions(): void {
     const video = videoRef.current;
     if (!video) return;

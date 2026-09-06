@@ -35,6 +35,7 @@ export function attachPlayback(
   let frame: number | null = null;
   let playRequest = 0;
 
+  /** Publishes clip-relative state only while the controller has valid bounds. */
   function emit(): void {
     if (disposed || !bounds) return;
     options.update({
@@ -49,6 +50,7 @@ export function attachPlayback(
     });
   }
 
+  /** Stops playback and invalidates controls after an unrecoverable media error. */
   function fail(message: string): void {
     if (disposed) return;
     bounds = null;
@@ -56,6 +58,7 @@ export function attachPlayback(
     options.update({ status: "error", message });
   }
 
+  /** Stops at the clip boundary and notifies completion at most once per playback. */
   function finish(): void {
     if (!bounds || completed || disposed) return;
     completed = true;
@@ -65,6 +68,7 @@ export function attachPlayback(
     options.onComplete();
   }
 
+  /** Enforces clip bounds and synchronizes state after media events or frame ticks. */
   function sync(): void {
     if (!bounds || disposed) return;
     if (video.currentTime >= bounds.end) {
@@ -75,6 +79,7 @@ export function attachPlayback(
     emit();
   }
 
+  /** Checks the boundary each animation frame until playback pauses or completes. */
   function tick(): void {
     frame = null;
     sync();
@@ -82,12 +87,14 @@ export function attachPlayback(
       frame = requestAnimationFrame(tick);
   }
 
+  /** Starts a single boundary-check loop when the media begins playing. */
   function onPlay(): void {
     if (disposed || !bounds) return;
     if (frame === null) frame = requestAnimationFrame(tick);
     emit();
   }
 
+  /** Requests playback while ignoring stale rejections and handling late teardown. */
   function play(): void {
     const request = ++playRequest;
     void video
@@ -102,6 +109,7 @@ export function attachPlayback(
       });
   }
 
+  /** Validates the loaded duration, sets the clip start, and optionally requests playback. */
   function metadata(): void {
     if (!Number.isFinite(video.duration) || video.duration <= 0) {
       fail("This recording does not have a playable duration.");
@@ -121,6 +129,7 @@ export function attachPlayback(
     if (options.autoplay) play();
   }
 
+  /** Converts a native media failure into a recoverable player-facing message. */
   function onError(): void {
     fail("The recording couldn’t load. Check your connection and try again.");
   }
@@ -139,6 +148,7 @@ export function attachPlayback(
   if (video.readyState >= 1) metadata();
 
   return {
+    /** Pauses active playback or plays, resetting a completed clip for replay. */
     toggle(): void {
       if (!bounds || disposed) return;
       if (!video.paused) {
@@ -152,6 +162,7 @@ export function attachPlayback(
       }
       play();
     },
+    /** Seeks in clip-relative seconds; endpoint scrubs stop without firing completion. */
     seek(elapsed: number): void {
       if (!bounds || disposed || !Number.isFinite(elapsed)) return;
       const position =
@@ -167,6 +178,7 @@ export function attachPlayback(
       video.currentTime = position;
       emit();
     },
+    /** Removes listeners, cancels the frame loop, and stops the owned media element. */
     dispose(): void {
       disposed = true;
       ++playRequest;

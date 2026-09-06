@@ -62,6 +62,8 @@ Categories cannot include `mediaId`, `start`, or `end`. Feature descriptions, me
 
 IDs must use lowercase letters, numbers, and single separating hyphens. Navigation IDs are globally unique, including categories. Supported limits are 500 navigation entries and 8 levels, counting the top level. Empty categories and an empty tour are valid during preparation. Use two or three levels where possible so visitors can scan the menu easily.
 
+Although the manifest permits missing caption tracks for pending or silent media, published videos containing prerecorded audio require captions. The exception is a clearly labeled media alternative that adds no information beyond existing text; see `PRODUCT.md`. Verify caption accuracy and synchronization before publishing.
+
 Timestamps must be finite non-negative numbers, and `end` must exceed `start`. The build validates the manifest's structure. The player validates times against the actual recording duration after metadata loads; the build does not download remote videos to verify duration or availability.
 
 ## Publish an update

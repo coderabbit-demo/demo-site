@@ -10,6 +10,7 @@ import type { Feature, Media } from "./tour";
 let container: HTMLDivElement;
 let root: Root;
 
+/** Builds a nested two-feature tour with either pending or playable media. */
 function manifest(src: string | null = null) {
   return {
     version: 1,
@@ -42,6 +43,7 @@ function manifest(src: string | null = null) {
   };
 }
 
+/** Queries a required element and verifies its runtime DOM type. */
 function element<T extends Element>(
   selector: string,
   type: { new (...args: never[]): T },
@@ -51,6 +53,7 @@ function element<T extends Element>(
   return result;
 }
 
+/** Finds a button by its visible text or accessible label, failing if absent. */
 function button(text: string): HTMLButtonElement {
   const result = [...container.querySelectorAll("button")].find(
     (item) =>
@@ -61,16 +64,19 @@ function button(text: string): HTMLButtonElement {
   return result;
 }
 
+/** Dispatches a user click and flushes React updates before assertions. */
 async function click(target: HTMLElement): Promise<void> {
   await act(async () => {
     target.click();
   });
 }
+/** Dispatches a named DOM event within React's update boundary. */
 async function event(target: HTMLElement, name: string): Promise<void> {
   await act(async () => {
     target.dispatchEvent(new Event(name, { bubbles: true }));
   });
 }
+/** Supplies a mocked manifest response and mounts the application for a test. */
 async function load(data: unknown = manifest()): Promise<void> {
   vi.stubGlobal(
     "fetch",
@@ -196,6 +202,7 @@ describe("tour navigation", () => {
   it("shows an empty tour without invalid controls", async () => {
     await load({ ...manifest(), navigation: [] });
     expect(container.textContent).toContain("Your feature tour is on its way");
+    expect(container.textContent).not.toContain("No features match");
     expect(container.querySelector("video")).toBeNull();
     await act(async () => {
       window.dispatchEvent(new PopStateEvent("popstate"));
@@ -236,6 +243,29 @@ describe("manifest loading", () => {
     await click(button("Try again"));
     expect(container.textContent).toContain("The feature list is unavailable");
   });
+
+  it.each([
+    [{ media: { demo: { src: "https://" } } }, "media.demo.src"],
+    [
+      {
+        navigation: [
+          { id: "one", title: "Invalid range", mediaId: "demo", start: -1 },
+        ],
+      },
+      "navigation[0].start",
+    ],
+  ])(
+    "rejects invalid manifests before mounting playback: %j",
+    async (override, path) => {
+      const play = vi.spyOn(HTMLMediaElement.prototype, "play");
+      await load({ ...manifest("/demo.mp4"), ...override });
+      expect(container.querySelector('[role="alert"]')?.textContent).toContain(
+        path,
+      );
+      expect(container.querySelector("video")).toBeNull();
+      expect(play).not.toHaveBeenCalled();
+    },
+  );
 
   it.each([true, false])(
     "aborts a pending request on unmount (success: %s)",
@@ -286,6 +316,7 @@ const source: Media = {
   captions: "/captions.vtt",
 };
 
+/** Mounts a player with controlled media and captures its progress and completion callbacks. */
 async function renderPlayer(media = source) {
   const onComplete = vi.fn();
   const onProgress = vi.fn();

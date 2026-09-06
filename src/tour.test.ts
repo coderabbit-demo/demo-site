@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { featureEntries, formatTime, parseTour } from "./tour";
 
 const feature = { id: "one", title: "One", mediaId: "demo" };
+/** Builds a minimal valid manifest so each test can override one boundary. */
 function config(): Record<string, unknown> {
   return {
     version: 1,
@@ -62,6 +63,25 @@ describe("tour configuration", () => {
       parseTour({ ...config(), description: undefined, navigation: [] })
         .description,
     ).toBe("");
+  });
+
+  it("normalizes media IDs consistently with feature references", () => {
+    const tour = parseTour({
+      ...config(),
+      media: { " demo ": { src: "/demo.mp4" } },
+      navigation: [{ ...feature, mediaId: " demo " }],
+    });
+    expect(tour.media.get("demo")?.src).toBe("/demo.mp4");
+    expect(featureEntries(tour.navigation)[0]?.feature.mediaId).toBe("demo");
+  });
+
+  it("rejects media IDs that collide after normalization", () => {
+    expect(() =>
+      parseTour({
+        ...config(),
+        media: { demo: { src: null }, " demo ": { src: "/demo.mp4" } },
+      }),
+    ).toThrow('duplicate ID "demo"');
   });
 
   it.each([null, [], 1, "tour"])("rejects a non-object root: %j", (root) => {
@@ -146,6 +166,8 @@ describe("tour configuration", () => {
 
 it.each([
   [0, "0:00"],
+  [59.9, "0:59"],
+  [60, "1:00"],
   [62.9, "1:02"],
   [-1, "0:00"],
   [NaN, "0:00"],

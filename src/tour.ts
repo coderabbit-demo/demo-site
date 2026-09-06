@@ -36,6 +36,7 @@ export interface FeatureEntry {
   readonly parents: readonly Category[];
 }
 
+/** Copies an input object's own fields or reports the invalid field path. */
 function record(value: unknown, path: string): Record<string, unknown> {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new Error(`${path}: expected an object.`);
@@ -43,12 +44,14 @@ function record(value: unknown, path: string): Record<string, unknown> {
   return Object.fromEntries(Object.entries(value));
 }
 
+/** Trims required text and rejects blank or non-string input. */
 function text(value: unknown, path: string): string {
   if (typeof value !== "string" || !value.trim())
     throw new Error(`${path}: expected non-empty text.`);
   return value.trim();
 }
 
+/** Validates a stable lowercase, hyphen-separated manifest identifier. */
 function identifier(value: unknown, path: string): string {
   const result = text(value, path);
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(result))
@@ -56,6 +59,7 @@ function identifier(value: unknown, path: string): string {
   return result;
 }
 
+/** Accepts root-relative or credential-free HTTPS media URLs with path-specific errors. */
 function source(value: unknown, path: string): string {
   const result = text(value, path);
   const message = `${path}: use a root-relative path or an HTTPS URL without credentials.`;
@@ -80,16 +84,21 @@ function source(value: unknown, path: string): string {
   return result;
 }
 
+/** Rejects negative, non-numeric, or non-finite timestamp values. */
 function seconds(value: unknown, path: string): number {
   if (typeof value !== "number" || !Number.isFinite(value) || value < 0)
     throw new Error(`${path}: expected finite, non-negative seconds.`);
   return value;
 }
 
+/** Validates each recording's source and optional poster and caption locations. */
 function parseMedia(value: unknown): ReadonlyMap<string, Media> {
+  const ids = new Set<string>();
   return new Map(
-    Object.entries(record(value, "media")).map(([id, raw]) => {
-      identifier(id, `media.${id}`);
+    Object.entries(record(value, "media")).map(([rawId, raw]) => {
+      const id = identifier(rawId, `media.${rawId}`);
+      if (ids.has(id)) throw new Error(`media.${rawId}: duplicate ID "${id}".`);
+      ids.add(id);
       const item = record(raw, `media.${id}`);
       return [
         id,
@@ -116,6 +125,7 @@ export function parseTour(value: unknown): Tour {
   const media = parseMedia(root.media);
   const ids = new Set<string>();
 
+  /** Parses nested categories and clips while enforcing shared size and ID constraints. */
   function nodes(
     value: unknown,
     path: string,

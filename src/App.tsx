@@ -70,6 +70,7 @@ export function App(): ReactElement {
   return <TourView tour={state.tour} />;
 }
 
+/** Renders the official white logotype with its original aspect ratio. */
 function Brand(): ReactElement {
   return (
     <div className="brand">
@@ -93,6 +94,7 @@ interface NavigationProps {
   readonly progress: number;
 }
 
+/** Renders nested disclosure controls and selectable clips in manifest order. */
 function Navigation({
   nodes,
   entries,
@@ -171,6 +173,7 @@ function Navigation({
   );
 }
 
+/** Resolves the URL's feature ID, falling back to the first configured clip. */
 function selectedEntry(
   entries: readonly FeatureEntry[],
 ): FeatureEntry | undefined {
@@ -178,6 +181,7 @@ function selectedEntry(
   return entries.find((entry) => entry.feature.id === id) ?? entries[0];
 }
 
+/** Coordinates feature selection, sharing, search, and playback for a validated tour. */
 function TourView({ tour }: { readonly tour: Tour }): ReactElement {
   const [entries] = useState(() => featureEntries(tour.navigation));
   const [activeId, setActiveId] = useState(
@@ -203,6 +207,7 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
   const active = entries.find((entry) => entry.feature.id === activeId);
   const index = entries.findIndex((entry) => entry.feature.id === activeId);
 
+  /** Selects a known clip, reveals its ancestors, and synchronizes browser history. */
   const select = useCallback(
     (id: string, play = true, replace = false): void => {
       const entry = entries.find((item) => item.feature.id === id);
@@ -227,6 +232,7 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
   );
 
   useEffect(() => {
+    /** Restores URL selection without autoplay or adding another history entry. */
     function popstate(): void {
       const entry = selectedEntry(entries);
       if (entry) select(entry.feature.id, false, true);
@@ -244,6 +250,7 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
       : "Feature Tour · CodeRabbit";
   }, [active]);
 
+  /** Toggles one category without mutating the previous expansion state. */
   function toggle(id: string): void {
     setExpanded((previous) => {
       const next = new Set(previous);
@@ -253,6 +260,7 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
     });
   }
 
+  /** Copies the active feature URL and reports clipboard support or permission failures. */
   function copyLink(): void {
     const url = new URL(window.location.href);
     url.searchParams.set("feature", activeId);
@@ -311,7 +319,7 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
           select={select}
           progress={progress}
         />
-        {matching.length === 0 && (
+        {query.trim().length > 0 && matching.length === 0 && (
           <p className="no-results">
             No features match “{query}”. Try another search.
           </p>
