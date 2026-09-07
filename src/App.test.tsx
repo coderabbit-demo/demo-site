@@ -440,6 +440,59 @@ describe("video controls", () => {
     expect(container.textContent).toContain("Fullscreen couldn’t open");
   });
 
+  it("exits fullscreen with the same button and tracks Escape and rejected exits", async () => {
+    await renderPlayer();
+    const stage = element(".player", HTMLDivElement);
+    let current: Element | null = null;
+    Object.defineProperty(document, "fullscreenElement", {
+      configurable: true,
+      get: () => current,
+    });
+    const exit = vi.fn(() => {
+      current = null;
+      document.dispatchEvent(new Event("fullscreenchange"));
+      return Promise.resolve();
+    });
+    Object.defineProperty(document, "exitFullscreen", {
+      configurable: true,
+      value: exit,
+    });
+    const request = vi.fn(() => {
+      current = stage;
+      document.dispatchEvent(new Event("fullscreenchange"));
+      return Promise.resolve();
+    });
+    Object.defineProperty(stage, "requestFullscreen", { value: request });
+    try {
+      await click(button("Fullscreen"));
+      expect(button("Exit fullscreen").getAttribute("aria-pressed")).toBe(
+        "true",
+      );
+      await click(button("Exit fullscreen"));
+      expect(exit).toHaveBeenCalledOnce();
+      expect(request).toHaveBeenCalledOnce();
+      expect(button("Fullscreen").getAttribute("aria-pressed")).toBe("false");
+      await click(button("Fullscreen"));
+      current = null;
+      await act(async () => {
+        document.dispatchEvent(new Event("fullscreenchange"));
+      });
+      expect(button("Fullscreen").getAttribute("aria-pressed")).toBe("false");
+      await click(button("Fullscreen"));
+      exit.mockRejectedValueOnce(new Error("Denied"));
+      await click(button("Exit fullscreen"));
+      expect(container.textContent).toContain("Fullscreen couldn’t close");
+      expect(button("Exit fullscreen").getAttribute("aria-pressed")).toBe(
+        "true",
+      );
+      await click(button("Exit fullscreen"));
+      expect(container.textContent).not.toContain("Fullscreen couldn’t close");
+    } finally {
+      Reflect.deleteProperty(document, "fullscreenElement");
+      Reflect.deleteProperty(document, "exitFullscreen");
+    }
+  });
+
   it("retries failed media with a new element", async () => {
     const { video } = await renderPlayer({ ...source, captions: undefined });
     expect(container.querySelector("track")).toBeNull();

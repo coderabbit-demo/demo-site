@@ -67,7 +67,20 @@ function ReadyPlayer({
   const [muted, setMuted] = useState(false);
   const [captions, setCaptions] = useState(false);
   const [notice, setNotice] = useState("");
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const callbacks = useRef({ onProgress, onComplete });
+
+  useEffect(() => {
+    /** Mirrors browser fullscreen changes, including exits through Escape. */
+    function syncFullscreen(): void {
+      setIsFullscreen(document.fullscreenElement === stageRef.current);
+    }
+    syncFullscreen();
+    document.addEventListener("fullscreenchange", syncFullscreen);
+    return () => {
+      document.removeEventListener("fullscreenchange", syncFullscreen);
+    };
+  }, []);
 
   useEffect(() => {
     callbacks.current = { onProgress, onComplete };
@@ -98,9 +111,18 @@ function ReadyPlayer({
     };
   }, [feature.start, feature.end, autoplay]);
 
-  /** Requests fullscreen for the stage and reports unsupported or rejected requests. */
+  /** Toggles the stage's browser fullscreen mode and reports rejected requests. */
   function fullscreen(): void {
+    setNotice("");
     const stage = stageRef.current;
+    if (stage && document.fullscreenElement === stage) {
+      void document.exitFullscreen().catch(() => {
+        setNotice(
+          "Fullscreen couldn’t close. Please try again or press Escape.",
+        );
+      });
+      return;
+    }
     if (!stage?.requestFullscreen) {
       setNotice("Fullscreen is unavailable in this browser.");
       return;
@@ -228,7 +250,11 @@ function ReadyPlayer({
             CC
           </button>
         )}
-        <button aria-label="Fullscreen" onClick={fullscreen}>
+        <button
+          aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+          aria-pressed={isFullscreen}
+          onClick={fullscreen}
+        >
           ⛶
         </button>
       </div>
