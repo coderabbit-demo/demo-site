@@ -414,7 +414,6 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
                 <span className="stage-label">DEMO</span>
               </div>
               <Player
-                key={activeId}
                 feature={active.feature}
                 media={media}
                 autoplay={autoplay}

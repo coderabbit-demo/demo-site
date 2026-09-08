@@ -64,6 +64,7 @@ function ReadyPlayer({
   const stageRef = useRef<HTMLDivElement>(null);
   const controllerRef = useRef<PlaybackController | null>(null);
   const [state, setState] = useState<PlaybackState>({ status: "loading" });
+  const [speed, setSpeed] = useState(1);
   const [muted, setMuted] = useState(false);
   const [captions, setCaptions] = useState(false);
   const [notice, setNotice] = useState("");
@@ -89,6 +90,7 @@ function ReadyPlayer({
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    setState({ status: "loading" });
     const controller = attachPlayback(video, {
       start: feature.start,
       end: feature.end,
@@ -109,7 +111,7 @@ function ReadyPlayer({
       controller.dispose();
       controllerRef.current = null;
     };
-  }, [feature.start, feature.end, autoplay]);
+  }, [feature.id, feature.start, feature.end, src, autoplay]);
 
   /** Toggles the stage's browser fullscreen mode and reports rejected requests. */
   function fullscreen(): void {
@@ -132,6 +134,17 @@ function ReadyPlayer({
     });
   }
 
+  /** Applies saved preferences before playback and when a caption track loads. */
+  function applyPreferences(): void {
+    const video = videoRef.current;
+    if (!video) return;
+    video.defaultPlaybackRate = speed;
+    video.playbackRate = speed;
+    video.muted = muted;
+    for (const track of video.textTracks)
+      track.mode = captions ? "showing" : "disabled";
+  }
+
   /** Toggles available text tracks and keeps the captions button state synchronized. */
   function toggleCaptions(): void {
     const video = videoRef.current;
@@ -147,7 +160,10 @@ function ReadyPlayer({
     <div className="player" ref={stageRef}>
       <div className="video-surface">
         <video
+          key={`${feature.id}:${src}`}
           ref={videoRef}
+          muted={muted}
+          onLoadedMetadata={applyPreferences}
           src={src}
           poster={media.poster}
           preload="metadata"
@@ -157,6 +173,7 @@ function ReadyPlayer({
         >
           {media.captions && (
             <track
+              onLoad={applyPreferences}
               kind="captions"
               src={media.captions}
               srcLang="en"
@@ -219,10 +236,14 @@ function ReadyPlayer({
         />
         <select
           aria-label="Playback speed"
-          defaultValue="1"
+          value={speed}
           onChange={(event) => {
-            if (videoRef.current)
-              videoRef.current.playbackRate = Number(event.currentTarget.value);
+            const rate = Number(event.currentTarget.value);
+            setSpeed(rate);
+            if (videoRef.current) {
+              videoRef.current.defaultPlaybackRate = rate;
+              videoRef.current.playbackRate = rate;
+            }
           }}
         >
           <option value="0.75">0.75×</option>
