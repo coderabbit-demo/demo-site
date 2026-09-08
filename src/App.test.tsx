@@ -408,6 +408,79 @@ describe("video controls", () => {
     expect(video.currentTime).toBe(10);
   });
 
+  it("preserves preferences and the fullscreen stage across automatic advances", async () => {
+    const data = {
+      ...manifest(),
+      media: {
+        first: { src: "/first.mp4", captions: "/first.vtt" },
+        second: { src: "/second.mp4" },
+        third: { src: "/third.mp4", captions: "/third.vtt" },
+      },
+      navigation: [
+        { id: "one", title: "One", mediaId: "first" },
+        { id: "two", title: "Two", mediaId: "second" },
+        { id: "three", title: "Three", mediaId: "third" },
+      ],
+    };
+    await load(data);
+    const stage = element(".player", HTMLDivElement);
+    Object.defineProperty(document, "fullscreenElement", {
+      configurable: true,
+      get: () => stage,
+    });
+    try {
+      await event(stage, "fullscreenchange");
+      let video = element("video", HTMLVideoElement);
+      Object.defineProperty(video, "duration", { value: 60 });
+      await event(video, "loadedmetadata");
+      const speed = element("select", HTMLSelectElement);
+      speed.value = "1.5";
+      await event(speed, "change");
+      await click(button("Mute"));
+      await click(button("Captions"));
+      await click(element(".advance-toggle input", HTMLInputElement));
+      for (const id of ["two", "three"]) {
+        const previous = video;
+        await event(previous, "ended");
+        video = element("video", HTMLVideoElement);
+        expect(video).not.toBe(previous);
+        expect(element(".player", HTMLDivElement)).toBe(stage);
+        expect(document.fullscreenElement).toBe(stage);
+        expect(button("Exit fullscreen").getAttribute("aria-pressed")).toBe(
+          "true",
+        );
+        expect(window.location.search).toBe(`?feature=${id}`);
+        const track = { mode: "disabled" };
+        Object.defineProperties(video, {
+          duration: { value: 60 },
+          textTracks: { value: id === "three" ? [track] : [] },
+        });
+        const play = vi.spyOn(video, "play").mockResolvedValue().mockClear();
+        await event(video, "loadedmetadata");
+        expect(play).toHaveBeenCalledOnce();
+        expect(video.playbackRate).toBe(1.5);
+        expect(video.muted).toBe(true);
+        expect(element("select", HTMLSelectElement).value).toBe("1.5");
+        if (id === "three") expect(track.mode).toBe("showing");
+        await event(previous, "ended");
+        expect(window.location.search).toBe(`?feature=${id}`);
+      }
+      await event(video, "ended");
+      expect(window.location.search).toBe("?feature=three");
+      await click(button("Previous"));
+      const manualVideo = element("video", HTMLVideoElement);
+      Object.defineProperty(manualVideo, "duration", { value: 60 });
+      const play = vi
+        .spyOn(manualVideo, "play")
+        .mockResolvedValue()
+        .mockClear();
+      await event(manualVideo, "loadedmetadata");
+      expect(play).not.toHaveBeenCalled();
+    } finally {
+      Reflect.deleteProperty(document, "fullscreenElement");
+    }
+  });
+
   it("changes speed, mute and captions without resetting the clip", async () => {
     const { video } = await renderPlayer();
     const track = { mode: "disabled" };
