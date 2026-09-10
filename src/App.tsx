@@ -201,6 +201,7 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
   const [progress, setProgress] = useState(0);
   const [autoplay, setAutoplay] = useState(false);
   const [advance, setAdvance] = useState(false);
+  const [menuCollapsed, setMenuCollapsed] = useState(false);
   const [copyStatus, setCopyStatus] = useState("");
   const [query, setQuery] = useState("");
   const drawer = useRef<HTMLDialogElement>(null);
@@ -329,11 +330,15 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
   );
   const media = active ? tour.media.get(active.feature.mediaId) : undefined;
   return (
-    <div className="app-shell">
+    <div className={`app-shell${menuCollapsed ? " menu-collapsed" : ""}`}>
       <a className="skip-link" href="#main">
         Skip to demo
       </a>
-      <aside className="sidebar">
+      <aside
+        className="sidebar"
+        id="desktop-feature-menu"
+        hidden={menuCollapsed}
+      >
         <Brand />
         <p className="tour-intro">{tour.description}</p>
         {nav}
@@ -371,6 +376,15 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
       </dialog>
       <main id="main" tabIndex={-1}>
         <header className="main-header">
+          <button
+            className="menu-toggle"
+            aria-controls="desktop-feature-menu"
+            aria-expanded={!menuCollapsed}
+            onClick={() => setMenuCollapsed((collapsed) => !collapsed)}
+          >
+            <span aria-hidden="true">{menuCollapsed ? "☰" : "‹"}</span>
+            {menuCollapsed ? "Show features" : "Hide features"}
+          </button>
           <div className="breadcrumb">
             <span>Feature tour</span>
             <span aria-hidden="true">/</span>

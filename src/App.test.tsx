@@ -408,6 +408,44 @@ describe("video controls", () => {
     expect(video.currentTime).toBe(10);
   });
 
+  it("collapses and restores the feature menu without interrupting playback", async () => {
+    await load(manifest("/demo.mp4"));
+    const video = element("video", HTMLVideoElement);
+    Object.defineProperty(video, "duration", { value: 60 });
+    await event(video, "loadedmetadata");
+    video.currentTime = 15;
+    const pause = vi.spyOn(video, "pause").mockClear();
+    const toggle = button("Hide features");
+    toggle.focus();
+    await click(toggle);
+    const sidebar = element("#desktop-feature-menu", HTMLElement);
+    expect(sidebar.hidden).toBe(true);
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    expect(toggle.getAttribute("aria-controls")).toBe(sidebar.id);
+    expect(document.activeElement).toBe(toggle);
+    expect(
+      element(".app-shell", HTMLDivElement).classList.contains(
+        "menu-collapsed",
+      ),
+    ).toBe(true);
+    expect(element("video", HTMLVideoElement)).toBe(video);
+    expect(video.currentTime).toBe(15);
+    expect(pause).not.toHaveBeenCalled();
+    await click(button("Browse features"));
+    expect(element("dialog", HTMLDialogElement).open).toBe(true);
+    await click(button("Close feature menu"));
+    await click(button("Show features"));
+    expect(sidebar.hidden).toBe(false);
+    expect(toggle.getAttribute("aria-expanded")).toBe("true");
+    expect(
+      element(".app-shell", HTMLDivElement).classList.contains(
+        "menu-collapsed",
+      ),
+    ).toBe(false);
+    expect(element("video", HTMLVideoElement)).toBe(video);
+    expect(pause).not.toHaveBeenCalled();
+  });
+
   it("preserves preferences and the fullscreen stage across automatic advances", async () => {
     const data = {
       ...manifest(),
