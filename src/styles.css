@@ -771,3 +771,34 @@ h1 {
     scroll-behavior: auto !important;
   }
 }
+
+/* Keep the disclosure control mounted so keyboard focus survives either state. */
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  flex-shrink: 0;
+  font-size: 11px;
+  background: transparent;
+}
+.main-header .breadcrumb {
+  flex: 1;
+  flex-wrap: wrap;
+}
+.sidebar[hidden] {
+  display: none;
+}
+@media (min-width: 781px) {
+  .app-shell.menu-collapsed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .menu-collapsed .player:not(:fullscreen) video {
+    max-height: none;
+  }
+}
+@media (max-width: 780px) {
+  .menu-toggle {
+    display: none;
+  }
+}
