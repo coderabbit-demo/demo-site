@@ -6,6 +6,21 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { format } from "prettier";
 
+const storeId = "o6mfxpkyyfleovxb";
+const storeHostname = `${storeId}.public.blob.vercel-storage.com`;
+
+/** The installed @vercel/blob SDK extracts the store ID from token.split("_")[3]. */
+export function validateStoreToken(token) {
+  const match =
+    typeof token === "string" &&
+    /^vercel_blob_rw_([a-z0-9]+)_\S+$/i.exec(token);
+  if (!match || match[1].toLowerCase() !== storeId) {
+    throw new Error(
+      "Blob credentials must belong to the dedicated demo-site-videos store.",
+    );
+  }
+}
+
 /** Checks exact release identity without requiring new fields in existing receipts. */
 export function matchesReleaseUrl(value, releasePath) {
   if (typeof value !== "string") return false;
@@ -13,7 +28,7 @@ export function matchesReleaseUrl(value, releasePath) {
     const url = new URL(value);
     return (
       url.protocol === "https:" &&
-      /^[a-z0-9]+\.public\.blob\.vercel-storage\.com$/.test(url.hostname) &&
+      url.hostname === storeHostname &&
       !url.username &&
       !url.password &&
       !url.port &&
@@ -45,6 +60,41 @@ export function parseUploadUrl(output, releasePath) {
   return url;
 }
 
+/** Recovers an interrupted upload's receipt only after verifying the remote bytes. */
+export async function recoverRemoteReceipt(asset, fetchAsset = fetch) {
+  const url = `https://${storeHostname}/${asset.releasePath}`;
+  if (!matchesReleaseUrl(url, asset.releasePath)) {
+    throw new Error(`Invalid release path: ${asset.releasePath}`);
+  }
+  const response = await fetchAsset(url, {
+    redirect: "error",
+    cache: "no-store",
+    signal: AbortSignal.timeout(60_000),
+  });
+  if (response.status === 404) {
+    await response.body?.cancel();
+    return null;
+  }
+  if (response.status !== 200 || !response.body) {
+    await response.body?.cancel();
+    throw new Error(
+      `Cannot reconcile ${asset.releasePath}: HTTP ${response.status}`,
+    );
+  }
+  const hash = createHash("sha256");
+  let bytes = 0;
+  for await (const chunk of response.body) {
+    bytes += chunk.byteLength;
+    if (bytes > asset.bytes)
+      throw new Error(`Remote checksum mismatch: ${asset.releasePath}`);
+    hash.update(chunk);
+  }
+  if (bytes !== asset.bytes || hash.digest("hex") !== asset.sha256) {
+    throw new Error(`Remote checksum mismatch: ${asset.releasePath}`);
+  }
+  return { url, sha256: asset.sha256, bytes };
+}
+
 /** Passes Blob credentials through the child environment, excluding conflicting OIDC auth. */
 export function uploadEnvironment(environment, token) {
   const result = { ...environment, BLOB_READ_WRITE_TOKEN: token };
@@ -66,6 +116,7 @@ async function publishMedia() {
     throw new Error(
       "Link the Vercel project and pull its Blob environment first.",
     );
+  validateStoreToken(token);
   const inventory = JSON.parse(
     await readFile("docs/media-release.json", "utf8"),
   );
@@ -91,6 +142,16 @@ async function publishMedia() {
   }
   for (const asset of publish) {
     if (canResumeReceipt(receipts[asset.path], asset)) continue;
+    const recovered = await recoverRemoteReceipt(asset);
+    if (recovered) {
+      receipts[asset.path] = recovered;
+      await writeFile(
+        receiptsPath,
+        await format(JSON.stringify(receipts), { parser: "json" }),
+      );
+      console.log(`Recovered receipt for ${asset.path}`);
+      continue;
+    }
     const result = spawnSync(
       "vercel",
       [

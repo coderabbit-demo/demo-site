@@ -121,6 +121,11 @@ times. Unknown links retain the existing first-feature fallback.
    after each successful upload so an interrupted upload can resume. It never
    overwrites existing Blob objects. Captions, posters, and Markdown remain
    same-origin static assets. PDF source copies remain in Git for reproducibility.
+   The publisher checks that credentials and returned URLs identify the dedicated
+   `o6mfxpkyyfleovxb.public.blob.vercel-storage.com` store. If a receipt is missing
+   or invalid, it reads the exact remote release URL and verifies its size and
+   SHA256 before recovering the receipt. Only a 404 permits a new upload;
+   redirects, mismatched content, and other failures stop publication.
 6. Verify the public URLs and byte-range responses, then run the repository
    checks and review workflow. Deploy a preview and check seeking, captions,
    PDF/script links, fullscreen, desktop/mobile layout, and legacy links before
