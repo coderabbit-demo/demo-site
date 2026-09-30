@@ -11,3 +11,4 @@ coverage/
 public/media/v3/
 .vercel
 .env*
+!.env.example

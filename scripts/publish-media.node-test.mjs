@@ -5,6 +5,7 @@ import {
   canResumeReceipt,
   matchesReleaseUrl,
   parseUploadUrl,
+  uploadEnvironment,
 } from "./publish-media.mjs";
 
 const asset = {
@@ -81,4 +82,20 @@ test("rejects success output with no exact matching destination", () => {
       /No matching Blob URL returned/,
     );
   }
+});
+
+test("keeps upload credentials out of argv and removes conflicting child OIDC settings", () => {
+  const parent = {
+    PATH: "/tools",
+    VERCEL_OIDC_TOKEN: "old-oidc",
+    BLOB_STORE_ID: "old-store",
+    OTHER: "preserved",
+  };
+  assert.deepEqual(uploadEnvironment(parent, "test-token"), {
+    PATH: "/tools",
+    OTHER: "preserved",
+    BLOB_READ_WRITE_TOKEN: "test-token",
+  });
+  assert.equal(parent.VERCEL_OIDC_TOKEN, "old-oidc");
+  assert.equal(parent.BLOB_STORE_ID, "old-store");
 });

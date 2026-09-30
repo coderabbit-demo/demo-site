@@ -45,6 +45,14 @@ export function parseUploadUrl(output, releasePath) {
   return url;
 }
 
+/** Passes Blob credentials through the child environment, excluding conflicting OIDC auth. */
+export function uploadEnvironment(environment, token) {
+  const result = { ...environment, BLOB_READ_WRITE_TOKEN: token };
+  delete result.VERCEL_OIDC_TOKEN;
+  delete result.BLOB_STORE_ID;
+  return result;
+}
+
 /** Publishes only on explicit CLI invocation; imports expose pure helpers for tests. */
 async function publishMedia() {
   if (!process.argv.includes("--upload")) {
@@ -95,10 +103,8 @@ async function publishMedia() {
         "public",
         "--scope",
         "coderabbitai",
-        "--rw-token",
-        token,
       ],
-      { encoding: "utf8" },
+      { encoding: "utf8", env: uploadEnvironment(process.env, token) },
     );
     const output = `${result.stdout}\n${result.stderr}`.replaceAll(
       token,
