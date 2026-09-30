@@ -35,6 +35,6 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "security:check": "npm audit --audit-level=low",
-    "check": "npm run format:check && npm run lint && npm run build && npm run test:coverage && node --test scripts/publish-media.node-test.mjs"
+    "check": "npm run format:check && npm run lint && npm run build && npm run test:coverage && node --test scripts/publish-media.node-test.mjs scripts/immutable-asset.node-test.mjs"
   }
 }

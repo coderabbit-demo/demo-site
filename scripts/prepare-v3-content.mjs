@@ -2,7 +2,9 @@
 import { format } from "prettier";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { preserveAsset } from "./immutable-asset.mjs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -117,9 +119,7 @@ const operatorRequests = JSON.parse(
 
 async function asset(source, destination, kind, mediaId, provenance) {
   const output = resolve(root, "public", destination);
-  await mkdir(dirname(output), { recursive: true });
-  if (source !== output) await copyFile(source, output);
-  const contents = await readFile(output);
+  const contents = await preserveAsset(source, output);
   inventory.push({
     mediaId,
     kind,
@@ -188,29 +188,34 @@ for (const [id, filename, title, description, duration] of entries) {
     "captions",
     id,
   );
-  const posterFile = resolve(root, `public/posters/v3/${id}.jpg`);
-  await mkdir(dirname(posterFile), { recursive: true });
-  execFileSync("ffmpeg", [
-    "-v",
-    "error",
-    "-y",
-    "-ss",
-    "5",
-    "-i",
-    `${delivery}.mp4`,
-    "-frames:v",
-    "1",
-    "-q:v",
-    "2",
-    posterFile,
-  ]);
-  const poster = await asset(
-    posterFile,
-    `posters/v3/${id}.jpg`,
-    "poster",
-    id,
-    `Frame at 5 seconds from consolidated-videos-per-slide/${filename}.mp4; original dimensions preserved.`,
-  );
+  const posterDirectory = await mkdtemp(resolve(tmpdir(), "demo-v3-poster-"));
+  let poster;
+  try {
+    const posterFile = resolve(posterDirectory, `${id}.jpg`);
+    execFileSync("ffmpeg", [
+      "-v",
+      "error",
+      "-n",
+      "-ss",
+      "5",
+      "-i",
+      `${delivery}.mp4`,
+      "-frames:v",
+      "1",
+      "-q:v",
+      "2",
+      posterFile,
+    ]);
+    poster = await asset(
+      posterFile,
+      `posters/v3/${id}.jpg`,
+      "poster",
+      id,
+      `Frame at 5 seconds from consolidated-videos-per-slide/${filename}.mp4; original dimensions preserved.`,
+    );
+  } finally {
+    await rm(posterDirectory, { recursive: true, force: true });
+  }
   const readalong = await readFile(`${delivery}-readalong.txt`, "utf8");
   let steps;
   let pdf;
