@@ -367,3 +367,29 @@ We've defined the task once and followed an incoming issue through to a proposed
 ### See
 
 Frame at 04:05 in 06-codeRabbit-automations.mp4.
+
+## Appendix: Operator text to type
+
+These recorded inputs belong to the Do instructions and are separate from the spoken Say track.
+
+### Agent instructions
+
+For each newly opened GitHub issue in this demo repository, investigate the reported discount-threshold problem using the issue and the code. Ignore events other than newly opened issues. Check whether the reported problem is already fixed before changing anything. If a fix is needed, keep it limited to the discount threshold and its tests. Preserve unrelated application behavior. Add or update tests for quantities below, exactly at, and above the configured minimum. Run the relevant tests and report their results and any blockers accurately. Do not require CodeRabbit CLI review before delivery. Prepare one focused pull request in the selected GitHub repository. Do not modify or close the original issue, and do not merge the pull request. If the issue is already resolved or a required step is blocked, explain that outcome rather than claiming a fix was delivered.
+
+### GitHub target instructions
+
+Open one pull request for the focused discount fix. Include a concise explanation, the relevant test results, any validation limitations, and a labeled link to the original GitHub issue. Leave the pull request open and unmerged.
+
+### GitHub issue title
+
+Discount does not apply when quantity equals the promotion minimum
+
+### GitHub issue body
+
+A qualifying order does not receive its discount when its quantity is exactly the configured minimum. The discount only starts applying above that quantity.
+
+To reproduce, use a valid promotion and otherwise eligible order. Compare quantities one below the configured minimum, exactly at the minimum, and one above it.
+
+Expected behavior: below the minimum, no discount applies. At the minimum and above it, the configured discount applies.
+
+Please fix the threshold comparison and add regression tests for all three cases. Preserve the discount amount, eligibility rules, and unrelated checkout behavior. Include the test results in the proposed fix PR.

@@ -302,8 +302,8 @@
       "mediaId": "automations",
       "kind": "guide",
       "path": "public/guides/v3/automations.md",
-      "bytes": 12080,
-      "sha256": "e1ecb738ffda74be764caacac01a890ec6c12b4a56583a88e4a147b276e04f00",
+      "bytes": 14147,
+      "sha256": "d83bed02c040ef5279a9779be69b113906e20999e42eea9d40191e716a9b22dc",
       "releasePath": "v3-2026-09-30/guides/v3/automations.md"
     },
     {
@@ -346,8 +346,8 @@
       "mediaId": "coding-agent",
       "kind": "guide",
       "path": "public/guides/v3/coding-agent.md",
-      "bytes": 12128,
-      "sha256": "ac3d926adc65695dee8a8c535cc1c90a9d3146ae8ae59ab71ee7ca59f0676b02",
+      "bytes": 13136,
+      "sha256": "6efdf2482fbad198d660f0666de50a0cf3686e45d5e13fee4f7428a6714ba1fe",
       "releasePath": "v3-2026-09-30/guides/v3/coding-agent.md"
     },
     {
@@ -390,8 +390,8 @@
       "mediaId": "slack-agent",
       "kind": "guide",
       "path": "public/guides/v3/slack-agent.md",
-      "bytes": 12404,
-      "sha256": "ddb160a8a96e64db3a273734f6c853d02f7a33d815280cbc46be429f848fc522",
+      "bytes": 14252,
+      "sha256": "71b108018ccb84234860b6a23bd0b931d5b8a4609137a7f32fdd0ec0aa5a7bb6",
       "releasePath": "v3-2026-09-30/guides/v3/slack-agent.md"
     }
   ]

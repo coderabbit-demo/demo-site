@@ -359,3 +359,15 @@ The delivery step didn't rerun validation. The earlier results are recorded in t
 ### See
 
 Frame at 04:31 in 07-coding-agent.mp4.
+
+## Appendix: Operator text to type
+
+These recorded inputs belong to the Do instructions and are separate from the spoken Say track.
+
+### Recorded coding-task request
+
+Fix SQL injection in invoice search. Bind the signed-in customer's account ID and search text as SQL parameters. Preserve partial-name searches, the API response, the 100-character input limit, newest-first order, and the 50-result limit. Add tests proving normal searches work and crafted input cannot expose another customer's invoices. Convert the existing expected-failure test for this issue into a normal passing test. Keep discounts and invoice exports unchanged. First propose a plan and wait for approval. Do not commit, push, or open a PR; I will deliver the reviewed patch manually.
+
+### Mid-task test request
+
+Before finishing, verify that a product name containing an apostrophe remains searchable, and that a matching product in another customer account is excluded. If these tests are already present, confirm their results.

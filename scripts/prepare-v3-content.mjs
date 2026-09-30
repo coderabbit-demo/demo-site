@@ -71,7 +71,7 @@ const entries = [
     "change-stack",
     "04-change-stack",
     "Change Stack",
-    "Review related changes across repositories.",
+    "Inspect code, findings, and review context in one workspace.",
     270.4,
   ],
   [
@@ -111,6 +111,9 @@ const entries = [
   ],
 ];
 const inventory = [];
+const operatorRequests = JSON.parse(
+  await readFile(resolve(root, "scripts/data/operator-requests.json"), "utf8"),
+).guides;
 
 async function asset(source, destination, kind, mediaId, provenance) {
   const output = resolve(root, "public", destination);
@@ -294,8 +297,20 @@ for (const [id, filename, title, description, duration] of entries) {
     id === "application-security"
       ? "\nThese timestamps include the 21.14-second introduction in the final Version 3 video. The accompanying illustrated PDF uses the same corrected timeline.\n"
       : "";
+  const requests = operatorRequests[id] ?? [];
+  if (
+    steps.some((step) =>
+      step.do.some((instruction) => /the appendix/i.test(instruction)),
+    ) &&
+    requests.length === 0
+  ) {
+    throw new Error(`Missing operator request appendix for ${id}`);
+  }
+  const appendix = requests.length
+    ? `\n\n## Appendix: Operator text to type\n\nThese recorded inputs belong to the Do instructions and are separate from the spoken Say track.\n\n${requests.map((request) => `### ${request.title}\n\n${request.text}\n`).join("\n")}`
+    : "";
   const markdown = await format(
-    `# ${guide.title}\n\nCompanion to the complete Version 3 recording. Times are minutes:seconds.milliseconds.\n${note}\n${steps.map((step) => `## ${step.title}\n\n${timestamp(step.start)}–${timestamp(step.end)}\n\n### Do\n\n${step.do.map((line) => `- ${line}`).join("\n")}\n\n${step.links.map((link) => `[${link.label}](${link.url})`).join(" · ")}\n\n### Say\n\n${step.say}\n\n### See\n\n${step.see}\n`).join("\n")}`,
+    `# ${guide.title}\n\nCompanion to the complete Version 3 recording. Times are minutes:seconds.milliseconds.\n${note}\n${steps.map((step) => `## ${step.title}\n\n${timestamp(step.start)}–${timestamp(step.end)}\n\n### Do\n\n${step.do.map((line) => `- ${line}`).join("\n")}\n\n${step.links.map((link) => `[${link.label}](${link.url})`).join(" · ")}\n\n### Say\n\n${step.say}\n\n### See\n\n${step.see}\n`).join("\n")}${appendix}`,
     { parser: "markdown" },
   );
   await mkdir(resolve(root, "public/guides/v3"), { recursive: true });
@@ -309,7 +324,17 @@ for (const [id, filename, title, description, duration] of entries) {
     sha256: createHash("sha256").update(contents).digest("hex"),
     releasePath: `${release}${download}`,
   });
-  media[id] = { src, captions, poster, guide };
+  // Inline steps point to the illustrated PDF; downloaded Markdown includes its own appendix.
+  const inlineGuide = {
+    ...guide,
+    steps: steps.map((step) => ({
+      ...step,
+      do: step.do.map((instruction) =>
+        instruction.replace(/the appendix/gi, "the illustrated PDF appendix"),
+      ),
+    })),
+  };
+  media[id] = { src, captions, poster, guide: inlineGuide };
   navigation.push({ id, title, description, mediaId: id });
 }
 await writeFile(

@@ -358,3 +358,27 @@ CodeRabbit returns the inclusive rule, the 9, 10 and 11 item cases and a referen
 ### See
 
 Frame at 03:51 in 08-coderabbit-agent-for-slack.mp4.
+
+## Appendix: Operator text to type
+
+These recorded inputs belong to the Do instructions and are separate from the spoken Say track.
+
+### Investigation request
+
+@CodeRabbit Investigate why an eligible order at the promotion minimum is not receiving its discount. Read https://coderabbit-demo.atlassian.net/browse/CDB-4 and compare its expected behavior and acceptance criteria with coderabbit-demo/demo-site-slack on main. Explain the cause with source links. Investigate only for now; do not change code or update the ticket.
+
+### Plan request
+
+@CodeRabbit Plan the CDB-4 fix in coderabbit-demo/demo-site-slack on main. Make the minimum inclusive and test 9, 10 and 11 items. Convert the expected-failure test to a normal regression test. Preserve the discount percentage and expiration boundary. Use Jira and GitHub only. Show the plan; do not implement yet.
+
+### Implementation request
+
+@CodeRabbit Implement the agreed CDB-4 plan in coderabbit-demo/demo-site-slack, using a new branch from main. Preserve the discount amount and expiration behavior. Run the relevant checks and open one PR targeting main. Add a comment to https://coderabbit-demo.atlassian.net/browse/CDB-4 with the PR link and validation summary. Leave the ticket open and the PR unmerged.
+
+### Remember request
+
+@CodeRabbit Remember this rule for the demo application's promotions: the minimum quantity is inclusive. Regression tests must cover quantities below, exactly at, and above the configured minimum. Preserve the existing discount amount, expiration behavior, and other eligibility rules. The requirement and acceptance criteria are documented here: https://coderabbit-demo.atlassian.net/browse/CDB-4.
+
+### Recall question
+
+@CodeRabbit What promotion-boundary rule did we agree on for the demo application, and which regression cases should a future change include?

@@ -1,0 +1,55 @@
+{
+  "source": "Original operator requests from .cert-prep-build/prompts.py, imported by .cert-prep-v3/plan.py; recorded text retained verbatim.",
+  "guides": {
+    "automations": [
+      {
+        "title": "Agent instructions",
+        "text": "For each newly opened GitHub issue in this demo repository, investigate the reported discount-threshold problem using the issue and the code. Ignore events other than newly opened issues. Check whether the reported problem is already fixed before changing anything. If a fix is needed, keep it limited to the discount threshold and its tests. Preserve unrelated application behavior. Add or update tests for quantities below, exactly at, and above the configured minimum. Run the relevant tests and report their results and any blockers accurately. Do not require CodeRabbit CLI review before delivery. Prepare one focused pull request in the selected GitHub repository. Do not modify or close the original issue, and do not merge the pull request. If the issue is already resolved or a required step is blocked, explain that outcome rather than claiming a fix was delivered."
+      },
+      {
+        "title": "GitHub target instructions",
+        "text": "Open one pull request for the focused discount fix. Include a concise explanation, the relevant test results, any validation limitations, and a labeled link to the original GitHub issue. Leave the pull request open and unmerged."
+      },
+      {
+        "title": "GitHub issue title",
+        "text": "Discount does not apply when quantity equals the promotion minimum"
+      },
+      {
+        "title": "GitHub issue body",
+        "text": "A qualifying order does not receive its discount when its quantity is exactly the configured minimum. The discount only starts applying above that quantity.\n\nTo reproduce, use a valid promotion and otherwise eligible order. Compare quantities one below the configured minimum, exactly at the minimum, and one above it.\n\nExpected behavior: below the minimum, no discount applies. At the minimum and above it, the configured discount applies.\n\nPlease fix the threshold comparison and add regression tests for all three cases. Preserve the discount amount, eligibility rules, and unrelated checkout behavior. Include the test results in the proposed fix PR."
+      }
+    ],
+    "coding-agent": [
+      {
+        "title": "Recorded coding-task request",
+        "text": "Fix SQL injection in invoice search. Bind the signed-in customer's account ID and search text as SQL parameters. Preserve partial-name searches, the API response, the 100-character input limit, newest-first order, and the 50-result limit. Add tests proving normal searches work and crafted input cannot expose another customer's invoices. Convert the existing expected-failure test for this issue into a normal passing test. Keep discounts and invoice exports unchanged. First propose a plan and wait for approval. Do not commit, push, or open a PR; I will deliver the reviewed patch manually."
+      },
+      {
+        "title": "Mid-task test request",
+        "text": "Before finishing, verify that a product name containing an apostrophe remains searchable, and that a matching product in another customer account is excluded. If these tests are already present, confirm their results."
+      }
+    ],
+    "slack-agent": [
+      {
+        "title": "Investigation request",
+        "text": "@CodeRabbit Investigate why an eligible order at the promotion minimum is not receiving its discount. Read https://coderabbit-demo.atlassian.net/browse/CDB-4 and compare its expected behavior and acceptance criteria with coderabbit-demo/demo-site-slack on main. Explain the cause with source links. Investigate only for now; do not change code or update the ticket."
+      },
+      {
+        "title": "Plan request",
+        "text": "@CodeRabbit Plan the CDB-4 fix in coderabbit-demo/demo-site-slack on main. Make the minimum inclusive and test 9, 10 and 11 items. Convert the expected-failure test to a normal regression test. Preserve the discount percentage and expiration boundary. Use Jira and GitHub only. Show the plan; do not implement yet."
+      },
+      {
+        "title": "Implementation request",
+        "text": "@CodeRabbit Implement the agreed CDB-4 plan in coderabbit-demo/demo-site-slack, using a new branch from main. Preserve the discount amount and expiration behavior. Run the relevant checks and open one PR targeting main. Add a comment to https://coderabbit-demo.atlassian.net/browse/CDB-4 with the PR link and validation summary. Leave the ticket open and the PR unmerged."
+      },
+      {
+        "title": "Remember request",
+        "text": "@CodeRabbit Remember this rule for the demo application's promotions: the minimum quantity is inclusive. Regression tests must cover quantities below, exactly at, and above the configured minimum. Preserve the existing discount amount, expiration behavior, and other eligibility rules. The requirement and acceptance criteria are documented here: https://coderabbit-demo.atlassian.net/browse/CDB-4."
+      },
+      {
+        "title": "Recall question",
+        "text": "@CodeRabbit What promotion-boundary rule did we agree on for the demo application, and which regression cases should a future change include?"
+      }
+    ]
+  }
+}
