@@ -6,3 +6,8 @@ coverage/
 .env.*
 !.env.example
 .DS_Store
+
+# Local copies of immutable Version 3 deliveries; publish to Blob before release.
+public/media/v3/
+.vercel
+.env*

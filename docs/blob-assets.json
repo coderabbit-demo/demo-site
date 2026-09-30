@@ -1,0 +1,87 @@
+{
+  "public/media/v3/platform.mp4": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/platform.mp4",
+    "sha256": "52b1a4ba8032b6d44e67546d017485fbab6477f8fb66a4196eeb987e559c55d6",
+    "bytes": 1447845
+  },
+  "public/media/v3/pr-review.mp4": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/pr-review.mp4",
+    "sha256": "0ba59f310940d556ec5a4305d5d4059c4e32fa2487115d04076f37ea90621c40",
+    "bytes": 24109326
+  },
+  "public/guides/v3/pr-review.pdf": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/pr-review.pdf",
+    "sha256": "1cfb0c6d79d0eb613cd80677dc5f5f239c19b77a301a3aa32f531d7fc162ce35",
+    "bytes": 3828462
+  },
+  "public/media/v3/triage.mp4": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/triage.mp4",
+    "sha256": "57b0ab08ee476eb500ff8b4e14c880db9040750935dcbd8b98657d4e5ae9f3db",
+    "bytes": 10130366
+  },
+  "public/guides/v3/triage.pdf": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/triage.pdf",
+    "sha256": "fe45eb67876ee514b1b2339ba98e126726c93191132c19d95362865a8aaa3182",
+    "bytes": 2843789
+  },
+  "public/media/v3/change-stack.mp4": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/change-stack.mp4",
+    "sha256": "a11989e40302bae08502ae7c5d856fb5d4293690de851243a6c0735a65fb499f",
+    "bytes": 19754840
+  },
+  "public/guides/v3/change-stack.pdf": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/change-stack.pdf",
+    "sha256": "1b78d74400e6c14fe5f84c595b9ec994fd9e269d7b7dcd5a55854baa200c4b02",
+    "bytes": 6983155
+  },
+  "public/media/v3/engineering-security.mp4": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/engineering-security.mp4",
+    "sha256": "33e97f097f720f861d34c1b5e9ce055d3715ac63062091c758c45320b2bec2b7",
+    "bytes": 14190401
+  },
+  "public/guides/v3/engineering-security.pdf": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/engineering-security.pdf",
+    "sha256": "f534b95be91e5abd809020c177aff63965cd3f6a74167f333789962d3970e17b",
+    "bytes": 3962589
+  },
+  "public/media/v3/application-security.mp4": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/application-security.mp4",
+    "sha256": "dee7e1923b26fa735fac12a2cc2c697829ff9fb5f817272925719c890c444e76",
+    "bytes": 23813682
+  },
+  "public/guides/v3/application-security.pdf": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/application-security.pdf",
+    "sha256": "a2a1dee80ef9c9975f8515d3d9d6af39dc38948f15ca501d28b688e01304025a",
+    "bytes": 2755990
+  },
+  "public/media/v3/automations.mp4": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/automations.mp4",
+    "sha256": "af3832dc81fa44b81d45c00b8e9724c99b4ff24b02bff25c4e1aca1ca4ff775c",
+    "bytes": 13442502
+  },
+  "public/guides/v3/automations.pdf": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/automations.pdf",
+    "sha256": "252fde1233c8e69b7ef87d73edd130effab6f89a4bcb34fc5055d53307bb6646",
+    "bytes": 3978392
+  },
+  "public/media/v3/coding-agent.mp4": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/coding-agent.mp4",
+    "sha256": "4e84f03dd86aa423ca61b3f192f9e0a9f8e80b81d5bfc787526ab34ec5105da0",
+    "bytes": 17161713
+  },
+  "public/guides/v3/coding-agent.pdf": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/coding-agent.pdf",
+    "sha256": "79d2938fd11b58e047a63176cd0e015def142814a6aa9129f3c9f5e60b31404e",
+    "bytes": 5139069
+  },
+  "public/media/v3/slack-agent.mp4": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/slack-agent.mp4",
+    "sha256": "5f9e713773a1006f4a37629ba449db83cfb6eae6b6a209334fe047a83b874114",
+    "bytes": 15054469
+  },
+  "public/guides/v3/slack-agent.pdf": {
+    "url": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/slack-agent.pdf",
+    "sha256": "2959d1b95fd15a3b9edfafacc16198865a4316112b21e7789244a4009ea4f96d",
+    "bytes": 5282543
+  }
+}

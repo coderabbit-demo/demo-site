@@ -3,6 +3,26 @@ export interface Media {
   readonly src: string | null;
   readonly poster: string | undefined;
   readonly captions: string | undefined;
+  readonly guide?: Guide | undefined;
+}
+
+/** A script step's start and end are seconds on the delivered recording timeline. */
+export interface GuideStep {
+  readonly title: string;
+  readonly start: number;
+  readonly end: number;
+  readonly do: readonly string[];
+  readonly say: string;
+  readonly see: string;
+  readonly links: readonly { readonly label: string; readonly url: string }[];
+}
+
+/** Embedded script content with links to the original downloadable documents. */
+export interface Guide {
+  readonly title: string;
+  readonly download: string;
+  readonly pdf: string | undefined;
+  readonly steps: readonly GuideStep[];
 }
 
 export interface Feature {
@@ -91,6 +111,62 @@ function seconds(value: unknown, path: string): number {
   return value;
 }
 
+/** Bounds embedded collections before validating individual entries. */
+function collection(
+  value: unknown,
+  path: string,
+  minimum: number,
+  maximum: number,
+): readonly unknown[] {
+  if (!Array.isArray(value)) throw new Error(`${path}: expected an array.`);
+  if (value.length < minimum || value.length > maximum)
+    throw new Error(
+      `${path}: expected ${minimum.toString()} to ${maximum.toString()} items.`,
+    );
+  return value;
+}
+
+/** Parses a guide without fetching remote content or trusting document links. */
+function parseGuide(value: unknown, path: string): Guide {
+  const guide = record(value, path);
+  return {
+    title: text(guide.title, `${path}.title`),
+    download: source(guide.download, `${path}.download`),
+    pdf: guide.pdf === undefined ? undefined : source(guide.pdf, `${path}.pdf`),
+    steps: collection(guide.steps, `${path}.steps`, 1, 500).map(
+      (raw, index): GuideStep => {
+        const location = `${path}.steps[${index.toString()}]`;
+        const step = record(raw, location);
+        const start = seconds(step.start, `${location}.start`);
+        const end = seconds(step.end, `${location}.end`);
+        if (end <= start)
+          throw new Error(`${location}.end: must be greater than start.`);
+        return {
+          title: text(step.title, `${location}.title`),
+          start,
+          end,
+          do: collection(step.do, `${location}.do`, 0, 100).map(
+            (action, actionIndex) =>
+              text(action, `${location}.do[${actionIndex.toString()}]`),
+          ),
+          say: text(step.say, `${location}.say`),
+          see: text(step.see, `${location}.see`),
+          links: collection(step.links, `${location}.links`, 0, 100).map(
+            (rawLink, linkIndex) => {
+              const linkPath = `${location}.links[${linkIndex.toString()}]`;
+              const link = record(rawLink, linkPath);
+              return {
+                label: text(link.label, `${linkPath}.label`),
+                url: source(link.url, `${linkPath}.url`),
+              };
+            },
+          ),
+        };
+      },
+    ),
+  };
+}
+
 /** Validates each recording's source and optional poster and caption locations. */
 function parseMedia(value: unknown): ReadonlyMap<string, Media> {
   const ids = new Set<string>();
@@ -112,6 +188,10 @@ function parseMedia(value: unknown): ReadonlyMap<string, Media> {
             item.captions === undefined
               ? undefined
               : source(item.captions, `media.${id}.captions`),
+          guide:
+            item.guide === undefined
+              ? undefined
+              : parseGuide(item.guide, `media.${id}.guide`),
         },
       ];
     }),

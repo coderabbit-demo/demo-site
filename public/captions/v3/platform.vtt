@@ -1,0 +1,32 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.240
+CodeRabbit is the agentic governance and
+control layer for software development.
+
+00:00:04.520 --> 00:00:08.060
+We help teams of every size
+ship high-quality code faster.
+
+00:00:09.080 --> 00:00:11.970
+The platform supports the
+development phases you see here,
+
+00:00:12.000 --> 00:00:15.420
+from planning and writing
+code through review and merge.
+
+00:00:16.420 --> 00:00:20.720
+Today, we'll follow that work through
+code review, Triage, and Change Stack.
+
+00:00:21.040 --> 00:00:23.800
+Then look at security
+from both the engineering
+
+00:00:23.800 --> 00:00:25.640
+and application security perspectives.
+
+00:00:26.000 --> 00:00:29.200
+We'll finish with Automations,
+the Coding Agent, and Slack.

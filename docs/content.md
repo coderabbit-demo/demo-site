@@ -75,3 +75,58 @@ Timestamps must be finite non-negative numbers, and `end` must exceed `start`. T
 5. Deploy the reviewed change to Vercel. Check desktop, mobile, audio/captions, fullscreen, and the start/end of every new recording or segment.
 
 Do not commit credentials, signed URLs with sensitive tokens, or private customer footage. For large recordings, upload approved assets to the chosen media host and place only their public demo URLs in the manifest.
+
+## Version 3 videos and companion scripts
+
+The tour contains nine complete recordings, one per slide. Each media entry can
+include a `guide` with a title, Markdown `download`, optional PDF URL, and ordered
+steps. A step contains a title, absolute `start`/`end` seconds, `do` action strings,
+verbatim `say` narration, `see` description, and `links` (`label`, `url`).
+The parser validates text, timestamps, collection bounds, and safe URLs. Guide
+scrolling and visibility do not change playback. Platform uses its introduction
+transcript; the eight demonstration flows also have illustrated PDFs.
+
+The side panel is optional. It stacks below the video on smaller screens and sits
+beside it when enough width is available. Collapsing Features gives the recording
+more space. The script currently uses manual scrolling, not automatic tracking.
+Captions use the final full-recording WebVTT timestamps.
+
+Old `introduction` and `summary` links resolve to Platform. The former PR feature
+IDs resolve to the complete PR Review recording; they do not seek to old segment
+times. Unknown links retain the existing first-feature fallback.
+
+### Prepare and publish assets
+
+1. Preserve the original capture, narration, approved videos, and captions in the
+   recording workspace. Never use this site repository as the capture master.
+2. With the Version 3 recording pack available, run
+   `node scripts/prepare-v3-content.mjs /absolute/path/to/version-3`.
+   This stages byte-identical MP4s under ignored `public/media/v3`, copies captions
+   and guides, and extracts posters at five seconds with the existing FFmpeg
+   installation. It checks the complete Say narration against every caption.
+   Source paths, sizes, and SHA256 values are recorded in `docs/media-release.json`.
+   The corrected AppSec PDF is preserved from the checked-in guide: its final
+   timeline includes the 21.14-second introduction. Existing capture files are
+   never overwritten.
+3. Preparation refuses to replace published URLs. For an intentional new release,
+   first change the release identifier in the preparation script, then pass
+   `--reset-local-urls`. Every release must use new Blob paths.
+4. Link the existing `coderabbitai/fe-demo-site` project with Vercel CLI and pull
+   the development environment into ignored `.env.local`. Its dedicated public
+   store is `demo-site-videos`. Credentials must never be committed or exposed
+   through `VITE_*` variables.
+5. Run `node scripts/publish-media.mjs --upload` to verify all source hashes,
+   upload the MP4s/PDFs with the installed Vercel CLI, and write returned URLs to
+   `tour.json`. The script saves non-secret receipts in `docs/blob-assets.json`
+   after each successful upload so an interrupted upload can resume. It never
+   overwrites existing Blob objects. Captions, posters, and Markdown remain
+   same-origin static assets. PDF source copies remain in Git for reproducibility.
+6. Verify the public URLs and byte-range responses, then run the repository
+   checks and review workflow. Deploy a preview and check seeking, captions,
+   PDF/script links, fullscreen, desktop/mobile layout, and legacy links before
+   releasing to production.
+
+Uploads are an explicit administrative action and never run during builds.
+Public Blob media can be accessed by anyone with the URL, independently of
+preview deployment protection. A rollback restores a previous tour manifest and
+its immutable URLs; retain prior media releases.

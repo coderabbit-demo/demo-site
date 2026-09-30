@@ -1,0 +1,249 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.760
+We'll start in Slack where the team is
+discussing a customer's missing discount.
+
+00:00:05.320 --> 00:00:08.220
+I'll give CodeRabbit the
+Jira report and repository,
+
+00:00:08.600 --> 00:00:11.500
+then follow the evidence from
+the ticket into the code.
+
+00:00:11.920 --> 00:00:14.160
+We'll agree on a focused plan and inspect
+
+00:00:14.160 --> 00:00:16.840
+the resulting fix, tests and pull request.
+
+00:00:17.440 --> 00:00:19.760
+Finally, I'll ask CodeRabbit
+to remember the business rule
+
+00:00:19.760 --> 00:00:23.080
+and check whether it can recall
+that decision in a new conversation.
+
+00:00:24.800 --> 00:00:28.400
+In Slack, I open the conversation
+about a customer's missing discount.
+
+00:00:28.800 --> 00:00:32.500
+The order has reached the minimum
+quantity but the promotion hasn't applied.
+
+00:00:33.200 --> 00:00:36.900
+I ask CodeRabbit to investigate linking
+the Jira report and naming the repository.
+
+00:00:37.580 --> 00:00:39.660
+The ticket contains the reported problem,
+
+00:00:39.720 --> 00:00:41.940
+expected behavior and acceptance criteria.
+
+00:00:42.500 --> 00:00:45.720
+For this first request, I want an
+explanation with links to the evidence.
+
+00:00:45.880 --> 00:00:48.000
+I'll review that before
+asking for a code change.
+
+00:00:48.560 --> 00:00:51.520
+When the response arrives,
+I open the thread and follow
+
+00:00:51.520 --> 00:00:53.720
+its references to the
+ticket and implementation.
+
+00:00:54.400 --> 00:00:56.940
+The ticket describes an unexpired promotion
+
+00:00:56.940 --> 00:00:59.860
+with a minimum of 10
+items and 10% discount.
+
+00:01:00.600 --> 00:01:03.940
+9 items should not
+qualify, 10 and 11 should.
+
+00:01:05.520 --> 00:01:07.540
+CodeRabbit points to a
+comparison that requires
+
+00:01:07.540 --> 00:01:09.560
+the quantity to be
+greater than the minimum.
+
+00:01:10.220 --> 00:01:13.740
+Greater than 10 excludes 10 itself
+which explains the missing discount.
+
+00:01:14.440 --> 00:01:16.940
+I follow the code link
+and check that condition.
+
+00:01:17.400 --> 00:01:20.620
+The response also identifies
+a test for that exact
+
+00:01:20.620 --> 00:01:23.060
+minimum that's marked
+as an expected failure.
+
+00:01:23.980 --> 00:01:25.980
+The test records the known problem.
+
+00:01:26.120 --> 00:01:28.920
+At this stage, CodeRabbit has
+inspected the code and test.
+
+00:01:29.280 --> 00:01:32.340
+We haven't established a
+passing result for a fix.
+
+00:01:33.660 --> 00:01:38.020
+The ticket and implementation now give
+us a specific boundary to correct.
+
+00:01:38.580 --> 00:01:40.580
+Back in the thread, I ask for a plan.
+
+00:01:41.220 --> 00:01:45.720
+The minimum must be inclusive so an
+order of exactly 10 items qualifies.
+
+00:01:46.440 --> 00:01:50.340
+I want a small change with tests
+below, at and above the boundary.
+
+00:01:50.340 --> 00:01:55.160
+The existing expected failure test
+should become a normal passing test.
+
+00:01:56.360 --> 00:01:58.280
+I also ask the plan to
+preserve the discount
+
+00:01:58.280 --> 00:02:00.320
+percentage and expiration behavior.
+
+00:02:00.940 --> 00:02:04.560
+At the exact expiration time, the
+promotion should remain expired.
+
+00:02:05.840 --> 00:02:09.280
+I read the proposed approach and
+check it against those requirements.
+
+00:02:09.780 --> 00:02:12.820
+The plan gives us a defined scope
+and a way to judge the result.
+
+00:02:14.780 --> 00:02:17.040
+With that agreed, we are ready
+to request implementation.
+
+00:02:17.040 --> 00:02:21.340
+I ask CodeRabbit to implement
+the plan in a demo repository,
+
+00:02:21.760 --> 00:02:24.880
+run the relevant checks and open
+a pull request on a new branch.
+
+00:02:25.840 --> 00:02:29.060
+The response links to a dedicated
+code channel for the implementation.
+
+00:02:29.500 --> 00:02:31.840
+I follow it to inspect the changed files
+
+00:02:31.840 --> 00:02:34.540
+and validation, then open the pull request.
+
+00:02:34.980 --> 00:02:37.160
+The patch includes the inclusive comparison
+
+00:02:37.160 --> 00:02:40.480
+and regression tests for the
+quantity and expiration boundaries.
+
+00:02:41.220 --> 00:02:43.680
+In this recorded run, CodeRabbit reports
+
+00:02:43.680 --> 00:02:48.160
+65 passed tests and 5
+unchanged expected failures.
+
+00:02:48.940 --> 00:02:52.340
+GitHub's validation checks passed and
+CodeRabbit approved the pull request.
+
+00:02:53.080 --> 00:02:57.100
+The delivery message links the result
+back to Jira with the validation summary.
+
+00:02:57.520 --> 00:02:59.340
+The ticket and pull request remain open,
+
+00:02:59.380 --> 00:03:01.840
+ready for the team to review
+and decide what to accept.
+
+00:03:02.720 --> 00:03:05.620
+I return to Slack and ask
+CodeRabbit to remember the promotion
+
+00:03:05.620 --> 00:03:08.860
+rule and the regression cases
+future changes should cover.
+
+00:03:09.480 --> 00:03:12.260
+The response identifies a
+saved knowledge-base record
+
+00:03:12.260 --> 00:03:15.180
+containing the inclusive
+minimum, boundary tests
+
+00:03:15.180 --> 00:03:18.080
+and the requirement to preserve
+discount and expiration behavior.
+
+00:03:19.060 --> 00:03:21.440
+Its live remote check was
+unavailable in this run,
+
+00:03:21.500 --> 00:03:24.460
+so I also ask recall in a new conversation.
+
+00:03:26.240 --> 00:03:29.900
+I ask which promotion rule
+we agreed on and which tests
+
+00:03:29.900 --> 00:03:32.920
+a future change should include
+without repeating the answer.
+
+00:03:32.920 --> 00:03:35.480
+CodeRabbit returns the inclusive rule,
+
+00:03:36.220 --> 00:03:40.980
+the 9, 10 and 11 item cases and
+a reference to the saved record.
+
+00:03:41.640 --> 00:03:44.900
+We followed a customer report
+from Slack into the evidence,
+
+00:03:45.200 --> 00:03:47.900
+agreed on a fix and inspected its delivery.
+
+00:03:48.520 --> 00:03:53.160
+The team also brings that business
+rule into its next conversation.

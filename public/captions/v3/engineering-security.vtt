@@ -1,0 +1,359 @@
+WEBVTT
+
+1
+00:00:01.440 --> 00:00:05.100
+Let's look at security from the engineer side,
+reviewing
+
+2
+00:00:05.100 --> 00:00:06.760
+a pull request, understanding
+
+3
+00:00:06.760 --> 00:00:09.160
+the impact of a finding, and getting a fix
+
+4
+00:00:09.160 --> 00:00:09.820
+ready for review.
+
+5
+00:00:10.780 --> 00:00:12.660
+We'll start with the security finding in the PR,
+
+6
+00:00:13.440 --> 00:00:15.220
+follow the change through Change Stack
+
+7
+00:00:15.220 --> 00:00:18.560
+and security blast radius, then use fix with AI
+
+8
+00:00:18.560 --> 00:00:19.560
+to prepare a patch.
+
+9
+00:00:20.890 --> 00:00:24.560
+Here in PR security reviews, I'll open pull
+request
+
+10
+00:00:24.560 --> 00:00:25.000
+4.
+
+11
+00:00:25.620 --> 00:00:29.720
+This change adds bulk checkout, promotional
+pricing, and invoice
+
+12
+00:00:29.720 --> 00:00:30.160
+exports.
+
+13
+00:00:31.100 --> 00:00:33.520
+We'll focus on the SQL injection finding in
+invoice
+
+14
+00:00:33.520 --> 00:00:33.860
+search.
+
+15
+00:00:34.580 --> 00:00:38.040
+The finding points to a query that inserts
+search
+
+16
+00:00:38.040 --> 00:00:39.640
+text directly into a SQL command.
+
+17
+00:00:40.440 --> 00:00:42.980
+It also inserts the tenant ID into that command.
+
+18
+00:00:44.060 --> 00:00:46.420
+A crafted search could change the query and
+return
+
+19
+00:00:46.420 --> 00:00:48.360
+invoices belonging to another customer.
+
+20
+00:00:48.360 --> 00:00:54.020
+I can see the severity, reachability, and
+exploitability assessment
+
+21
+00:00:54.020 --> 00:00:56.700
+along with the code behind the finding.
+
+22
+00:00:57.600 --> 00:01:01.020
+The recommended fix is to bind both values as
+
+23
+00:01:01.020 --> 00:01:03.560
+parameters so the database treats them as data.
+
+24
+00:01:04.480 --> 00:01:06.680
+Let's open the pull request and look at the
+
+25
+00:01:06.680 --> 00:01:07.820
+review comment in context.
+
+26
+00:01:08.400 --> 00:01:11.200
+From here, I'll choose review in Change Stack.
+
+27
+00:01:11.960 --> 00:01:14.820
+Change Stack organizes the PR into related
+layers.
+
+28
+00:01:14.820 --> 00:01:18.720
+That lets me review the invoice changes together
+and
+
+29
+00:01:18.720 --> 00:01:20.300
+see how they fit into the rest of the
+
+30
+00:01:20.300 --> 00:01:20.720
+pull request.
+
+31
+00:01:21.780 --> 00:01:24.960
+Now I'll open security blast radius and select
+the
+
+32
+00:01:24.960 --> 00:01:26.120
+SQL injection concern.
+
+33
+00:01:27.120 --> 00:01:30.060
+The graph shows the changed components and their
+relationships.
+
+34
+00:01:30.900 --> 00:01:33.520
+For invoice search and export, I can inspect the
+
+35
+00:01:33.520 --> 00:01:34.400
+shared data model.
+
+36
+00:01:35.140 --> 00:01:37.620
+This code depends on and the web client that
+
+37
+00:01:37.620 --> 00:01:39.300
+sends searches and receives results.
+
+38
+00:01:40.960 --> 00:01:43.900
+Those connections help me decide where else to
+look.
+
+39
+00:01:43.900 --> 00:01:47.120
+They don't mean every connected component is
+vulnerable.
+
+40
+00:01:47.860 --> 00:01:50.200
+I can open the supporting evidence and check
+what
+
+41
+00:01:50.200 --> 00:01:52.060
+each relationship actually involves.
+
+42
+00:01:53.060 --> 00:01:55.780
+In this case, the important question is whether
+customer
+
+43
+00:01:55.780 --> 00:01:58.440
+controlled search text can alter the database
+query
+
+44
+00:01:58.440 --> 00:02:00.960
+and cross boundary between tenants.
+
+45
+00:02:01.820 --> 00:02:04.380
+That gives me a specific behavior to check when
+
+46
+00:02:04.380 --> 00:02:05.140
+I review the fix.
+
+47
+00:02:06.100 --> 00:02:07.300
+Let's address the finding.
+
+48
+00:02:07.300 --> 00:02:10.860
+I'll open the affected component, choose open in
+layer
+
+49
+00:02:10.860 --> 00:02:14.000
+and return to the review comments beside the
+code.
+
+50
+00:02:14.980 --> 00:02:17.620
+In the comments panel, I'll select fix with AI
+
+51
+00:02:17.620 --> 00:02:19.040
+for the SQL injection finding.
+
+52
+00:02:19.660 --> 00:02:22.700
+Then I'll review the selected comment and choose
+how
+
+53
+00:02:22.700 --> 00:02:24.160
+the agent should deliver the change.
+
+54
+00:02:25.300 --> 00:02:27.620
+I'm choosing a separate pull request so I can
+
+55
+00:02:27.620 --> 00:02:30.660
+inspect the proposed patch before it reaches the
+original
+
+56
+00:02:30.660 --> 00:02:31.080
+branch.
+
+57
+00:02:31.080 --> 00:02:35.080
+To show the result, let's switch to a complete
+
+58
+00:02:35.080 --> 00:02:38.180
+run of this same fix in our recording
+repository.
+
+59
+00:02:39.960 --> 00:02:44.240
+The patch replaces the interpolated SQL with
+bound parameters
+
+60
+00:02:44.240 --> 00:02:46.580
+for the tenant ID and search pattern.
+
+61
+00:02:47.320 --> 00:02:50.300
+It also escapes wildcard characters, so a search
+for
+
+62
+00:02:50.300 --> 00:02:52.040
+those characters matches them literally.
+
+63
+00:02:53.160 --> 00:02:56.640
+The agent added regression tests for injection
+attempts and
+
+64
+00:02:56.640 --> 00:02:57.160
+tenant isolation.
+
+65
+00:02:57.160 --> 00:03:01.860
+The task reports 71 passing tests with four
+unrelated
+
+66
+00:03:01.860 --> 00:03:03.200
+and expected failures.
+
+67
+00:03:04.660 --> 00:03:06.300
+Here's the resulting pull request.
+
+68
+00:03:06.720 --> 00:03:08.820
+I can inspect the code and the tests before
+
+69
+00:03:08.820 --> 00:03:09.940
+deciding whether to merge.
+
+70
+00:03:10.560 --> 00:03:12.720
+For this demo, we are leaving it open.
+
+71
+00:03:13.520 --> 00:03:15.900
+Back on the original pull request, CodeRabbit
+has
+
+72
+00:03:15.900 --> 00:03:16.640
+requested changes.
+
+73
+00:03:17.380 --> 00:03:20.380
+The application checks passed, but the security
+concerns still
+
+74
+00:03:20.380 --> 00:03:21.060
+needs to be addressed.
+
+75
+00:03:21.060 --> 00:03:25.540
+This demo branch doesn't have protection
+enabled, so the
+
+76
+00:03:25.540 --> 00:03:27.800
+request for changes isn't an enforcement block.
+
+77
+00:03:28.420 --> 00:03:31.320
+With branch rules, a team can require the checks
+
+78
+00:03:31.320 --> 00:03:33.980
+and approvals it needs before accepting a
+change.
+
+79
+00:03:35.040 --> 00:03:37.900
+We followed a security finding from the PR to
+
+80
+00:03:37.900 --> 00:03:38.720
+its wider impact,
+
+81
+00:03:38.720 --> 00:03:42.260
+prepared a proposed fix and identified what
+needs review
+
+82
+00:03:42.260 --> 00:03:43.520
+before merging.

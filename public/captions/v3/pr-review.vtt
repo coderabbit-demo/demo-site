@@ -1,0 +1,463 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.880
+We'll start with code that a
+coding agent has already written.
+
+00:00:04.220 --> 00:00:06.200
+I'll review it locally in VS Code.
+
+00:00:06.460 --> 00:00:09.880
+Then open a pull request and walk
+through the summary and findings.
+
+00:00:10.480 --> 00:00:13.880
+We'll investigate a security
+issue and a discount bug,
+
+00:00:14.080 --> 00:00:17.560
+ask questions in the review, and
+teach CodeRabbit a business rule.
+
+00:00:18.040 --> 00:00:21.580
+Then we'll follow an AI generated
+fix through the code and tests,
+
+00:00:21.780 --> 00:00:23.960
+and look at the separate
+documentation change.
+
+00:00:25.547 --> 00:00:28.207
+In my Mac terminal, I'm
+in the projects folder.
+
+00:00:28.747 --> 00:00:30.947
+I clone the repository
+from GitHub and select
+
+00:00:30.947 --> 00:00:32.607
+the branch containing the implementation.
+
+00:00:33.207 --> 00:00:35.167
+Then I launch VS Code from this folder.
+
+00:00:35.627 --> 00:00:38.387
+This is my first look at the
+code the agent generated.
+
+00:00:38.987 --> 00:00:42.467
+I open the CodeRabbit extension so
+I can review the changes locally.
+
+00:00:43.207 --> 00:00:45.627
+The agent's work is already
+committed to this branch.
+
+00:00:45.987 --> 00:00:49.527
+I choose main as the base and
+select review committed changes.
+
+00:00:49.947 --> 00:00:51.847
+That compares this branch with main.
+
+00:00:52.327 --> 00:00:55.507
+Even with no pending edits, there
+are committed changes to review.
+
+00:00:56.147 --> 00:00:57.547
+I start the review.
+
+00:00:57.947 --> 00:01:00.727
+When the results are ready,
+I open the security finding.
+
+00:01:01.407 --> 00:01:04.727
+CodeRabbit has identified a SQL
+injection issue in invoice search.
+
+00:01:05.427 --> 00:01:08.627
+Opening the finding takes me to the
+affected code and the explanation.
+
+00:01:09.407 --> 00:01:13.087
+Search text is being inserted directly
+into the database query which could
+
+00:01:13.087 --> 00:01:18.027
+let someone change the query and
+retrieve another customer's invoice.
+
+00:01:20.107 --> 00:01:22.647
+The agent generated tests
+and those tests passed.
+
+00:01:22.867 --> 00:01:26.787
+This review still found a security
+problem before I opened the pull request.
+
+00:01:27.827 --> 00:01:29.787
+Next I open the discount finding.
+
+00:01:30.427 --> 00:01:34.187
+The discount should apply at 10 items
+but the code checks for more than 10.
+
+00:01:34.507 --> 00:01:37.347
+An order of exactly 10
+items pays full price.
+
+00:01:37.887 --> 00:01:41.647
+The suggested fix changes greater
+than to greater than or equal.
+
+00:01:42.167 --> 00:01:45.467
+That includes the minimum quantity
+as the business rule requires.
+
+00:01:46.167 --> 00:01:48.547
+The findings also give me ways to respond.
+
+00:01:49.627 --> 00:01:52.847
+I can apply a suggested fix
+for a simple change or use fix
+
+00:01:52.847 --> 00:01:56.527
+with AI to pass the finding and
+its context to my coding agent.
+
+00:01:57.207 --> 00:01:59.987
+Fix All lets me hand over
+the review findings together.
+
+00:02:01.727 --> 00:02:03.807
+After a fix, I would inspect the diff,
+
+00:02:03.987 --> 00:02:06.407
+run the relevant tests and
+review the updated code.
+
+00:02:06.847 --> 00:02:10.967
+I can do that work here on my branch
+before asking the team to review it.
+
+00:02:11.467 --> 00:02:14.047
+For this walkthrough, I'll
+carry the example into a
+
+00:02:14.047 --> 00:02:17.027
+pull request so we can see
+the team's review experience.
+
+00:02:18.207 --> 00:02:21.307
+I am now on GitHub opening
+a pull request against main.
+
+00:02:21.787 --> 00:02:24.827
+The description links the
+requirements for promotional pricing,
+
+00:02:25.087 --> 00:02:26.847
+checkout and invoice search and export.
+
+00:02:27.687 --> 00:02:30.807
+Once the pull request is created,
+CodeRabbit starts its review.
+
+00:02:31.347 --> 00:02:32.927
+I open the walkthrough first.
+
+00:02:33.027 --> 00:02:36.367
+It summarizes the implementation
+and the areas it touches so
+
+00:02:36.367 --> 00:02:39.247
+I can understand the scope before
+reading individual findings.
+
+00:02:40.077 --> 00:02:42.747
+Next, I scroll to the pre -merged checks.
+
+00:02:43.787 --> 00:02:46.087
+Security gate has failed
+because this review
+
+00:02:46.087 --> 00:02:49.007
+found major and critical security issues.
+
+00:02:49.527 --> 00:02:52.787
+The linked issues check also
+flags acceptance criteria the
+
+00:02:52.787 --> 00:02:55.727
+implementation has missed,
+including the discount threshold.
+
+00:02:56.207 --> 00:02:59.487
+I follow the security finding
+to the invoice search query.
+
+00:03:00.107 --> 00:03:02.047
+It's the same problem we saw locally.
+
+00:03:02.227 --> 00:03:04.907
+Search text goes straight
+into the SQL command.
+
+00:03:05.287 --> 00:03:08.667
+The finding identifies the affected
+line and explains how crafted
+
+00:03:08.667 --> 00:03:11.787
+input could expose invoices
+outside the customer's account.
+
+00:03:14.347 --> 00:03:17.467
+The proposed correction uses
+parameters so the database
+
+00:03:17.467 --> 00:03:20.807
+receives the search text as a
+value separate from the command.
+
+00:03:21.247 --> 00:03:22.927
+The discount finding is here too.
+
+00:03:23.547 --> 00:03:27.547
+Exactly 10 items should qualify and
+the current comparison excludes them.
+
+00:03:27.987 --> 00:03:31.727
+I can follow the explanation directly
+to the condition that needs to change.
+
+00:03:32.247 --> 00:03:35.147
+There's also a compatibility
+issue across repositories.
+
+00:03:35.887 --> 00:03:37.767
+This change returns a field called total
+
+00:03:37.767 --> 00:03:41.207
+while a linked consumer expects totalCents.
+
+00:03:42.127 --> 00:03:45.207
+CodeRabbit points to the consumer
+code that depends on that contract.
+
+00:03:45.627 --> 00:03:48.427
+That gives me a concrete
+reason to investigate even
+
+00:03:48.427 --> 00:03:51.187
+if this application's own
+screen appears to work.
+
+00:03:52.407 --> 00:03:54.447
+Finally, I check the review configuration.
+
+00:03:55.447 --> 00:03:56.547
+Request changes is enabled.
+
+00:03:57.227 --> 00:04:00.567
+Whether those requests prevent a
+merge depends on the repository's
+
+00:04:00.567 --> 00:04:04.227
+branch rules, which we need to
+check alongside the review results.
+
+00:04:06.427 --> 00:04:09.647
+I open the discount findings
+conversation to add a business rule.
+
+00:04:10.127 --> 00:04:12.787
+Exactly 10 paid items should
+qualify for the discount.
+
+00:04:13.207 --> 00:04:15.907
+Free promotional items should
+not count toward that minimum.
+
+00:04:16.947 --> 00:04:19.907
+I explain the distinction and
+ask CodeRabbit to remember it.
+
+00:04:20.227 --> 00:04:23.767
+At this point, I'm asking you to understand
+the rule before changing the code.
+
+00:04:24.287 --> 00:04:27.007
+The reply confirms that
+eligibility depends on
+
+00:04:27.007 --> 00:04:30.067
+paid items and that exactly
+10 paid items qualify.
+
+00:04:30.627 --> 00:04:34.887
+It also confirms that free promotional
+items do not count toward the minimum.
+
+00:04:35.507 --> 00:04:37.187
+The rule is captured as a learning.
+
+00:04:37.787 --> 00:04:40.287
+That gives later eligible
+reviews additional context
+
+00:04:40.287 --> 00:04:42.907
+about how this team expects
+the feature to behave.
+
+00:04:43.767 --> 00:04:45.987
+Now I return to the SQL injection finding.
+
+00:04:46.407 --> 00:04:48.607
+I ask CodeRabbit to explain
+the problem in plain
+
+00:04:48.607 --> 00:04:51.187
+language and give examples of
+this type of vulnerability.
+
+00:04:51.807 --> 00:04:55.147
+The answer uses an ordinary
+search to explain the risk.
+
+00:04:55.327 --> 00:04:57.567
+A word like laptop should
+be treated as text.
+
+00:04:58.107 --> 00:05:00.707
+In this query, specially
+crafted text can change the
+
+00:05:00.707 --> 00:05:03.707
+database command and expose
+another customer's invoices.
+
+00:05:04.527 --> 00:05:07.767
+It also explains why a character
+limit does not fix the problem
+
+00:05:08.307 --> 00:05:12.107
+and why parameters keep search
+values separate from the command.
+
+00:05:12.727 --> 00:05:17.707
+The reply includes examples of the same
+vulnerability class in other systems.
+
+00:05:18.387 --> 00:05:21.367
+I can ask a follow up
+here with the relevant
+
+00:05:21.367 --> 00:05:24.307
+code and the original
+finding still in view.
+
+00:05:24.707 --> 00:05:28.627
+That helps me understand what the fix
+needs to protect before I request a change.
+
+00:05:29.607 --> 00:05:33.567
+I return to the discount finding and
+ask AI to fix it from the review thread.
+
+00:05:34.027 --> 00:05:36.367
+The request includes the affected code and
+
+00:05:36.367 --> 00:05:38.087
+the explanation of the boundary problem.
+
+00:05:38.847 --> 00:05:41.467
+When the generated change
+is ready, I open the diff.
+
+00:05:42.327 --> 00:05:44.247
+Greater than becomes greater than or equal,
+
+00:05:44.347 --> 00:05:47.227
+so an order of exactly 10
+items now meets the minimum.
+
+00:05:47.587 --> 00:05:51.527
+The regression test for that boundary
+becomes a normal passing assertion.
+
+00:05:52.087 --> 00:05:56.227
+The focus checks cover quantities
+below, at and above the minimum.
+
+00:05:56.747 --> 00:06:00.047
+They also confirm that an expired
+promotion remains ineligible.
+
+00:06:00.947 --> 00:06:02.847
+After validating the generated commit,
+
+00:06:02.987 --> 00:06:05.887
+we apply that same commit
+to the pull request branch.
+
+00:06:06.487 --> 00:06:08.547
+This patch addresses the boundary bug.
+
+00:06:08.747 --> 00:06:11.147
+The other findings still
+need their own attention.
+
+00:06:12.607 --> 00:06:14.187
+There's another action I want to show.
+
+00:06:14.747 --> 00:06:19.507
+Under finishing touches, I select generate
+docstrings and choose create new PR.
+
+00:06:20.207 --> 00:06:22.967
+That prepares a separate
+documentation change for review.
+
+00:06:23.507 --> 00:06:26.007
+I open the resulting pull
+request and inspect the diff.
+
+00:06:26.407 --> 00:06:29.287
+The new comments explain
+what the functions expect,
+
+00:06:29.507 --> 00:06:31.827
+what they return, and
+how they handle errors.
+
+00:06:32.767 --> 00:06:37.227
+For this example, this docstring
+describes the catalog subtotal
+
+00:06:37.227 --> 00:06:40.247
+in cents and what happens when
+a product cannot be found.
+
+00:06:40.807 --> 00:06:45.307
+Beside it, the request parser documents
+the product ID and quantity requirements.
+
+00:06:45.857 --> 00:06:49.427
+We check that removing the
+comments leaves the code unchanged.
+
+00:06:50.067 --> 00:06:53.687
+I still read the descriptions against
+implementation before accepting them.
+
+00:06:54.267 --> 00:06:57.327
+We've reviewed the code locally,
+examined the pull request,
+
+00:06:57.507 --> 00:07:00.587
+clarified the findings, and
+inspected an AI generated fix.
+
+00:07:01.147 --> 00:07:03.387
+The resulting changes are
+ready for the team's review.

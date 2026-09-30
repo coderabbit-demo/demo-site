@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ReactElement } from "react";
 import { Player } from "./Player";
+import { ScriptPanel } from "./ScriptPanel";
 import { featureEntries, formatTime, parseTour } from "./tour";
 import type { FeatureEntry, NavigationNode, Tour } from "./tour";
 
@@ -178,7 +179,27 @@ function selectedEntry(
   entries: readonly FeatureEntry[],
 ): FeatureEntry | undefined {
   const id = new URLSearchParams(window.location.search).get("feature");
-  return entries.find((entry) => entry.feature.id === id) ?? entries[0];
+  const direct = entries.find((entry) => entry.feature.id === id);
+  if (direct) return direct;
+  const legacyTarget =
+    id === "introduction" || id === "summary"
+      ? "platform"
+      : [
+            "reviewing-local-changes",
+            "walkthroughs",
+            "pre-merge-checks",
+            "anatomy-of-a-finding",
+            "chat",
+            "learnings",
+            "issue-validation",
+            "coding-guidelines",
+            "cross-repo",
+          ].includes(id ?? "")
+        ? "pr-review"
+        : undefined;
+  return (
+    entries.find((entry) => entry.feature.id === legacyTarget) ?? entries[0]
+  );
 }
 
 /** Coordinates feature selection, sharing, search, and playback for a validated tour. */
@@ -202,6 +223,7 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
   const [autoplay, setAutoplay] = useState(false);
   const [advance, setAdvance] = useState(false);
   const [menuCollapsed, setMenuCollapsed] = useState(false);
+  const [scriptVisible, setScriptVisible] = useState(false);
   const [copyStatus, setCopyStatus] = useState("");
   const [query, setQuery] = useState("");
   const drawer = useRef<HTMLDialogElement>(null);
@@ -417,27 +439,53 @@ function TourView({ tour }: { readonly tour: Tour }): ReactElement {
             <p className="copy-status" role="status">
               {copyStatus}
             </p>
-            <section className="demo-stage" aria-label="Feature demonstration">
-              <div className="stage-toolbar">
-                <span className="window-dots" aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span>{active.feature.title}</span>
-                <span className="stage-label">DEMO</span>
+            {media.guide && (
+              <div className="script-toolbar">
+                <button
+                  aria-expanded={scriptVisible}
+                  aria-controls="demo-script"
+                  onClick={() => setScriptVisible((visible) => !visible)}
+                >
+                  {scriptVisible ? "Hide script" : "Show script"}
+                </button>
+                <span>Follow along with the Do / Say / See guide</span>
               </div>
-              <Player
-                feature={active.feature}
-                media={media}
-                autoplay={autoplay}
-                onProgress={setProgress}
-                onComplete={() => {
-                  const next = entries[index + 1];
-                  if (advance && next) select(next.feature.id, true);
-                }}
-              />
-            </section>
+            )}
+            <div
+              className={`demo-workspace${scriptVisible && media.guide ? " with-script" : ""}`}
+            >
+              <section
+                className="demo-stage"
+                aria-label="Feature demonstration"
+              >
+                <div className="stage-toolbar">
+                  <span className="window-dots" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                  <span>{active.feature.title}</span>
+                  <span className="stage-label">DEMO</span>
+                </div>
+                <Player
+                  feature={active.feature}
+                  media={media}
+                  autoplay={autoplay}
+                  onProgress={setProgress}
+                  onComplete={() => {
+                    const next = entries[index + 1];
+                    if (advance && next) select(next.feature.id, true);
+                  }}
+                />
+              </section>
+              {media.guide && (
+                <ScriptPanel
+                  key={active.feature.mediaId}
+                  guide={media.guide}
+                  hidden={!scriptVisible}
+                />
+              )}
+            </div>
             <footer className="demo-footer">
               <label className="advance-toggle">
                 <input
