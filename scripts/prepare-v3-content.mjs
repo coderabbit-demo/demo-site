@@ -265,6 +265,31 @@ for (const [id, filename, title, description, duration] of entries) {
         : undefined,
     );
   }
+  // Clarify operator-only training actions without changing recorded narration.
+  if (id === "automations") {
+    const trigger = steps.find(
+      (step) =>
+        step.title ===
+        "Run Always-On / STEP 2 OF 4: Inspect the triggering issue",
+    );
+    if (!trigger) throw new Error("Missing Automations training trigger step");
+    trigger.do = [
+      "For rehearsal, keep the automation paused. Open the dedicated repository, click Issues, then inspect recorded issue #1 and the existing run only.",
+      "For a separate training run, first resume the saved automation and verify it is active. Then click New issue, enter the title/body from the appendix, and Submit new issue once.",
+      "After the training run completes, pause the automation again and verify its paused state.",
+    ];
+  }
+  if (id === "coding-agent") {
+    const delivery = steps.find(
+      (step) => step.title === "Deliver / STEP 1 OF 4: Create the review PR",
+    );
+    if (!delivery) throw new Error("Missing Coding Agent delivery step");
+    delivery.do = [
+      "The initial task request does not authorize autonomous publishing: the agent must not commit, push, or open a PR on its own.",
+      "For a separate training run, finish reviewing the patch first. The operator then separately authorizes publication and manually selects Create PR, waits for publication, and checks the destination branch.",
+      "For rehearsal, open existing PR #10 only; do not select Commit and push or Create PR.",
+    ];
+  }
   for (const step of steps) {
     if (
       !Number.isFinite(step.start) ||
@@ -324,14 +349,26 @@ for (const [id, filename, title, description, duration] of entries) {
     sha256: createHash("sha256").update(contents).digest("hex"),
     releasePath: `${release}${download}`,
   });
-  // Inline steps point to the illustrated PDF; downloaded Markdown includes its own appendix.
+  // Inline steps link the downloadable script where the operator appendix is maintained.
   const inlineGuide = {
     ...guide,
     steps: steps.map((step) => ({
       ...step,
       do: step.do.map((instruction) =>
-        instruction.replace(/the appendix/gi, "the illustrated PDF appendix"),
+        instruction.replace(
+          /the appendix/gi,
+          "the downloadable script appendix",
+        ),
       ),
+      links: step.do.some((instruction) => /the appendix/i.test(instruction))
+        ? [
+            ...step.links,
+            {
+              label: "Operator-request appendix (downloadable script)",
+              url: download,
+            },
+          ]
+        : step.links,
     })),
   };
   media[id] = { src, captions, poster, guide: inlineGuide };

@@ -289,8 +289,9 @@ Frame at 03:32 in 07-coding-agent.mp4.
 
 ### Do
 
-- Show Commit and push and Create PR. Choose Create PR for a training run and wait for publication.
-- For rehearsal, inspect the existing delivery result and open PR #10.
+- The initial task request does not authorize autonomous publishing: the agent must not commit, push, or open a PR on its own.
+- For a separate training run, finish reviewing the patch first. The operator then separately authorizes publication and manually selects Create PR, waits for publication, and checks the destination branch.
+- For rehearsal, open existing PR #10 only; do not select Commit and push or Create PR.
 
 [Recorded Coding Agent task](https://app.coderabbit.ai/code/tasks/19bb8d53-3b68-4a6a-ba65-29125b8e134b) · [Coding Agent result: PR #10](https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/10)
 

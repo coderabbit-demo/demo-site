@@ -170,9 +170,9 @@ Frame at 01:49 in 06-codeRabbit-automations.mp4.
 
 ### Do
 
-- Open the dedicated repository, click Issues, then the recorded issue #1.
-- For a training run, click New issue and enter the title/body from the appendix, then Submit new issue once.
-- Read the reproduction steps, boundary expectations and preserved behavior.
+- For rehearsal, keep the automation paused. Open the dedicated repository, click Issues, then inspect recorded issue #1 and the existing run only.
+- For a separate training run, first resume the saved automation and verify it is active. Then click New issue, enter the title/body from the appendix, and Submit new issue once.
+- After the training run completes, pause the automation again and verify its paused state.
 
 [Triggering GitHub issue #1](https://github.com/coderabbit-demo/demo-site-automations/issues/1) · [Automations repository](https://github.com/coderabbit-demo/demo-site-automations)
 

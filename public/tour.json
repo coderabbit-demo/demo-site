@@ -1526,12 +1526,17 @@
             "start": 59.98,
             "end": 77.58,
             "do": [
-              "Click Tell CodeRabbit what to do and enter Agent instructions from the illustrated PDF appendix.",
+              "Click Tell CodeRabbit what to do and enter Agent instructions from the downloadable script appendix.",
               "Scroll inside the field to the existing-fix check and below/at/above-minimum tests."
             ],
             "say": "In the instructions, I describe the work in plain language, investigate the reported problem, make a focused fix and test the result. I ask the agent to check whether the bug is already fixed before editing anything. If a change is needed, the test should cover an order below the minimum, exactly at it and above it.",
             "see": "Frame at 01:12 in 06-codeRabbit-automations.mp4.",
-            "links": []
+            "links": [
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/automations.md"
+              }
+            ]
           },
           {
             "title": "Define the Task / STEP 2 OF 4: Check preserved behavior",
@@ -1550,11 +1555,16 @@
             "end": 96.52,
             "do": [
               "Scroll to Post results back to GitHub and select demo-site-automations.",
-              "Enter the GitHub target instructions from the illustrated PDF appendix, including one PR, test evidence, issue link and no merge."
+              "Enter the GitHub target instructions from the downloadable script appendix, including one PR, test evidence, issue link and no merge."
             ],
             "say": "For the destination, I select the GitHub repository and request one pull request with an explanation, test results and a link to the issue. The pull request should remain unmerged for review.",
             "see": "Frame at 01:32 in 06-codeRabbit-automations.mp4.",
-            "links": []
+            "links": [
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/automations.md"
+              }
+            ]
           },
           {
             "title": "Define the Task / STEP 4 OF 4: Review and save the configuration",
@@ -1595,9 +1605,9 @@
             "start": 110.9,
             "end": 130.24,
             "do": [
-              "Open the dedicated repository, click Issues, then the recorded issue #1.",
-              "For a training run, click New issue and enter the title/body from the illustrated PDF appendix, then Submit new issue once.",
-              "Read the reproduction steps, boundary expectations and preserved behavior."
+              "For rehearsal, keep the automation paused. Open the dedicated repository, click Issues, then inspect recorded issue #1 and the existing run only.",
+              "For a separate training run, first resume the saved automation and verify it is active. Then click New issue, enter the title/body from the downloadable script appendix, and Submit new issue once.",
+              "After the training run completes, pause the automation again and verify its paused state."
             ],
             "say": "Here's the issue used for this run. Its title identifies the missing discount at the exact minimum quantity. The description explains how to reproduce it and gives the expected behavior below, at and above the boundary. The issue also asks the fix to preserve the existing discount and checkout behavior.",
             "see": "Frame at 02:01 in 06-codeRabbit-automations.mp4.",
@@ -1609,6 +1619,10 @@
               {
                 "label": "Automations repository",
                 "url": "https://github.com/coderabbit-demo/demo-site-automations"
+              },
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/automations.md"
               }
             ]
           },
@@ -1842,12 +1856,17 @@
             "start": 40.86,
             "end": 67.48,
             "do": [
-              "Click the task description and enter the Recorded coding-task request from the illustrated PDF appendix.",
+              "Click the task description and enter the Recorded coding-task request from the downloadable script appendix.",
               "Scroll within the field to verify tenant isolation, normal searches, order, limit, tests and excluded issues."
             ],
             "say": "My request describes the result we need. Keep search results within the customer's account and treat search text as data. I also describe the behavior to preserve. Customers should still be able to search using part of a product name and results should keep their existing order and limit. I ask for regression tests that demonstrate the fix. This task covers invoice search and its tests with the discount and invoice export issues left for separate work.",
             "see": "Frame at 01:00 in 07-coding-agent.mp4.",
-            "links": []
+            "links": [
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/coding-agent.md"
+              }
+            ]
           },
           {
             "title": "Start a Task / STEP 3 OF 3: Keep the task ready for planning",
@@ -1935,12 +1954,17 @@
             "start": 133.3,
             "end": 149.84,
             "do": [
-              "Click the follow-up input and enter the Mid-task test request from the illustrated PDF appendix.",
+              "Click the follow-up input and enter the Mid-task test request from the downloadable script appendix.",
               "Click Send for a training run; for rehearsal, scroll to the recorded request."
             ],
             "say": "I add a specific test request. Check a product name containing an apostrophe and check that another customer's matching invoice stays out of the result. Those are useful cases because the fix needs to preserve ordinary text searches while maintaining the customer boundary.",
             "see": "Frame at 02:25 in 07-coding-agent.mp4.",
-            "links": []
+            "links": [
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/coding-agent.md"
+              }
+            ]
           },
           {
             "title": "Watch It Work / STEP 3 OF 4: Read the two-case response",
@@ -2024,8 +2048,9 @@
             "start": 225.68,
             "end": 238.86,
             "do": [
-              "Show Commit and push and Create PR. Choose Create PR for a training run and wait for publication.",
-              "For rehearsal, inspect the existing delivery result and open PR #10."
+              "The initial task request does not authorize autonomous publishing: the agent must not commit, push, or open a PR on its own.",
+              "For a separate training run, finish reviewing the patch first. The operator then separately authorizes publication and manually selects Create PR, waits for publication, and checks the destination branch.",
+              "For rehearsal, open existing PR #10 only; do not select Commit and push or Create PR."
             ],
             "say": "The task offers commit and push or create PR. I choose create PR so the fix can have its own review. That action starts publishing the change. Once it finishes, I follow the link to GitHub and check the destination branch.",
             "see": "Frame at 03:50 in 07-coding-agent.mp4.",
@@ -2151,7 +2176,7 @@
             "start": 33.2,
             "end": 48,
             "do": [
-              "In the composer, mention @CodeRabbit and enter the Investigation request from the illustrated PDF appendix, including CDB-4 and demo-site-slack main.",
+              "In the composer, mention @CodeRabbit and enter the Investigation request from the downloadable script appendix, including CDB-4 and demo-site-slack main.",
               "Click Send for a training run. For rehearsal, use the recorded message."
             ],
             "say": "I ask CodeRabbit to investigate linking the Jira report and naming the repository. The ticket contains the reported problem, expected behavior and acceptance criteria. For this first request, I want an explanation with links to the evidence. I'll review that before asking for a code change.",
@@ -2164,6 +2189,10 @@
               {
                 "label": "Slack demo repository",
                 "url": "https://github.com/coderabbit-demo/demo-site-slack"
+              },
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/slack-agent.md"
               }
             ]
           },
@@ -2261,7 +2290,7 @@
             "start": 98.58,
             "end": 115.16,
             "do": [
-              "In the conversation, mention @CodeRabbit and enter the Plan request from the illustrated PDF appendix.",
+              "In the conversation, mention @CodeRabbit and enter the Plan request from the downloadable script appendix.",
               "Click Send for a training run; for rehearsal, open the saved plan."
             ],
             "say": "Back in the thread, I ask for a plan. The minimum must be inclusive so an order of exactly 10 items qualifies. I want a small change with tests below, at and above the boundary. The existing expected failure test should become a normal passing test.",
@@ -2270,6 +2299,10 @@
               {
                 "label": "Slack planning conversation",
                 "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790458861537939"
+              },
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/slack-agent.md"
               }
             ]
           },
@@ -2302,7 +2335,7 @@
             "start": 137.04,
             "end": 144.88,
             "do": [
-              "Mention @CodeRabbit and enter the Implementation request from the illustrated PDF appendix.",
+              "Mention @CodeRabbit and enter the Implementation request from the downloadable script appendix.",
               "Click Send for a training run. For rehearsal, open the existing delivery conversation."
             ],
             "say": "I ask CodeRabbit to implement the plan in a demo repository, run the relevant checks and open a pull request on a new branch.",
@@ -2311,6 +2344,10 @@
               {
                 "label": "Slack planning conversation",
                 "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790458861537939"
+              },
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/slack-agent.md"
               }
             ]
           },
@@ -2379,7 +2416,7 @@
             "start": 182.72,
             "end": 188.86,
             "do": [
-              "Return to the original Slack conversation. Mention @CodeRabbit and enter the Remember request from the illustrated PDF appendix.",
+              "Return to the original Slack conversation. Mention @CodeRabbit and enter the Remember request from the downloadable script appendix.",
               "Click Send for a training run; for rehearsal, read the recorded request."
             ],
             "say": "I return to Slack and ask CodeRabbit to remember the promotion rule and the regression cases future changes should cover.",
@@ -2388,6 +2425,10 @@
               {
                 "label": "Slack planning conversation",
                 "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790458861537939"
+              },
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/slack-agent.md"
               }
             ]
           },

@@ -302,8 +302,8 @@
       "mediaId": "automations",
       "kind": "guide",
       "path": "public/guides/v3/automations.md",
-      "bytes": 14147,
-      "sha256": "d83bed02c040ef5279a9779be69b113906e20999e42eea9d40191e716a9b22dc",
+      "bytes": 14304,
+      "sha256": "161c93ab1fcdfc4087b4ad56235e55b2b0a95ec99c8d655ec7546db8cf4f7c84",
       "releasePath": "v3-2026-09-30/guides/v3/automations.md"
     },
     {
@@ -346,8 +346,8 @@
       "mediaId": "coding-agent",
       "kind": "guide",
       "path": "public/guides/v3/coding-agent.md",
-      "bytes": 13136,
-      "sha256": "6efdf2482fbad198d660f0666de50a0cf3686e45d5e13fee4f7428a6714ba1fe",
+      "bytes": 13387,
+      "sha256": "d375ce15cb115073c34ae8b5d05808a32044e25b394b81027e3b928c1e099543",
       "releasePath": "v3-2026-09-30/guides/v3/coding-agent.md"
     },
     {
