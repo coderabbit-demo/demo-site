@@ -1,0 +1,279 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.840
+Here we'll use a reported discount
+bug to walk through an automation.
+
+00:00:04.380 --> 00:00:08.140
+I'll start with the GitHub issue trigger,
+define the task and its destination,
+
+00:00:08.340 --> 00:00:11.400
+then follow a run from the
+incoming issue to its result.
+
+00:00:11.860 --> 00:00:15.480
+We'll inspect the proposed fix and
+regression tests in the pull request.
+
+00:00:16.080 --> 00:00:18.480
+Finally, I'll return to the
+run history and show where
+
+00:00:18.480 --> 00:00:20.960
+to refine the instructions
+or pause the workflow.
+
+00:00:23.500 --> 00:00:27.060
+I open automations and choose
+create PR from GitHub issue.
+
+00:00:27.850 --> 00:00:30.080
+Our example is a discount boundary bug.
+
+00:00:30.540 --> 00:00:32.960
+An order reaches the minimum
+quantity but the discount
+
+00:00:32.960 --> 00:00:35.660
+doesn't apply until the
+customer adds another item.
+
+00:00:36.140 --> 00:00:39.460
+I select the demo repository
+and the issue opened event.
+
+00:00:41.120 --> 00:00:43.960
+That defines which GitHub
+event starts the work.
+
+00:00:44.480 --> 00:00:47.760
+The connection status confirms
+that the GitHub app is connected,
+
+00:00:47.900 --> 00:00:50.600
+the repository is installed
+and the event is synced.
+
+00:00:51.360 --> 00:00:53.700
+GitHub can now send a
+matching event to CodeRabbit.
+
+00:00:54.220 --> 00:00:56.780
+The trigger tells the
+automation when to start.
+
+00:00:57.180 --> 00:00:59.440
+Next, I'll define the
+task it should carry out.
+
+00:00:59.980 --> 00:01:02.840
+In the instructions, I describe
+the work in plain language,
+
+00:01:03.020 --> 00:01:06.880
+investigate the reported problem, make
+a focused fix and test the result.
+
+00:01:07.540 --> 00:01:11.540
+I ask the agent to check whether the bug
+is already fixed before editing anything.
+
+00:01:12.000 --> 00:01:14.180
+If a change is needed,
+the test should cover an
+
+00:01:14.180 --> 00:01:17.580
+order below the minimum,
+exactly at it and above it.
+
+00:01:18.260 --> 00:01:20.460
+I also specify the behavior to preserve,
+
+00:01:20.600 --> 00:01:23.120
+including the discount
+amount and expiration rule.
+
+00:01:23.700 --> 00:01:27.780
+For the destination, I select the
+GitHub repository and request one
+
+00:01:27.780 --> 00:01:32.820
+pull request with an explanation,
+test results and a link to the issue.
+
+00:01:33.780 --> 00:01:36.520
+The pull request should
+remain unmerged for review.
+
+00:01:37.780 --> 00:01:40.880
+Those instructions will be reused
+for matching events so it's
+
+00:01:40.880 --> 00:01:44.180
+worth being clear about the scope
+and the evidence we want back.
+
+00:01:44.900 --> 00:01:47.860
+With the trigger, instructions
+and destination saved,
+
+00:01:48.060 --> 00:01:50.100
+I check that the automation is active.
+
+00:01:50.900 --> 00:01:52.920
+Here's the issue used for this run.
+
+00:01:53.140 --> 00:01:57.580
+Its title identifies the missing
+discount at the exact minimum quantity.
+
+00:01:58.040 --> 00:02:01.080
+The description explains how
+to reproduce it and gives
+
+00:02:01.080 --> 00:02:04.720
+the expected behavior below,
+at and above the boundary.
+
+00:02:05.320 --> 00:02:08.300
+The issue also asks the fix to preserve the
+
+00:02:08.300 --> 00:02:10.240
+existing discount and checkout behavior.
+
+00:02:10.820 --> 00:02:13.180
+I return to automations and open activity.
+
+00:02:13.640 --> 00:02:17.840
+This run was started by that GitHub
+issue using the instructions we saved.
+
+00:02:18.480 --> 00:02:21.760
+I can follow the agent's investigation
+and read the results here.
+
+00:02:22.320 --> 00:02:24.980
+The completed run reports
+that it opened a pull request
+
+00:02:24.980 --> 00:02:27.540
+containing the threshold
+fix and regression tests.
+
+00:02:28.320 --> 00:02:31.500
+I follow the result link to
+inspect what it produced.
+
+00:02:32.900 --> 00:02:35.980
+On GitHub, I check the pull
+request destination branch,
+
+00:02:36.200 --> 00:02:38.620
+changed files and link back to the issue.
+
+00:02:39.280 --> 00:02:43.660
+The code change includes the minimum
+quantity in the discount comparison.
+
+00:02:44.320 --> 00:02:48.040
+I open the test to see how
+the boundary is covered.
+
+00:02:48.860 --> 00:02:51.360
+There are cases below, at
+and above the threshold,
+
+00:02:51.420 --> 00:02:53.100
+using two different minimum quantities.
+
+00:02:53.440 --> 00:02:57.100
+The tests also check that an expired
+promotion doesn't give a discount.
+
+00:02:57.960 --> 00:03:01.760
+The recorded run reports
+70 passed tests and 5
+
+00:03:01.760 --> 00:03:04.860
+existing expected failures
+for unrelated problems.
+
+00:03:05.860 --> 00:03:07.760
+GitHub's automated checks also passed.
+
+00:03:08.620 --> 00:03:10.740
+There is a separate review limitation here.
+
+00:03:10.740 --> 00:03:13.360
+CodeRabbit skipped its
+pull request review because
+
+00:03:13.360 --> 00:03:15.760
+the author is also the
+configured reviewer account.
+
+00:03:16.060 --> 00:03:18.440
+The passing tests don't
+stand in for that review.
+
+00:03:20.420 --> 00:03:22.780
+I leave the pull request
+open for the team to inspect.
+
+00:03:23.160 --> 00:03:26.180
+The automation has prepared a
+proposed fix and its evidence.
+
+00:03:26.640 --> 00:03:28.880
+The team still decides
+whether to accept it.
+
+00:03:29.200 --> 00:03:32.120
+I return to the automation's
+overview and open activity.
+
+00:03:33.280 --> 00:03:35.400
+The history shows when it ran,
+
+00:03:35.460 --> 00:03:38.280
+what triggered the work
+and the agent minutes used.
+
+00:03:39.100 --> 00:03:42.160
+Opening a run lets me read
+its result in context.
+
+00:03:42.380 --> 00:03:45.400
+That's where I'd look if a
+task reported a blocker or
+
+00:03:45.400 --> 00:03:47.400
+delivered something different
+from what I expected.
+
+00:03:48.100 --> 00:03:50.920
+I can return to the
+configuration to refine the
+
+00:03:50.920 --> 00:03:53.400
+instructions or destination
+for future runs.
+
+00:03:53.940 --> 00:03:57.560
+If I want to stop processing new
+events, I can pause the automation.
+
+00:03:58.600 --> 00:04:00.780
+We've defined the task once and followed an
+
+00:04:00.780 --> 00:04:02.840
+incoming issue through to a proposed fix.
+
+00:04:02.840 --> 00:04:05.700
+The run history and
+configuration give us a way
+
+00:04:05.700 --> 00:04:08.120
+to improve that workflow
+as we see the results.

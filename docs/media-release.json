@@ -1,0 +1,398 @@
+{
+  "release": "v3-2026-09-30",
+  "sourceVersion": "version-3",
+  "notes": [
+    "MP4 delivery assets are exact copies; original recordings and narration remain unchanged.",
+    "AppSec Markdown, inline guide, and corrected PDF include the final 21.14-second introduction. The checked-in PDF was generated with existing .cert-prep-v3/build.py using the 21.14-second offset plus introduction, then visually verified; regeneration preserves this reviewed PDF.",
+    "Posters are frames at 5 seconds extracted from the final MP4 at original dimensions."
+  ],
+  "assets": [
+    {
+      "mediaId": "platform",
+      "kind": "video",
+      "path": "public/media/v3/platform.mp4",
+      "source": "consolidated-videos-per-slide/00-platform.mp4",
+      "bytes": 1447845,
+      "sha256": "52b1a4ba8032b6d44e67546d017485fbab6477f8fb66a4196eeb987e559c55d6",
+      "releasePath": "v3-2026-09-30/media/v3/platform.mp4"
+    },
+    {
+      "mediaId": "platform",
+      "kind": "captions",
+      "path": "public/captions/v3/platform.vtt",
+      "source": "consolidated-videos-per-slide/00-platform.vtt",
+      "bytes": 735,
+      "sha256": "bed0ab03dec25e95b36dd00ddc5d65f4da1bc51f0f40628b7a748b964899052c",
+      "releasePath": "v3-2026-09-30/captions/v3/platform.vtt"
+    },
+    {
+      "mediaId": "platform",
+      "kind": "poster",
+      "path": "public/posters/v3/platform.jpg",
+      "source": "Frame at 5 seconds from consolidated-videos-per-slide/00-platform.mp4; original dimensions preserved.",
+      "bytes": 181361,
+      "sha256": "a23f05d6a7628c17453faa9bbe43bc18210574c0dd904626324b8223589132e1",
+      "releasePath": "v3-2026-09-30/posters/v3/platform.jpg"
+    },
+    {
+      "mediaId": "platform",
+      "kind": "guide",
+      "path": "public/guides/v3/platform.md",
+      "bytes": 774,
+      "sha256": "a280f5b544dd408b59a2c5a63f20ade5503867b735e1631522e061f663946b6e",
+      "releasePath": "v3-2026-09-30/guides/v3/platform.md"
+    },
+    {
+      "mediaId": "pr-review",
+      "kind": "video",
+      "path": "public/media/v3/pr-review.mp4",
+      "source": "consolidated-videos-per-slide/01-pr-review.mp4",
+      "bytes": 24109326,
+      "sha256": "0ba59f310940d556ec5a4305d5d4059c4e32fa2487115d04076f37ea90621c40",
+      "releasePath": "v3-2026-09-30/media/v3/pr-review.mp4"
+    },
+    {
+      "mediaId": "pr-review",
+      "kind": "captions",
+      "path": "public/captions/v3/pr-review.vtt",
+      "source": "consolidated-videos-per-slide/01-pr-review.vtt",
+      "bytes": 10630,
+      "sha256": "24fdf34284829eb1e9148a713e91d830f5efb8f43676c0983f7511aea8a7d2aa",
+      "releasePath": "v3-2026-09-30/captions/v3/pr-review.vtt"
+    },
+    {
+      "mediaId": "pr-review",
+      "kind": "poster",
+      "path": "public/posters/v3/pr-review.jpg",
+      "source": "Frame at 5 seconds from consolidated-videos-per-slide/01-pr-review.mp4; original dimensions preserved.",
+      "bytes": 181411,
+      "sha256": "f7357803fd8cfa5d6a298334060d16b638dff5224dc71777428895d25c8bec19",
+      "releasePath": "v3-2026-09-30/posters/v3/pr-review.jpg"
+    },
+    {
+      "mediaId": "pr-review",
+      "kind": "pdf",
+      "path": "public/guides/v3/pr-review.pdf",
+      "source": "talk-tracks/01-pr-review/cert-prep/01-pr-review-do-say-see.pdf",
+      "bytes": 3828462,
+      "sha256": "1cfb0c6d79d0eb613cd80677dc5f5f239c19b77a301a3aa32f531d7fc162ce35",
+      "releasePath": "v3-2026-09-30/guides/v3/pr-review.pdf"
+    },
+    {
+      "mediaId": "pr-review",
+      "kind": "guide",
+      "path": "public/guides/v3/pr-review.md",
+      "bytes": 16517,
+      "sha256": "cb43e95046ba6b118813bc7d176b9d1c5c3f4ff9e6c8d8c236ae11e500db82dc",
+      "releasePath": "v3-2026-09-30/guides/v3/pr-review.md"
+    },
+    {
+      "mediaId": "triage",
+      "kind": "video",
+      "path": "public/media/v3/triage.mp4",
+      "source": "consolidated-videos-per-slide/03-triage.mp4",
+      "bytes": 10130366,
+      "sha256": "57b0ab08ee476eb500ff8b4e14c880db9040750935dcbd8b98657d4e5ae9f3db",
+      "releasePath": "v3-2026-09-30/media/v3/triage.mp4"
+    },
+    {
+      "mediaId": "triage",
+      "kind": "captions",
+      "path": "public/captions/v3/triage.vtt",
+      "source": "consolidated-videos-per-slide/03-triage.vtt",
+      "bytes": 5387,
+      "sha256": "48324cc7a56bbc4edcf17a7cef19d49e945384ab427c6190a2067fcb527e0b82",
+      "releasePath": "v3-2026-09-30/captions/v3/triage.vtt"
+    },
+    {
+      "mediaId": "triage",
+      "kind": "poster",
+      "path": "public/posters/v3/triage.jpg",
+      "source": "Frame at 5 seconds from consolidated-videos-per-slide/03-triage.mp4; original dimensions preserved.",
+      "bytes": 170431,
+      "sha256": "d24d8712dbcb3389bf6350204c98a0bdf862b2cab532f43380e3836b194f3549",
+      "releasePath": "v3-2026-09-30/posters/v3/triage.jpg"
+    },
+    {
+      "mediaId": "triage",
+      "kind": "pdf",
+      "path": "public/guides/v3/triage.pdf",
+      "source": "talk-tracks/03-triage/cert-prep/03-triage-do-say-see.pdf",
+      "bytes": 2843789,
+      "sha256": "fe45eb67876ee514b1b2339ba98e126726c93191132c19d95362865a8aaa3182",
+      "releasePath": "v3-2026-09-30/guides/v3/triage.pdf"
+    },
+    {
+      "mediaId": "triage",
+      "kind": "guide",
+      "path": "public/guides/v3/triage.md",
+      "bytes": 9011,
+      "sha256": "06c1fa701d243bf7b20d052900b92c2e9878efce08235445a74848ad07a2c4d5",
+      "releasePath": "v3-2026-09-30/guides/v3/triage.md"
+    },
+    {
+      "mediaId": "change-stack",
+      "kind": "video",
+      "path": "public/media/v3/change-stack.mp4",
+      "source": "consolidated-videos-per-slide/04-change-stack.mp4",
+      "bytes": 19754840,
+      "sha256": "a11989e40302bae08502ae7c5d856fb5d4293690de851243a6c0735a65fb499f",
+      "releasePath": "v3-2026-09-30/media/v3/change-stack.mp4"
+    },
+    {
+      "mediaId": "change-stack",
+      "kind": "captions",
+      "path": "public/captions/v3/change-stack.vtt",
+      "source": "consolidated-videos-per-slide/04-change-stack.vtt",
+      "bytes": 6766,
+      "sha256": "cda3df53f1378cd0c1fcfe3efd95de01bca89359b3760280b8437649934f6b2f",
+      "releasePath": "v3-2026-09-30/captions/v3/change-stack.vtt"
+    },
+    {
+      "mediaId": "change-stack",
+      "kind": "poster",
+      "path": "public/posters/v3/change-stack.jpg",
+      "source": "Frame at 5 seconds from consolidated-videos-per-slide/04-change-stack.mp4; original dimensions preserved.",
+      "bytes": 184132,
+      "sha256": "93557b2e1b0ea4a9c35c3fe30ada5bb59b68c4b170a30caa3515699e269a68eb",
+      "releasePath": "v3-2026-09-30/posters/v3/change-stack.jpg"
+    },
+    {
+      "mediaId": "change-stack",
+      "kind": "pdf",
+      "path": "public/guides/v3/change-stack.pdf",
+      "source": "talk-tracks/04-change-stack/cert-prep/04-change-stack-do-say-see.pdf",
+      "bytes": 6983155,
+      "sha256": "1b78d74400e6c14fe5f84c595b9ec994fd9e269d7b7dcd5a55854baa200c4b02",
+      "releasePath": "v3-2026-09-30/guides/v3/change-stack.pdf"
+    },
+    {
+      "mediaId": "change-stack",
+      "kind": "guide",
+      "path": "public/guides/v3/change-stack.md",
+      "bytes": 12071,
+      "sha256": "6ea6f91f084faeaa7bbfafc54e7e654e0890d02779fe1578f89f206edc792b0e",
+      "releasePath": "v3-2026-09-30/guides/v3/change-stack.md"
+    },
+    {
+      "mediaId": "engineering-security",
+      "kind": "video",
+      "path": "public/media/v3/engineering-security.mp4",
+      "source": "consolidated-videos-per-slide/5a-security-engineering.mp4",
+      "bytes": 14190401,
+      "sha256": "33e97f097f720f861d34c1b5e9ce055d3715ac63062091c758c45320b2bec2b7",
+      "releasePath": "v3-2026-09-30/media/v3/engineering-security.mp4"
+    },
+    {
+      "mediaId": "engineering-security",
+      "kind": "captions",
+      "path": "public/captions/v3/engineering-security.vtt",
+      "source": "consolidated-videos-per-slide/5a-security-engineering.vtt",
+      "bytes": 6175,
+      "sha256": "95a75c1c8794b4ceafe8e54fdd89cafe955d8c7ceb7837b685c047a49b99f195",
+      "releasePath": "v3-2026-09-30/captions/v3/engineering-security.vtt"
+    },
+    {
+      "mediaId": "engineering-security",
+      "kind": "poster",
+      "path": "public/posters/v3/engineering-security.jpg",
+      "source": "Frame at 5 seconds from consolidated-videos-per-slide/5a-security-engineering.mp4; original dimensions preserved.",
+      "bytes": 196840,
+      "sha256": "f7a1b26e91749b4a2710310fefc9bd188e39426579b2a8ed71037ac31da7e68a",
+      "releasePath": "v3-2026-09-30/posters/v3/engineering-security.jpg"
+    },
+    {
+      "mediaId": "engineering-security",
+      "kind": "pdf",
+      "path": "public/guides/v3/engineering-security.pdf",
+      "source": "talk-tracks/5a-security-engineering/cert-prep/5a-security-engineering-do-say-see.pdf",
+      "bytes": 3962589,
+      "sha256": "f534b95be91e5abd809020c177aff63965cd3f6a74167f333789962d3970e17b",
+      "releasePath": "v3-2026-09-30/guides/v3/engineering-security.pdf"
+    },
+    {
+      "mediaId": "engineering-security",
+      "kind": "guide",
+      "path": "public/guides/v3/engineering-security.md",
+      "bytes": 11310,
+      "sha256": "1340050bcc591b8e726e3bbe3b2c3855bd5ff0c94c38b0c6a386e417ed90d63c",
+      "releasePath": "v3-2026-09-30/guides/v3/engineering-security.md"
+    },
+    {
+      "mediaId": "application-security",
+      "kind": "video",
+      "path": "public/media/v3/application-security.mp4",
+      "source": "consolidated-videos-per-slide/05b-application-security.mp4",
+      "bytes": 23813682,
+      "sha256": "dee7e1923b26fa735fac12a2cc2c697829ff9fb5f817272925719c890c444e76",
+      "releasePath": "v3-2026-09-30/media/v3/application-security.mp4"
+    },
+    {
+      "mediaId": "application-security",
+      "kind": "captions",
+      "path": "public/captions/v3/application-security.vtt",
+      "source": "consolidated-videos-per-slide/05b-application-security.vtt",
+      "bytes": 6156,
+      "sha256": "700d088c76f6e73aeec1af47ae8a6fc470d5b7219f2efc2aff5ae137b8db95ed",
+      "releasePath": "v3-2026-09-30/captions/v3/application-security.vtt"
+    },
+    {
+      "mediaId": "application-security",
+      "kind": "poster",
+      "path": "public/posters/v3/application-security.jpg",
+      "source": "Frame at 5 seconds from consolidated-videos-per-slide/05b-application-security.mp4; original dimensions preserved.",
+      "bytes": 190216,
+      "sha256": "dd51b5961a7cedb71214677590a9fdd2d10eec40ccd11cc99bee767b242d61a0",
+      "releasePath": "v3-2026-09-30/posters/v3/application-security.jpg"
+    },
+    {
+      "mediaId": "application-security",
+      "kind": "pdf",
+      "path": "public/guides/v3/application-security.pdf",
+      "source": "Checked-in corrected PDF, generated with existing .cert-prep-v3/build.py using the 21.14-second offset and introduction; visually verified.",
+      "bytes": 2755990,
+      "sha256": "a2a1dee80ef9c9975f8515d3d9d6af39dc38948f15ca501d28b688e01304025a",
+      "releasePath": "v3-2026-09-30/guides/v3/application-security.pdf"
+    },
+    {
+      "mediaId": "application-security",
+      "kind": "guide",
+      "path": "public/guides/v3/application-security.md",
+      "bytes": 9466,
+      "sha256": "5578f7615b3a9346f5d4a6f623f5a1ad5faef378c4bce35f86350aa86fc682ae",
+      "releasePath": "v3-2026-09-30/guides/v3/application-security.md"
+    },
+    {
+      "mediaId": "automations",
+      "kind": "video",
+      "path": "public/media/v3/automations.mp4",
+      "source": "consolidated-videos-per-slide/06-codeRabbit-automations.mp4",
+      "bytes": 13442502,
+      "sha256": "af3832dc81fa44b81d45c00b8e9724c99b4ff24b02bff25c4e1aca1ca4ff775c",
+      "releasePath": "v3-2026-09-30/media/v3/automations.mp4"
+    },
+    {
+      "mediaId": "automations",
+      "kind": "captions",
+      "path": "public/captions/v3/automations.vtt",
+      "source": "consolidated-videos-per-slide/06-codeRabbit-automations.vtt",
+      "bytes": 6226,
+      "sha256": "5a4d4244ecc3299d01d4d31fce03d9f6aef6d5179628119bce879682d7e3f337",
+      "releasePath": "v3-2026-09-30/captions/v3/automations.vtt"
+    },
+    {
+      "mediaId": "automations",
+      "kind": "poster",
+      "path": "public/posters/v3/automations.jpg",
+      "source": "Frame at 5 seconds from consolidated-videos-per-slide/06-codeRabbit-automations.mp4; original dimensions preserved.",
+      "bytes": 189330,
+      "sha256": "83152808ea0777f0fdcbae68af39a7558fc8c3882cb3d439c19f60cc8c2e65c2",
+      "releasePath": "v3-2026-09-30/posters/v3/automations.jpg"
+    },
+    {
+      "mediaId": "automations",
+      "kind": "pdf",
+      "path": "public/guides/v3/automations.pdf",
+      "source": "talk-tracks/06-codeRabbit-automations/cert-prep/06-codeRabbit-automations-do-say-see.pdf",
+      "bytes": 3978392,
+      "sha256": "252fde1233c8e69b7ef87d73edd130effab6f89a4bcb34fc5055d53307bb6646",
+      "releasePath": "v3-2026-09-30/guides/v3/automations.pdf"
+    },
+    {
+      "mediaId": "automations",
+      "kind": "guide",
+      "path": "public/guides/v3/automations.md",
+      "bytes": 14304,
+      "sha256": "161c93ab1fcdfc4087b4ad56235e55b2b0a95ec99c8d655ec7546db8cf4f7c84",
+      "releasePath": "v3-2026-09-30/guides/v3/automations.md"
+    },
+    {
+      "mediaId": "coding-agent",
+      "kind": "video",
+      "path": "public/media/v3/coding-agent.mp4",
+      "source": "consolidated-videos-per-slide/07-coding-agent.mp4",
+      "bytes": 17161713,
+      "sha256": "4e84f03dd86aa423ca61b3f192f9e0a9f8e80b81d5bfc787526ab34ec5105da0",
+      "releasePath": "v3-2026-09-30/media/v3/coding-agent.mp4"
+    },
+    {
+      "mediaId": "coding-agent",
+      "kind": "captions",
+      "path": "public/captions/v3/coding-agent.vtt",
+      "source": "consolidated-videos-per-slide/07-coding-agent.vtt",
+      "bytes": 7078,
+      "sha256": "1e3bf53e3a1abb1cc0596d1bc2e0df3bc5cc6537da81745e7d0db31c1a68cb58",
+      "releasePath": "v3-2026-09-30/captions/v3/coding-agent.vtt"
+    },
+    {
+      "mediaId": "coding-agent",
+      "kind": "poster",
+      "path": "public/posters/v3/coding-agent.jpg",
+      "source": "Frame at 5 seconds from consolidated-videos-per-slide/07-coding-agent.mp4; original dimensions preserved.",
+      "bytes": 198495,
+      "sha256": "242e9522c325519d564ebf9d6507a6df2422183f2ee4b7d32b06dbce8aa7ab97",
+      "releasePath": "v3-2026-09-30/posters/v3/coding-agent.jpg"
+    },
+    {
+      "mediaId": "coding-agent",
+      "kind": "pdf",
+      "path": "public/guides/v3/coding-agent.pdf",
+      "source": "talk-tracks/07-coding-agent/cert-prep/07-coding-agent-do-say-see.pdf",
+      "bytes": 5139069,
+      "sha256": "79d2938fd11b58e047a63176cd0e015def142814a6aa9129f3c9f5e60b31404e",
+      "releasePath": "v3-2026-09-30/guides/v3/coding-agent.pdf"
+    },
+    {
+      "mediaId": "coding-agent",
+      "kind": "guide",
+      "path": "public/guides/v3/coding-agent.md",
+      "bytes": 13387,
+      "sha256": "d375ce15cb115073c34ae8b5d05808a32044e25b394b81027e3b928c1e099543",
+      "releasePath": "v3-2026-09-30/guides/v3/coding-agent.md"
+    },
+    {
+      "mediaId": "slack-agent",
+      "kind": "video",
+      "path": "public/media/v3/slack-agent.mp4",
+      "source": "consolidated-videos-per-slide/08-coderabbit-agent-for-slack.mp4",
+      "bytes": 15054469,
+      "sha256": "5f9e713773a1006f4a37629ba449db83cfb6eae6b6a209334fe047a83b874114",
+      "releasePath": "v3-2026-09-30/media/v3/slack-agent.mp4"
+    },
+    {
+      "mediaId": "slack-agent",
+      "kind": "captions",
+      "path": "public/captions/v3/slack-agent.vtt",
+      "source": "consolidated-videos-per-slide/08-coderabbit-agent-for-slack.vtt",
+      "bytes": 5773,
+      "sha256": "4237322ecc038789c05002bcd20722dd276a95d648512bf7f0b5e8b1297b1453",
+      "releasePath": "v3-2026-09-30/captions/v3/slack-agent.vtt"
+    },
+    {
+      "mediaId": "slack-agent",
+      "kind": "poster",
+      "path": "public/posters/v3/slack-agent.jpg",
+      "source": "Frame at 5 seconds from consolidated-videos-per-slide/08-coderabbit-agent-for-slack.mp4; original dimensions preserved.",
+      "bytes": 221450,
+      "sha256": "57717a5f010beca30ca6d1c000ce8ebe82f1c0148c3e53c3092c389b83ac53b6",
+      "releasePath": "v3-2026-09-30/posters/v3/slack-agent.jpg"
+    },
+    {
+      "mediaId": "slack-agent",
+      "kind": "pdf",
+      "path": "public/guides/v3/slack-agent.pdf",
+      "source": "talk-tracks/08-coderabbit-agent-for-slack/cert-prep/08-coderabbit-agent-for-slack-do-say-see.pdf",
+      "bytes": 5282543,
+      "sha256": "2959d1b95fd15a3b9edfafacc16198865a4316112b21e7789244a4009ea4f96d",
+      "releasePath": "v3-2026-09-30/guides/v3/slack-agent.pdf"
+    },
+    {
+      "mediaId": "slack-agent",
+      "kind": "guide",
+      "path": "public/guides/v3/slack-agent.md",
+      "bytes": 14252,
+      "sha256": "71b108018ccb84234860b6a23bd0b931d5b8a4609137a7f32fdd0ec0aa5a7bb6",
+      "releasePath": "v3-2026-09-30/guides/v3/slack-agent.md"
+    }
+  ]
+}

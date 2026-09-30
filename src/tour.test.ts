@@ -3,6 +3,28 @@ import { describe, expect, it } from "vitest";
 import { featureEntries, formatTime, parseTour } from "./tour";
 
 const feature = { id: "one", title: "One", mediaId: "demo" };
+const step = {
+  title: " First step ",
+  start: 0,
+  end: 12.5,
+  do: [" Open the page "],
+  say: " Narration ",
+  see: " The result ",
+  links: [{ label: " Reference ", url: "https://example.com/reference" }],
+};
+const guide = {
+  title: " Demo script ",
+  download: "/guides/demo.md",
+  steps: [step],
+};
+
+/** Isolates embedded script validation from unrelated manifest fields. */
+function parseGuideFixture(value: unknown): ReturnType<typeof parseTour> {
+  return parseTour({
+    ...config(),
+    media: { demo: { src: "/demo.mp4", guide: value } },
+  });
+}
 /** Builds a minimal valid manifest so each test can override one boundary. */
 function config(): Record<string, unknown> {
   return {
@@ -161,6 +183,126 @@ describe("tour configuration", () => {
         })),
       }),
     ).toThrow("500 items");
+  });
+});
+
+describe("embedded script guides", () => {
+  it("normalizes script text and retains timestamps and safe document links", () => {
+    expect(
+      parseGuideFixture({
+        ...guide,
+        pdf: "https://example.com/demo.pdf",
+      }).media.get("demo")?.guide,
+    ).toEqual({
+      title: "Demo script",
+      download: "/guides/demo.md",
+      pdf: "https://example.com/demo.pdf",
+      steps: [
+        {
+          ...step,
+          title: "First step",
+          do: ["Open the page"],
+          say: "Narration",
+          see: "The result",
+          links: [{ label: "Reference", url: "https://example.com/reference" }],
+        },
+      ],
+    });
+  });
+
+  it("allows omitted guides, omitted PDFs, and steps without actions or links", () => {
+    expect(parseTour(config()).media.get("demo")?.guide).toBeUndefined();
+    expect(
+      parseGuideFixture({
+        ...guide,
+        steps: [{ ...step, do: [], links: [] }],
+      }).media.get("demo")?.guide,
+    ).toMatchObject({ pdf: undefined, steps: [{ do: [], links: [] }] });
+  });
+
+  it.each([null, [], "script", 1])("rejects non-object guides: %j", (value) => {
+    expect(() => parseGuideFixture(value)).toThrow(
+      "media.demo.guide: expected an object",
+    );
+  });
+
+  it.each([
+    [{ title: " " }, ".title"],
+    [{ download: undefined }, ".download"],
+    [{ download: "javascript:alert(1)" }, ".download"],
+    [{ pdf: null }, ".pdf"],
+    [{ pdf: "//example.com/doc.pdf" }, ".pdf"],
+    [{ steps: undefined }, ".steps: expected an array"],
+    [{ steps: [] }, ".steps: expected 1 to 500 items"],
+    [
+      { steps: Array.from({ length: 501 }, () => step) },
+      ".steps: expected 1 to 500 items",
+    ],
+    [{ steps: [null] }, ".steps[0]: expected an object"],
+  ])("rejects malformed guide metadata %#", (override, path) => {
+    expect(() => parseGuideFixture({ ...guide, ...override })).toThrow(
+      `media.demo.guide${path}`,
+    );
+  });
+
+  it.each([
+    [{ title: "" }, ".title"],
+    [{ say: 7 }, ".say"],
+    [{ see: " " }, ".see"],
+    [{ start: -1 }, ".start"],
+    [{ start: NaN }, ".start"],
+    [{ start: "0" }, ".start"],
+    [{ end: Infinity }, ".end"],
+    [{ end: undefined }, ".end"],
+    [{ end: 0 }, ".end: must be greater than start"],
+    [{ start: 20 }, ".end: must be greater than start"],
+    [{ do: "Click" }, ".do: expected an array"],
+    [{ do: [null] }, ".do[0]"],
+    [{ do: [" "] }, ".do[0]"],
+    [
+      { do: Array.from({ length: 101 }, () => "Click") },
+      ".do: expected 0 to 100 items",
+    ],
+    [{ links: undefined }, ".links: expected an array"],
+    [
+      { links: Array.from({ length: 101 }, () => ({})) },
+      ".links: expected 0 to 100 items",
+    ],
+    [{ links: [null] }, ".links[0]: expected an object"],
+    [{ links: [{ label: "", url: "/reference" }] }, ".links[0].label"],
+    [
+      { links: [{ label: "Reference", url: "https://user:pass@example.com" }] },
+      ".links[0].url",
+    ],
+    [
+      { links: [{ label: "Reference", url: "http://example.com" }] },
+      ".links[0].url",
+    ],
+    [{ links: [{ label: "Reference", url: "https://" }] }, ".links[0].url"],
+  ])(
+    "reports malformed steps at their exact field path %#",
+    (override, path) => {
+      expect(() =>
+        parseGuideFixture({ ...guide, steps: [{ ...step, ...override }] }),
+      ).toThrow(`media.demo.guide.steps[0]${path}`);
+    },
+  );
+
+  it("accepts the maximum step and collection sizes", () => {
+    const boundary = {
+      ...step,
+      do: Array.from({ length: 100 }, () => "Click"),
+      links: Array.from({ length: 100 }, () => ({
+        label: "Reference",
+        url: "/reference",
+      })),
+    };
+    expect(
+      parseGuideFixture({
+        ...guide,
+        steps: Array.from({ length: 500 }, () => boundary),
+      }).media.get("demo")?.guide?.steps,
+    ).toHaveLength(500);
   });
 });
 

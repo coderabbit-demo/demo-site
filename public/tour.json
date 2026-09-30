@@ -1,114 +1,2546 @@
 {
   "version": 1,
   "title": "CodeRabbit product tour",
-  "description": "Four capabilities, one control layer — from the pull request author's seat.",
+  "description": "Follow the CodeRabbit platform from code review through security, automation, and coding agents.",
   "media": {
-    "introduction": {
-      "src": "/media/01-introduction.mp4"
+    "platform": {
+      "src": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/platform.mp4",
+      "captions": "/captions/v3/platform.vtt",
+      "poster": "/posters/v3/platform.jpg",
+      "guide": {
+        "title": "Platform overview — Do / Say / See",
+        "download": "/guides/v3/platform.md",
+        "steps": [
+          {
+            "title": "Platform overview",
+            "start": 0,
+            "end": 34.7,
+            "do": ["Show the platform overview slide."],
+            "say": "CodeRabbit is the agentic governance and control layer for software development. We help teams of every size ship high-quality code faster. The platform supports the development phases you see here, from planning and writing code through review and merge. Today, we'll follow that work through code review, Triage, and Change Stack. Then look at security from both the engineering and application security perspectives. We'll finish with Automations, the Coding Agent, and Slack.",
+            "see": "The CodeRabbit platform overview and development phases.",
+            "links": []
+          }
+        ]
+      }
     },
-    "reviewing-local-changes": {
-      "src": "/media/02-reviewing-local-changes.mp4"
+    "pr-review": {
+      "src": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/pr-review.mp4",
+      "captions": "/captions/v3/pr-review.vtt",
+      "poster": "/posters/v3/pr-review.jpg",
+      "guide": {
+        "title": "PR Review — Do / Say / See",
+        "download": "/guides/v3/pr-review.md",
+        "pdf": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/pr-review.pdf",
+        "steps": [
+          {
+            "title": "Introduction / OPENING: Introduce the flow",
+            "start": 0,
+            "end": 23.96,
+            "do": [
+              "Show the section’s flow slide. Keep the full slide visible and highlight each pillar as it comes up in the introduction.",
+              "At the end of the introduction, switch to the first demo screen."
+            ],
+            "say": "We'll start with code that a coding agent has already written. I'll review it locally in VS Code. Then open a pull request and walk through the summary and findings. We'll investigate a security issue and a discount bug, ask questions in the review, and teach CodeRabbit a business rule. Then we'll follow an AI generated fix through the code and tests, and look at the separate documentation change.",
+            "see": "Frame at 00:09 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "Slide deck",
+                "url": "https://docs.google.com/presentation/d/1zk6UD0ZoAxtGRqDTQL-MVulAWu5MH4nYmd-9xJBpU5Y/edit"
+              }
+            ]
+          },
+          {
+            "title": "Code Exists. Review Now. / STEP 1 OF 4: Clone and open the feature branch",
+            "start": 25.547,
+            "end": 38.387,
+            "do": [
+              "In Terminal, run cd ~/projects, then git clone https://github.com/coderabbit-demo/demo-site-pr-examples.git.",
+              "Run cd demo-site-pr-examples, then git checkout codex/bulk-checkout-flagship.",
+              "Run code . and switch to the VS Code window."
+            ],
+            "say": "In my Mac terminal, I'm in the projects folder. I clone the repository from GitHub and select the branch containing the implementation. Then I launch VS Code from this folder. This is my first look at the code the agent generated.",
+            "see": "Frame at 00:37 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "Example repository",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples"
+              }
+            ]
+          },
+          {
+            "title": "Code Exists. Review Now. / STEP 2 OF 4: Set the scope and start the review",
+            "start": 38.987,
+            "end": 57.547,
+            "do": [
+              "Click the CodeRabbit icon in VS Code’s activity bar. If needed, open Extensions, search CodeRabbit and open the installed extension first.",
+              "Click the base selector, type main and select main. Open the scope selector and choose Review committed changes.",
+              "Confirm the committed files are listed, then click Review committed changes. Wait for the findings."
+            ],
+            "say": "I open the CodeRabbit extension so I can review the changes locally. The agent's work is already committed to this branch. I choose main as the base and select review committed changes. That compares this branch with main. Even with no pending edits, there are committed changes to review. I start the review.",
+            "see": "Frame at 00:52 in 01-pr-review.mp4.",
+            "links": []
+          },
+          {
+            "title": "Code Exists. Review Now. / STEP 3 OF 4: Inspect the SQL finding",
+            "start": 57.947,
+            "end": 86.787,
+            "do": [
+              "Click the invoice-search SQL injection finding in the CodeRabbit results.",
+              "Keep src/services/invoice-search.ts open. Scroll the inline explanation to the interpolated query, tenant boundary and parameter-binding recommendation."
+            ],
+            "say": "When the results are ready, I open the security finding. CodeRabbit has identified a SQL injection issue in invoice search. Opening the finding takes me to the affected code and the explanation. Search text is being inserted directly into the database query which could let someone change the query and retrieve another customer's invoice. The agent generated tests and those tests passed. This review still found a security problem before I opened the pull request.",
+            "see": "Frame at 01:17 in 01-pr-review.mp4.",
+            "links": []
+          },
+          {
+            "title": "Code Exists. Review Now. / STEP 4 OF 4: Inspect the discount and fix choices",
+            "start": 87.827,
+            "end": 137.027,
+            "do": [
+              "Click the promotions boundary finding. Scroll to Proposed fix to show > and >=.",
+              "Show Apply suggestion and Fix with AI, then move back to the review panel to show Fix all.",
+              "Leave the local changes unapplied and switch to the browser for the PR review."
+            ],
+            "say": "Next I open the discount finding. The discount should apply at 10 items but the code checks for more than 10. An order of exactly 10 items pays full price. The suggested fix changes greater than to greater than or equal. That includes the minimum quantity as the business rule requires. The findings also give me ways to respond. I can apply a suggested fix for a simple change or use fix with AI to pass the finding and its context to my coding agent. Fix All lets me hand over the review findings together. After a fix, I would inspect the diff, run the relevant tests and review the updated code. I can do that work here on my branch before asking the team to review it. For this walkthrough, I'll carry the example into a pull request so we can see the team's review experience.",
+            "see": "Frame at 02:13 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "Recording repository",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings"
+              }
+            ]
+          },
+          {
+            "title": "PR Created. Walk the Summary & Findings / STEP 1 OF 4: Open the PR and read its summary",
+            "start": 138.207,
+            "end": 175.727,
+            "do": [
+              "For the existing run, open Recording PR #8. The recorded creation used main as base and codex/bulk-checkout-flagship as compare, then Create pull request.",
+              "In Conversation, open the CodeRabbit summary and expand Walkthrough. Scroll to Changes and Pre-merge checks.",
+              "Expand the checks and show Security Gate and the linked-issue assessment."
+            ],
+            "say": "I am now on GitHub opening a pull request against main. The description links the requirements for promotional pricing, checkout and invoice search and export. Once the pull request is created, CodeRabbit starts its review. I open the walkthrough first. It summarizes the implementation and the areas it touches so I can understand the scope before reading individual findings. Next, I scroll to the pre -merged checks. Security gate has failed because this review found major and critical security issues. The linked issues check also flags acceptance criteria the implementation has missed, including the discount threshold.",
+            "see": "Frame at 02:49 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "Recording PR #8",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8"
+              },
+              {
+                "label": "Acceptance criteria: issue #7",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/issues/7"
+              },
+              {
+                "label": "PR #8: CodeRabbit summary",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#issuecomment-5825402538"
+              }
+            ]
+          },
+          {
+            "title": "PR Created. Walk the Summary & Findings / STEP 2 OF 4: Read the security evidence",
+            "start": 176.207,
+            "end": 200.807,
+            "do": [
+              "Open the SQL comment link. Expand Show outdated or the collapsed thread if necessary.",
+              "Scroll through the query and explanation. Expand Proposed fix and show tenant and search values supplied separately."
+            ],
+            "say": "I follow the security finding to the invoice search query. It's the same problem we saw locally. Search text goes straight into the SQL command. The finding identifies the affected line and explains how crafted input could expose invoices outside the customer's account. The proposed correction uses parameters so the database receives the search text as a value separate from the command.",
+            "see": "Frame at 03:02 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "PR #8: SQL finding",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#discussion_r4100325576"
+              }
+            ]
+          },
+          {
+            "title": "PR Created. Walk the Summary & Findings / STEP 3 OF 4: Check the exact-minimum discount",
+            "start": 201.247,
+            "end": 211.727,
+            "do": [
+              "Open the discount finding. Expand the thread and Proposed fix.",
+              "Keep the strict > condition and proposed >= correction visible together."
+            ],
+            "say": "The discount finding is here too. Exactly 10 items should qualify and the current comparison excludes them. I can follow the explanation directly to the condition that needs to change.",
+            "see": "Frame at 03:29 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "PR #8: discount finding",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#discussion_r4100325582"
+              }
+            ]
+          },
+          {
+            "title": "PR Created. Walk the Summary & Findings / STEP 4 OF 4: Check the consumer and review configuration",
+            "start": 212.247,
+            "end": 244.227,
+            "do": [
+              "Open the linked-consumer finding. Scroll to the total/totalCents mismatch and expand Sources or Linked repositories.",
+              "Read the src/client.ts and src/checkout.ts references. Then return to the recorded review and scroll to its review configuration/details.",
+              "Show Request Changes enabled. Read this alongside the repository’s merge requirements."
+            ],
+            "say": "There's also a compatibility issue across repositories. This change returns a field called total while a linked consumer expects totalCents. CodeRabbit points to the consumer code that depends on that contract. That gives me a concrete reason to investigate even if this application's own screen appears to work. Finally, I check the review configuration. Request changes is enabled. Whether those requests prevent a merge depends on the repository's branch rules, which we need to check alongside the review results.",
+            "see": "Frame at 03:40 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "PR #8: linked-consumer finding",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#discussion_r4100325590"
+              },
+              {
+                "label": "Linked consumer repository",
+                "url": "https://github.com/coderabbit-demo/security-harness-consumer"
+              },
+              {
+                "label": "PR #8: recorded review",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#pullrequestreview-5312439610"
+              }
+            ]
+          },
+          {
+            "title": "Chat & Teach / STEP 1 OF 4: Add the paid-item rule",
+            "start": 246.427,
+            "end": 263.767,
+            "do": [
+              "Open the discount thread and click Reply.",
+              "Mention @coderabbitai. Explain that exactly ten paid items qualify and free promotional items do not count; ask it to remember the rule without changing code. Click Comment for a training run.",
+              "For rehearsal, open the recorded clarification and follow the existing response."
+            ],
+            "say": "I open the discount findings conversation to add a business rule. Exactly 10 paid items should qualify for the discount. Free promotional items should not count toward that minimum. I explain the distinction and ask CodeRabbit to remember it. At this point, I'm asking you to understand the rule before changing the code.",
+            "see": "Frame at 04:22 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "Discount clarification",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#discussion_r4100462792"
+              }
+            ]
+          },
+          {
+            "title": "Chat & Teach / STEP 2 OF 4: Inspect the reply and learning",
+            "start": 264.287,
+            "end": 282.907,
+            "do": [
+              "Scroll to the reply confirming the inclusive paid-item minimum.",
+              "Expand Learnings added and read the saved rule and scope. Keep the finding open."
+            ],
+            "say": "The reply confirms that eligibility depends on paid items and that exactly 10 paid items qualify. It also confirms that free promotional items do not count toward the minimum. The rule is captured as a learning. That gives later eligible reviews additional context about how this team expects the feature to behave.",
+            "see": "Frame at 04:41 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "Discount response and learning",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#discussion_r4100465216"
+              }
+            ]
+          },
+          {
+            "title": "Chat & Teach / STEP 3 OF 4: Ask for a security explanation",
+            "start": 283.767,
+            "end": 297.567,
+            "do": [
+              "Open the SQL thread and click Reply.",
+              "Enter: @coderabbitai, explain this security issue in simple terms and also quote examples where this was exploited in the real world.",
+              "Click Comment for a training run and wait. For rehearsal, open the saved question and response."
+            ],
+            "say": "Now I return to the SQL injection finding. I ask CodeRabbit to explain the problem in plain language and give examples of this type of vulnerability. The answer uses an ordinary search to explain the risk. A word like laptop should be treated as text.",
+            "see": "Frame at 04:56 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "Security question",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#discussion_r4100474606"
+              },
+              {
+                "label": "Security explanation and examples",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#discussion_r4100479733"
+              }
+            ]
+          },
+          {
+            "title": "Chat & Teach / STEP 4 OF 4: Read the explanation and examples",
+            "start": 298.107,
+            "end": 328.627,
+            "do": [
+              "Scroll the security response to crafted input and bound parameters.",
+              "Continue to the TalkTalk and MOVEit examples and their citations. Keep the reply in the original finding’s thread for the closing explanation."
+            ],
+            "say": "In this query, specially crafted text can change the database command and expose another customer's invoices. It also explains why a character limit does not fix the problem and why parameters keep search values separate from the command. The reply includes examples of the same vulnerability class in other systems. I can ask a follow up here with the relevant code and the original finding still in view. That helps me understand what the fix needs to protect before I request a change.",
+            "see": "Frame at 05:26 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "Security explanation and examples",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#discussion_r4100479733"
+              }
+            ]
+          },
+          {
+            "title": "One-Click Fix / STEP 1 OF 4: Request the focused fix",
+            "start": 329.607,
+            "end": 338.087,
+            "do": [
+              "Return to the discount finding and click Reply.",
+              "Type @coderabbitai autofix and click Comment for a training run. For rehearsal, open the recorded request and wait-state response."
+            ],
+            "say": "I return to the discount finding and ask AI to fix it from the review thread. The request includes the affected code and the explanation of the boundary problem.",
+            "see": "Frame at 05:36 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "Recorded autofix request",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#discussion_r4100694595"
+              }
+            ]
+          },
+          {
+            "title": "One-Click Fix / STEP 2 OF 4: Inspect the generated change and tests",
+            "start": 338.847,
+            "end": 371.147,
+            "do": [
+              "Open the generated commit. Scroll to src/services/promotions.ts and tests/flagship.test.ts.",
+              "Show > becoming >= and it.fails becoming a normal test. Check below/at/above-minimum and expiration coverage.",
+              "The recorded operator validated the generated commit locally and applied that same commit to PR #8. Keep the patch visible while describing that result."
+            ],
+            "say": "When the generated change is ready, I open the diff. Greater than becomes greater than or equal, so an order of exactly 10 items now meets the minimum. The regression test for that boundary becomes a normal passing assertion. The focus checks cover quantities below, at and above the minimum. They also confirm that an expired promotion remains ineligible. After validating the generated commit, we apply that same commit to the pull request branch. This patch addresses the boundary bug. The other findings still need their own attention.",
+            "see": "Frame at 05:57 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "Discount-fix commit",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/commit/c7d69caa0ce797de95436f95c99176c983867dac"
+              },
+              {
+                "label": "Recording PR #8",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8"
+              }
+            ]
+          },
+          {
+            "title": "One-Click Fix / STEP 3 OF 4: Request and open the documentation PR",
+            "start": 372.607,
+            "end": 386.007,
+            "do": [
+              "Return to the CodeRabbit summary and expand Finishing Touches.",
+              "Select Generate Docstrings, then Create New PR for a training run; wait for completion.",
+              "For rehearsal, open Docstrings PR #9. Read the head/base branch line and description."
+            ],
+            "say": "There's another action I want to show. Under finishing touches, I select generate docstrings and choose create new PR. That prepares a separate documentation change for review. I open the resulting pull request and inspect the diff.",
+            "see": "Frame at 06:26 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "PR #8: CodeRabbit summary",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8#issuecomment-5825402538"
+              },
+              {
+                "label": "Docstrings PR #9",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/9"
+              }
+            ]
+          },
+          {
+            "title": "One-Click Fix / STEP 4 OF 4: Inspect documentation and finish",
+            "start": 386.407,
+            "end": 423.387,
+            "do": [
+              "Click Files changed on PR #9. Use the file list to open the quote service and request parser.",
+              "Scroll to the new quote and parseQuoteRequest comments and compare them with the functions.",
+              "Leave both PRs open. Return to the flow slide for the silent closing hold."
+            ],
+            "say": "The new comments explain what the functions expect, what they return, and how they handle errors. For this example, this docstring describes the catalog subtotal in cents and what happens when a product cannot be found. Beside it, the request parser documents the product ID and quantity requirements. We check that removing the comments leaves the code unchanged. I still read the descriptions against implementation before accepting them. We've reviewed the code locally, examined the pull request, clarified the findings, and inspected an AI generated fix. The resulting changes are ready for the team's review.",
+            "see": "Frame at 07:01 in 01-pr-review.mp4.",
+            "links": [
+              {
+                "label": "PR #9: files changed",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/9/files"
+              },
+              {
+                "label": "Recording PR #8",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/8"
+              }
+            ]
+          }
+        ]
+      }
     },
-    "walkthroughs": {
-      "src": "/media/03-walkthroughs.mp4"
+    "triage": {
+      "src": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/triage.mp4",
+      "captions": "/captions/v3/triage.vtt",
+      "poster": "/posters/v3/triage.jpg",
+      "guide": {
+        "title": "Triage — Do / Say / See",
+        "download": "/guides/v3/triage.md",
+        "pdf": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/triage.pdf",
+        "steps": [
+          {
+            "title": "Introduction / OPENING: Introduce the flow",
+            "start": 0.8,
+            "end": 23.1,
+            "do": [
+              "Show the section’s flow slide. Keep the full slide visible and highlight each pillar as it comes up in the introduction.",
+              "At the end of the introduction, switch to the first demo screen."
+            ],
+            "say": "When several pull requests are waiting, I need to decide where to start. I'll open Triage, narrow the queue to the work that needs my action, and read the reason behind a recommendation. Then I'll use the card to open a detailed review. We'll also look at the Slack digest, which brings the queue into the team's conversation and gives me a place to pick up the next review.",
+            "see": "Frame at 00:09 in 03-triage.mp4.",
+            "links": [
+              {
+                "label": "Slide deck",
+                "url": "https://docs.google.com/presentation/d/1zk6UD0ZoAxtGRqDTQL-MVulAWu5MH4nYmd-9xJBpU5Y/edit"
+              }
+            ]
+          },
+          {
+            "title": "Open Triage / STEP 1 OF 3: Open and search the queue",
+            "start": 24.21,
+            "end": 38.71,
+            "do": [
+              "Open Triage in Mike’s reviewer account. Select coderabbit-demo and click All PRs.",
+              "Click search and enter demo-site-pr-examples."
+            ],
+            "say": "I open Triage to see pull requests across the repositories available to this account. I'm looking for our checkout and invoice change. I check the repository, pull request number, and title before opening it, so I know I'm following the right example.",
+            "see": "Frame at 00:36 in 03-triage.mp4.",
+            "links": [
+              {
+                "label": "Triage queue",
+                "url": "https://app.coderabbit.ai/triage"
+              }
+            ]
+          },
+          {
+            "title": "Open Triage / STEP 2 OF 3: Identify the PR",
+            "start": 39.27,
+            "end": 51.17,
+            "do": [
+              "Locate PR #4. Read its repository, title, author, review state and checks before opening it."
+            ],
+            "say": "This change introduces promotional pricing and invoice features. We already have two questions to investigate. Whether customers can see only their own invoices and whether the discount applies at the correct quantity.",
+            "see": "Frame at 00:48 in 03-triage.mp4.",
+            "links": [
+              {
+                "label": "Flagship PR #4",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4"
+              }
+            ]
+          },
+          {
+            "title": "Open Triage / STEP 3 OF 3: Read what needs attention",
+            "start": 52.17,
+            "end": 58.61,
+            "do": [
+              "Keep the PR card centered. Scroll enough to see its next-action line."
+            ],
+            "say": "The queue gives me a view of the work waiting for attention. I'll narrow it to my responsibilities before deciding where to begin.",
+            "see": "Frame at 00:57 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "My Action / STEP 1 OF 4: Select your action queue",
+            "start": 60.13,
+            "end": 65.87,
+            "do": ["Click Requires my action in the queue navigation."],
+            "say": "I select Requires my action, which brings together pull requests involving me as an author or reviewer.",
+            "see": "Frame at 01:04 in 03-triage.mp4.",
+            "links": [
+              {
+                "label": "Triage queue",
+                "url": "https://app.coderabbit.ai/triage"
+              }
+            ]
+          },
+          {
+            "title": "My Action / STEP 2 OF 4: Find the reviewer example",
+            "start": 66.65,
+            "end": 75.01,
+            "do": [
+              "Keep demo-site-pr-examples in search and locate PR #4.",
+              "Check the reviewer context; Mahesh is the author in this recorded example."
+            ],
+            "say": "For this part of the demo, I'm using Mike's reviewer account. I search for the demonstration repository and find the checkout and invoice pull request.",
+            "see": "Frame at 01:12 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "My Action / STEP 3 OF 4: Read your responsibility",
+            "start": 75.77,
+            "end": 86.55,
+            "do": [
+              "Scroll to Review this pull request in Change Stack on the card.",
+              "Leave it unclicked while explaining the reviewer’s next step."
+            ],
+            "say": "As the reviewer, my job is to examine the proposed behavior and the response to feedback. If the code needs to change, the author can prepare an update for another review.",
+            "see": "Frame at 01:24 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "My Action / STEP 4 OF 4: Show the wider queue",
+            "start": 88.05,
+            "end": 94.21,
+            "do": [
+              "Click All PRs to show the broader queue. Return to Requires my action to continue the reviewer flow."
+            ],
+            "say": "The search keeps this example in view. I can return to All PRs whenever I need to see the wider queue.",
+            "see": "Frame at 01:33 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "Read the Why / STEP 1 OF 3: Open the priority reason",
+            "start": 95.45,
+            "end": 110.79,
+            "do": [
+              "Click the card’s three-dot menu, then View priority reason.",
+              "Read the priority explanation and distinguish its priority label from High security risk."
+            ],
+            "say": "I open View priority reason from the card to see why this pull request needs attention. This example is P2, Medium priority, and it also shows High security risk. Those labels describe different things.",
+            "see": "Frame at 01:48 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "Read the Why / STEP 2 OF 3: Inspect the risk evidence",
+            "start": 111.33,
+            "end": 127.77,
+            "do": [
+              "Click outside the menu. Hover High security risk to show its explanation.",
+              "Hold the tooltip and PR title in view while describing the customer-data boundary."
+            ],
+            "say": "Queue priority helps me compare work while the security risk tells me about a concern within this change. The explanation points to security issues and problems with the data the change returns. I can use that reasoning to decide what to inspect first.",
+            "see": "Frame at 02:05 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "Read the Why / STEP 3 OF 3: Choose the investigation order",
+            "start": 128.71,
+            "end": 143.81,
+            "do": [
+              "Dismiss the tooltip and keep the PR card visible.",
+              "Explain the SQL finding and discount boundary without claiming the queue always ranks every security issue first."
+            ],
+            "say": "Here I'd start with invoice search because it could expose another customer's data. The discount boundary also matters and we'll inspect that as we review the code. I now have a reason for choosing this pull request and a specific question to investigate.",
+            "see": "Frame at 02:16 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "Act from Card / STEP 1 OF 3: Inspect available actions",
+            "start": 144.69,
+            "end": 152.73,
+            "do": [
+              "Open the three-dot menu and show View priority reason, Follow and Close PR.",
+              "Click outside to dismiss it; leave the PR open."
+            ],
+            "say": "I return to the card and open its action menu. The available actions sit alongside the recommendations so I can see how to move the work forward.",
+            "see": "Frame at 02:31 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "Act from Card / STEP 2 OF 3: Inspect checks and requested changes",
+            "start": 154.11,
+            "end": 165.23,
+            "do": [
+              "Hover the passed-checks indicator to reveal its detail.",
+              "Read passing checks alongside Changes requested, then dismiss the popover."
+            ],
+            "say": "I also check its current status. This card shows passed checks and requests for changes. Passing checks are useful but the review still raises questions about the application's behavior.",
+            "see": "Frame at 02:42 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "Act from Card / STEP 3 OF 3: Open the detailed review",
+            "start": 166.47,
+            "end": 178.15,
+            "do": [
+              "Click Review this pull request in Change Stack. Switch to the new tab.",
+              "Confirm PR #4 and the Overview screen."
+            ],
+            "say": "In this example, I want to read the code and findings before requesting a repair. I follow the Change Stack link to open the detailed review. That takes me from choosing a pull request to investigating the change itself.",
+            "see": "Frame at 02:56 in 03-triage.mp4.",
+            "links": [
+              {
+                "label": "PR #4: Change Stack",
+                "url": "https://app.coderabbit.ai/change-stack/coderabbit-demo/demo-site-pr-examples/pull/4/overview"
+              }
+            ]
+          },
+          {
+            "title": "Queue to You / STEP 1 OF 4: Open the digest example",
+            "start": 179.11,
+            "end": 186.95,
+            "do": [
+              "Switch to Slack in Mahesh’s connected account. Open the CodeRabbit app under Apps, then Messages.",
+              "Show the supplied digest screenshot. Its original message permalink was not recorded."
+            ],
+            "say": "The queue can also reach me in Slack. Here is a digest from the author's connected account with examples from other repositories.",
+            "see": "Frame at 03:05 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "Queue to You / STEP 2 OF 4: Read Now and Next",
+            "start": 187.91,
+            "end": 197.53,
+            "do": [
+              "Scroll the digest to show Now, then Next. Read the repository and PR number on each card."
+            ],
+            "say": "The message groups work into Now and Next. Each card identifies the repository and pull request, summarizes the change and shows its status.",
+            "see": "Frame at 03:15 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "Queue to You / STEP 3 OF 4: Show the digest actions",
+            "start": 198.19,
+            "end": 211.55,
+            "do": [
+              "Show Merge and Find reviewer on security-harness #18, then Fix merge conflicts on #14.",
+              "Keep these as previews; do not activate them."
+            ],
+            "say": "I scroll through the available actions. One card offers Merge and Find reviewer, another offers Fix merge conflicts. Those give the team a starting point for the next step. We still check the review evidence before accepting a change.",
+            "see": "Frame at 03:28 in 03-triage.mp4.",
+            "links": []
+          },
+          {
+            "title": "Queue to You / STEP 4 OF 4: Return to the reviewer card",
+            "start": 212.09,
+            "end": 220.25,
+            "do": [
+              "Switch back to Mike’s Triage tab and search demo-site-pr-examples.",
+              "Locate PR #4 and its Change Stack action. Return to the flow slide for the closing hold."
+            ],
+            "say": "I return to Mike's reviewer account and our checkout and invoice pull request. From this card, we'll continue to Change Stack to examine the code.",
+            "see": "Frame at 03:38 in 03-triage.mp4.",
+            "links": [
+              {
+                "label": "Triage queue",
+                "url": "https://app.coderabbit.ai/triage"
+              },
+              {
+                "label": "PR #4: Change Stack",
+                "url": "https://app.coderabbit.ai/change-stack/coderabbit-demo/demo-site-pr-examples/pull/4/overview"
+              }
+            ]
+          }
+        ]
+      }
     },
-    "pre-merge-checks": {
-      "src": "/media/04-pre-merge-checks.mp4"
+    "change-stack": {
+      "src": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/change-stack.mp4",
+      "captions": "/captions/v3/change-stack.vtt",
+      "poster": "/posters/v3/change-stack.jpg",
+      "guide": {
+        "title": "Change Stack — Do / Say / See",
+        "download": "/guides/v3/change-stack.md",
+        "pdf": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/change-stack.pdf",
+        "steps": [
+          {
+            "title": "Introduction / OPENING: Introduce the flow",
+            "start": 0,
+            "end": 20.2,
+            "do": [
+              "Show the section’s flow slide. Keep the full slide visible and highlight each pillar as it comes up in the introduction.",
+              "At the end of the introduction, switch to the first demo screen."
+            ],
+            "say": "Once I've chosen a pull request, I want to understand how its changes fit together. I'll open Change Stack, walk through the layers and connect the invoice search and discount behavior to the code and tests. Then I'll filter the findings and ask a question about the relevant code. We'll finish with the review options and the conditions that need to be met before a merge.",
+            "see": "Frame at 00:09 in 04-change-stack.mp4.",
+            "links": [
+              {
+                "label": "Slide deck",
+                "url": "https://docs.google.com/presentation/d/1zk6UD0ZoAxtGRqDTQL-MVulAWu5MH4nYmd-9xJBpU5Y/edit"
+              }
+            ]
+          },
+          {
+            "title": "Open the Stack / STEP 1 OF 3: Enter from Triage",
+            "start": 21.17,
+            "end": 29.05,
+            "do": [
+              "Open PR #4’s Triage card and click Review this pull request in Change Stack.",
+              "Switch to the new tab and confirm the PR identity."
+            ],
+            "say": "From the pull request card in Triage, I open Change Stack. This is our checkout and invoice change and overview is the starting point.",
+            "see": "Frame at 00:27 in 04-change-stack.mp4.",
+            "links": [
+              {
+                "label": "Triage queue",
+                "url": "https://app.coderabbit.ai/triage"
+              },
+              {
+                "label": "PR #4: Change Stack",
+                "url": "https://app.coderabbit.ai/change-stack/coderabbit-demo/demo-site-pr-examples/pull/4/overview"
+              }
+            ]
+          },
+          {
+            "title": "Open the Stack / STEP 2 OF 3: Read Overview and attention items",
+            "start": 29.79,
+            "end": 42.05,
+            "do": [
+              "Click Overview in the left rail. Scroll through the summary and changed behavior.",
+              "Continue to What changed and remaining concerns; expand details where needed."
+            ],
+            "say": "I read the summary to understand what the feature is trying to do and then look at the areas that need attention. For this application, I'm checking two promises. Customers should see their own invoices and qualifying orders should receive a discount.",
+            "see": "Frame at 00:40 in 04-change-stack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Open the Stack / STEP 3 OF 3: Check the review snapshot",
+            "start": 42.75,
+            "end": 54.41,
+            "do": [
+              "Open Review history at the lower left and inspect the recorded review version.",
+              "Select the historical snapshot if needed to find the retained discount discussion. Do not regenerate a review."
+            ],
+            "say": "I also check which review version I'm reading. The findings belong to that version of the code. If the author pushes an update, I need to inspect the newer review before deciding whether the issue is addressed.",
+            "see": "Frame at 00:51 in 04-change-stack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Walk the Layers / STEP 1 OF 4: Open pricing and checkout",
+            "start": 55.01,
+            "end": 66.45,
+            "do": [
+              "Click the promotional-pricing layer in the left rail. Select src/services/promotions.ts in its file list.",
+              "Read the summary and adjacent code. Then click the bulk-checkout layer and inspect its related changes."
+            ],
+            "say": "I open the layers to work through related changes in smaller groups. The promotion pricing layer shows how discount eligibility is calculated. Bulk discount shows where that behavior is used.",
+            "see": "Frame at 01:02 in 04-change-stack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Walk the Layers / STEP 2 OF 4: Trace invoice search",
+            "start": 67.15,
+            "end": 84.61,
+            "do": [
+              "Click the invoice-search/export layer and choose src/services/invoice-search.ts.",
+              "Scroll to the query and the customer/search inputs. Keep the inline finding visible."
+            ],
+            "say": "Invoice search and export cover another part of the feature with tests and documentation in their own layer. I select the invoice layer and scroll to the search query. The customer supplies search text and the application uses it to retrieve invoices. I check how the text and the customer's identity enter the query.",
+            "see": "Frame at 01:21 in 04-change-stack.mp4.",
+            "links": [
+              {
+                "label": "PR #4: SQL finding",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4#discussion_r3991696811"
+              }
+            ]
+          },
+          {
+            "title": "Walk the Layers / STEP 3 OF 4: Read the historical discount discussion",
+            "start": 85.12,
+            "end": 102.88,
+            "do": [
+              "Return to the pricing layer and promotions.ts.",
+              "Scroll to the strict > comparison. Expand the historical discount thread; enable Resolved if it is hidden."
+            ],
+            "say": "Next, I look at the discount comparison. The requirement includes an order of exactly 10 items while the strict, greater than condition excludes it. That discount discussion is retained in this demo's review history. I use it to examine the behavior without presenting it as a newly open finding.",
+            "see": "Frame at 01:31 in 04-change-stack.mp4.",
+            "links": [
+              {
+                "label": "PR #4: historical discount thread",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4#discussion_r3991696822"
+              }
+            ]
+          },
+          {
+            "title": "Walk the Layers / STEP 4 OF 4: Connect the behavior to tests",
+            "start": 103.7,
+            "end": 111.84,
+            "do": [
+              "Open the tests/validation layer and select the relevant promotion test file.",
+              "Scroll to ordinary and exact-minimum cases. Keep code and findings beside the tests."
+            ],
+            "say": "Finally, I look at the related tests. I want to see whether they check the behavior we expect at the boundary as well as an ordinary successful case.",
+            "see": "Frame at 01:50 in 04-change-stack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Filter Findings / STEP 1 OF 4: Set the minimum severity",
+            "start": 112.54,
+            "end": 118.06,
+            "do": [
+              "Open Comments in the review pane and click its filter controls.",
+              "Select the minimum severity for the security investigation."
+            ],
+            "say": "I open the findings controls and set a minimum severity to focus on the more serious concerns.",
+            "see": "Frame at 01:57 in 04-change-stack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Filter Findings / STEP 2 OF 4: Read the SQL finding beside the query",
+            "start": 119.34,
+            "end": 140.64,
+            "do": [
+              "Select the SQL injection finding in the filtered list.",
+              "Scroll within its explanation to the tenant-boundary concern and compare it with the adjacent query."
+            ],
+            "say": "Then, I open the security finding beside the affected query. The explanation describes how search text can become part of a database command. I read it alongside the code and check what that means for the customer's data. A useful correction needs to keep the search within the customer's account, including when the input contains characters with special meaning in SQL.",
+            "see": "Frame at 02:08 in 04-change-stack.mp4.",
+            "links": [
+              {
+                "label": "PR #4: SQL finding",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4#discussion_r3991696811"
+              }
+            ]
+          },
+          {
+            "title": "Filter Findings / STEP 3 OF 4: Inspect resolved and outdated visibility",
+            "start": 141.34,
+            "end": 153.16,
+            "do": [
+              "Open the comment filters again. Show Resolved and Outdated controls.",
+              "Enable Resolved to find the historical discount thread without treating it as a new unresolved finding."
+            ],
+            "say": "I can also include resolved and outdated threads to revisit earlier discussions, such as the discount example. Their status matters when I am deciding what still needs work.",
+            "see": "Frame at 02:30 in 04-change-stack.mp4.",
+            "links": [
+              {
+                "label": "PR #4: historical discount thread",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4#discussion_r3991696822"
+              }
+            ]
+          },
+          {
+            "title": "Filter Findings / STEP 4 OF 4: Check the filters before moving on",
+            "start": 154.98,
+            "end": 159.42,
+            "do": [
+              "Return to the filters and check which findings are hidden.",
+              "Close the menu and keep the selected code visible."
+            ],
+            "say": "Before finishing the review, I check the filters again so I don't overlook another finding I need to read.",
+            "see": "Frame at 02:38 in 04-change-stack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Ask in Context / STEP 1 OF 4: Open the inline conversation",
+            "start": 159.88,
+            "end": 175.66,
+            "do": [
+              "On promotions.ts, expand the discount item and select Continue.",
+              "Click the conversation input. Ask what happens with ten items at a minimum of ten, including tests and expiration. Click Send for a training run."
+            ],
+            "say": "On the discount's inline item, I select Continue to open a conversation about that code. I see what happens when an order contains 10 items and the minimum is 10. I also ask about tests and expirations because a quantity fix should leave an expired promotion ineligible.",
+            "see": "Frame at 02:53 in 04-change-stack.mp4.",
+            "links": [
+              {
+                "label": "PR #4: historical discount thread",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4#discussion_r3991696822"
+              }
+            ]
+          },
+          {
+            "title": "Ask in Context / STEP 2 OF 4: Read the clarified rule",
+            "start": 176.36,
+            "end": 187.02,
+            "do": [
+              "Scroll to the answer beside the selected code.",
+              "Keep the inclusive minimum and before-expiration explanation visible."
+            ],
+            "say": "The first answer needs clarification. I restate the rule at least 10 items and only before the expiration time. Then, I compare the follow-up with the condition in the code.",
+            "see": "Frame at 03:04 in 04-change-stack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Ask in Context / STEP 3 OF 4: Request a compact boundary summary",
+            "start": 187.96,
+            "end": 203.08,
+            "do": [
+              "Scroll through the answer, then use the input to ask for the 9, 10 and 11 item cases and the expiration boundary.",
+              "Click Send for a training run; for rehearsal, inspect the existing answer. Keep the relevant code selected."
+            ],
+            "say": "The checks we need are straightforward, below the minimum, exactly at it and above it. At the expiration time, the promotion should no longer apply. I ask for a short summary of those expectations. That gives me concrete behavior to verify in a proposed fix.",
+            "see": "Frame at 03:14 in 04-change-stack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Ask in Context / STEP 4 OF 4: Keep the conversation tied to its review",
+            "start": 203.58,
+            "end": 210.6,
+            "do": [
+              "Read the response with the selected review version visible.",
+              "Use the same review for this conversation; open a new conversation if inspecting a later revision."
+            ],
+            "say": "This conversation belongs to the review where it started. If the code changes, I'll open a new conversation on the updated review.",
+            "see": "Frame at 03:29 in 04-change-stack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Approve & Merge / STEP 1 OF 4: Preview the review choices",
+            "start": 211.92,
+            "end": 227.56,
+            "do": [
+              "Open Submit review in Mike’s reviewer account.",
+              "Show Comment, Approve and Request changes. Close the dialog without submitting."
+            ],
+            "say": "I open the review options. From this reviewer account, I can choose comment, approve or request changes. The invoice search concern still needs investigation. For this demo, I will leave the pull request open and preview the choices without submitting a review.",
+            "see": "Frame at 03:45 in 04-change-stack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Approve & Merge / STEP 2 OF 4: Return to the unresolved concerns",
+            "start": 228.42,
+            "end": 235.96,
+            "do": [
+              "Click Overview and scroll to remaining concerns.",
+              "Keep the SQL finding and historical discount context visible; leave the fixture open."
+            ],
+            "say": "In a working review, I request changes needed to address the concern, then inspect the updated code and tests before approving.",
+            "see": "Frame at 03:54 in 04-change-stack.mp4.",
+            "links": [
+              {
+                "label": "PR #4: Change Stack",
+                "url": "https://app.coderabbit.ai/change-stack/coderabbit-demo/demo-site-pr-examples/pull/4/overview"
+              }
+            ]
+          },
+          {
+            "title": "Approve & Merge / STEP 3 OF 4: Inspect provider merge requirements",
+            "start": 236.48,
+            "end": 254.32,
+            "do": [
+              "Open GitHub PR #4 and scroll to the merge area in Conversation.",
+              "Expand the review and check details. Read available merge controls without activating them."
+            ],
+            "say": "I also check the repository's merge requirements. CodeRabbit's assessment informs the decision while the provider's branch rules determine which checks and approvals are enforced. A request for changes on its own doesn't prove that a merge is blocked. I need to confirm the rules that apply to this branch.",
+            "see": "Frame at 04:09 in 04-change-stack.mp4.",
+            "links": [
+              {
+                "label": "Flagship PR #4",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4"
+              }
+            ]
+          },
+          {
+            "title": "Approve & Merge / STEP 4 OF 4: Finish on the review decision",
+            "start": 254.32,
+            "end": 264.94,
+            "do": [
+              "Return to Change Stack Overview and keep the remaining concerns visible.",
+              "Finish the narration, then show the flow slide during the silent ending."
+            ],
+            "say": "We follow the change through its layers, check the findings and clarify the expected behavior. We can now explain what needs to happen before the team accepts it.",
+            "see": "Frame at 04:22 in 04-change-stack.mp4.",
+            "links": [
+              {
+                "label": "PR #4: Change Stack",
+                "url": "https://app.coderabbit.ai/change-stack/coderabbit-demo/demo-site-pr-examples/pull/4/overview"
+              }
+            ]
+          }
+        ]
+      }
     },
-    "anatomy-of-a-finding": {
-      "src": "/media/05-anatomy-of-a-finding.mp4"
+    "engineering-security": {
+      "src": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/engineering-security.mp4",
+      "captions": "/captions/v3/engineering-security.vtt",
+      "poster": "/posters/v3/engineering-security.jpg",
+      "guide": {
+        "title": "Engineering Security — Do / Say / See",
+        "download": "/guides/v3/engineering-security.md",
+        "pdf": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/engineering-security.pdf",
+        "steps": [
+          {
+            "title": "Review PR Findings / STEP 1 OF 4: Open the PR security finding",
+            "start": 1.44,
+            "end": 33.86,
+            "do": [
+              "Open CodeRabbit Security, then PR security reviews. Filter to coderabbit-demo/demo-site-pr-examples.",
+              "Open Unaddressed findings and expand PR #4. Follow its PR/finding link to GitHub and open the invoice-search SQL review comment."
+            ],
+            "say": "Let's look at security from the engineer side, reviewing a pull request, understanding the impact of a finding, and getting a fix ready for review. We'll start with the security finding in the PR, follow the change through Change Stack and security blast radius, then use fix with AI to prepare a patch. Here in PR security reviews, I'll open pull request 4. This change adds bulk checkout, promotional pricing, and invoice exports. We'll focus on the SQL injection finding in invoice search.",
+            "see": "Frame at 00:22 in 5a-security-engineering.mp4.",
+            "links": [
+              {
+                "label": "Deep Scan finding: CWE-89",
+                "url": "https://app.coderabbit.ai/security/code?owner=coderabbit-demo&repo=demo-site-pr-examples&findingId=5bbe54d1-f97b-48ba-9a95-9cc1300c4cdf"
+              },
+              {
+                "label": "Flagship PR #4",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4"
+              },
+              {
+                "label": "PR #4: SQL finding",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4#discussion_r3991696811"
+              }
+            ]
+          },
+          {
+            "title": "Review PR Findings / STEP 2 OF 4: Inspect the interpolated query",
+            "start": 34.58,
+            "end": 48.36,
+            "do": [
+              "Scroll the finding to the cited invoice-search code.",
+              "Show search text and tenant ID inserted into the SQL command. Keep the cross-customer explanation visible."
+            ],
+            "say": "The finding points to a query that inserts search text directly into a SQL command. It also inserts the tenant ID into that command. A crafted search could change the query and return invoices belonging to another customer.",
+            "see": "Frame at 00:43 in 5a-security-engineering.mp4.",
+            "links": []
+          },
+          {
+            "title": "Review PR Findings / STEP 3 OF 4: Read severity and reachability",
+            "start": 48.36,
+            "end": 56.7,
+            "do": [
+              "Scroll to the finding summary and read severity, reachability and exploitability.",
+              "Keep the affected file and supporting code available."
+            ],
+            "say": "I can see the severity, reachability, and exploitability assessment along with the code behind the finding.",
+            "see": "Frame at 00:54 in 5a-security-engineering.mp4.",
+            "links": []
+          },
+          {
+            "title": "Review PR Findings / STEP 4 OF 4: Read the parameter-binding recommendation",
+            "start": 57.6,
+            "end": 63.56,
+            "do": [
+              "Scroll to Recommendation. Expand the suggested code if collapsed.",
+              "Show placeholders with tenant and search values supplied separately."
+            ],
+            "say": "The recommended fix is to bind both values as parameters so the database treats them as data.",
+            "see": "Frame at 01:01 in 5a-security-engineering.mp4.",
+            "links": []
+          },
+          {
+            "title": "Open Change Stack / STEP 1 OF 2: Follow the PR to Change Stack",
+            "start": 64.48,
+            "end": 71.2,
+            "do": [
+              "Click the PR #4 link and switch to GitHub. Open the SQL review comment.",
+              "Scroll to CodeRabbit’s walkthrough and click Review in Change Stack. Switch to the new tab."
+            ],
+            "say": "Let's open the pull request and look at the review comment in context. From here, I'll choose review in Change Stack.",
+            "see": "Frame at 01:08 in 5a-security-engineering.mp4.",
+            "links": [
+              {
+                "label": "Flagship PR #4",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4"
+              },
+              {
+                "label": "PR #4: SQL finding",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4#discussion_r3991696811"
+              },
+              {
+                "label": "PR #4: Change Stack",
+                "url": "https://app.coderabbit.ai/change-stack/coderabbit-demo/demo-site-pr-examples/pull/4/overview"
+              }
+            ]
+          },
+          {
+            "title": "Open Change Stack / STEP 2 OF 2: Read the related layers",
+            "start": 71.96,
+            "end": 80.72,
+            "do": [
+              "In Change Stack, read the left layer rail and select the invoice-search/export layer.",
+              "Inspect the grouped changes before opening the impact view."
+            ],
+            "say": "Change Stack organizes the PR into related layers. That lets me review the invoice changes together and see how they fit into the rest of the pull request.",
+            "see": "Frame at 01:17 in 5a-security-engineering.mp4.",
+            "links": [
+              {
+                "label": "PR #4: Change Stack",
+                "url": "https://app.coderabbit.ai/change-stack/coderabbit-demo/demo-site-pr-examples/pull/4/overview"
+              }
+            ]
+          },
+          {
+            "title": "Explore Blast Radius / STEP 1 OF 4: Open the security graph",
+            "start": 81.78,
+            "end": 90.06,
+            "do": [
+              "Click Security Blast Radius in the left rail. Select the SQL injection concern.",
+              "Keep the graph legend and changed components visible."
+            ],
+            "say": "Now I'll open security blast radius and select the SQL injection concern. The graph shows the changed components and their relationships.",
+            "see": "Frame at 01:27 in 5a-security-engineering.mp4.",
+            "links": [
+              {
+                "label": "PR #4: Security Blast Radius",
+                "url": "https://app.coderabbit.ai/change-stack/coderabbit-demo/demo-site-pr-examples/pull/4/blast-radius"
+              }
+            ]
+          },
+          {
+            "title": "Explore Blast Radius / STEP 2 OF 4: Inspect dependency and consumer relationships",
+            "start": 90.9,
+            "end": 99.3,
+            "do": [
+              "Select the shared data model relationship for invoice search/export.",
+              "Read its evidence, then select the web-client consumer relationship and inspect its request/result context."
+            ],
+            "say": "For invoice search and export, I can inspect the shared data model. This code depends on and the web client that sends searches and receives results.",
+            "see": "Frame at 01:37 in 5a-security-engineering.mp4.",
+            "links": []
+          },
+          {
+            "title": "Explore Blast Radius / STEP 3 OF 4: Read supporting evidence",
+            "start": 100.96,
+            "end": 112.06,
+            "do": [
+              "Open the relationship’s supporting code evidence.",
+              "Scroll inside the evidence panel and distinguish connected components from confirmed vulnerabilities."
+            ],
+            "say": "Those connections help me decide where else to look. They don't mean every connected component is vulnerable. I can open the supporting evidence and check what each relationship actually involves.",
+            "see": "Frame at 01:48 in 5a-security-engineering.mp4.",
+            "links": []
+          },
+          {
+            "title": "Explore Blast Radius / STEP 4 OF 4: Check the tenant boundary",
+            "start": 113.06,
+            "end": 125.14,
+            "do": [
+              "Keep the relevant query path visible.",
+              "Trace customer-controlled search text to the SQL command and the tenant boundary before starting the fix."
+            ],
+            "say": "In this case, the important question is whether customer controlled search text can alter the database query and cross boundary between tenants. That gives me a specific behavior to check when I review the fix.",
+            "see": "Frame at 02:01 in 5a-security-engineering.mp4.",
+            "links": []
+          },
+          {
+            "title": "Fix with AI / STEP 1 OF 4: Select the finding beside its code",
+            "start": 126.1,
+            "end": 139.04,
+            "do": [
+              "Click the affected graph component, then Open in layer.",
+              "Open the context panel and select Comments. Scroll to the SQL finding.",
+              "Click Fix with AI for that finding."
+            ],
+            "say": "Let's address the finding. I'll open the affected component, choose open in layer and return to the review comments beside the code. In the comments panel, I'll select fix with AI for the SQL injection finding.",
+            "see": "Frame at 02:14 in 5a-security-engineering.mp4.",
+            "links": [
+              {
+                "label": "PR #4: Security Blast Radius",
+                "url": "https://app.coderabbit.ai/change-stack/coderabbit-demo/demo-site-pr-examples/pull/4/blast-radius"
+              }
+            ]
+          },
+          {
+            "title": "Fix with AI / STEP 2 OF 4: Choose delivery and open the completed run",
+            "start": 139.66,
+            "end": 158.18,
+            "do": [
+              "Review the selected comment and click the next/delivery control.",
+              "Select Create a new PR with the fixes. The recorded setup previews this choice.",
+              "Switch to the completed task in the recording repository to inspect the result."
+            ],
+            "say": "Then I'll review the selected comment and choose how the agent should deliver the change. I'm choosing a separate pull request so I can inspect the proposed patch before it reaches the original branch. To show the result, let's switch to a complete run of this same fix in our recording repository.",
+            "see": "Frame at 02:32 in 5a-security-engineering.mp4.",
+            "links": [
+              {
+                "label": "Completed Engineering Security task",
+                "url": "https://app.coderabbit.ai/code/tasks/e6754368-4d77-4394-8161-8270bdab18af"
+              }
+            ]
+          },
+          {
+            "title": "Fix with AI / STEP 3 OF 4: Inspect the SQL patch and regressions",
+            "start": 159.96,
+            "end": 177.16,
+            "do": [
+              "Follow the completed task’s delivered PR #11 link. On GitHub, click Files changed and select invoice-search.ts.",
+              "Scroll to bound tenant/search parameters and literal wildcard handling.",
+              "Open the regression test files and inspect injection and tenant-isolation cases."
+            ],
+            "say": "The patch replaces the interpolated SQL with bound parameters for the tenant ID and search pattern. It also escapes wildcard characters, so a search for those characters matches them literally. The agent added regression tests for injection attempts and tenant isolation.",
+            "see": "Frame at 02:50 in 5a-security-engineering.mp4.",
+            "links": [
+              {
+                "label": "Completed Engineering Security task",
+                "url": "https://app.coderabbit.ai/code/tasks/e6754368-4d77-4394-8161-8270bdab18af"
+              },
+              {
+                "label": "PR #11: files changed",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/11/files"
+              }
+            ]
+          },
+          {
+            "title": "Fix with AI / STEP 4 OF 4: Read validation and the delivered PR",
+            "start": 177.16,
+            "end": 192.72,
+            "do": [
+              "Return to the task summary and read the 71-test result and four expected failures.",
+              "Open PR #11. Click Files changed to inspect code/tests, then return to Conversation.",
+              "Leave the proposed fix open and unmerged."
+            ],
+            "say": "The task reports 71 passing tests with four unrelated and expected failures. Here's the resulting pull request. I can inspect the code and the tests before deciding whether to merge. For this demo, we are leaving it open.",
+            "see": "Frame at 03:07 in 5a-security-engineering.mp4.",
+            "links": [
+              {
+                "label": "Completed Engineering Security task",
+                "url": "https://app.coderabbit.ai/code/tasks/e6754368-4d77-4394-8161-8270bdab18af"
+              },
+              {
+                "label": "Engineering Security fix: PR #11",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/11"
+              },
+              {
+                "label": "PR #11: files changed",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/11/files"
+              }
+            ]
+          },
+          {
+            "title": "Review Merge Readiness / STEP 1 OF 3: Return to the original PR",
+            "start": 193.52,
+            "end": 201.06,
+            "do": [
+              "Open flagship PR #4 and scroll to the Conversation merge panel.",
+              "Show Changes requested alongside passed application checks."
+            ],
+            "say": "Back on the original pull request, CodeRabbit has requested changes. The application checks passed, but the security concerns still needs to be addressed.",
+            "see": "Frame at 03:18 in 5a-security-engineering.mp4.",
+            "links": [
+              {
+                "label": "Flagship PR #4",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4"
+              }
+            ]
+          },
+          {
+            "title": "Review Merge Readiness / STEP 2 OF 3: Read the enforcement state",
+            "start": 201.06,
+            "end": 213.98,
+            "do": [
+              "Keep the merge panel visible. Read the absence of branch protection for this demo branch.",
+              "Show the available merge control without clicking it; no branch settings are changed."
+            ],
+            "say": "This demo branch doesn't have protection enabled, so the request for changes isn't an enforcement block. With branch rules, a team can require the checks and approvals it needs before accepting a change.",
+            "see": "Frame at 03:29 in 5a-security-engineering.mp4.",
+            "links": []
+          },
+          {
+            "title": "Review Merge Readiness / STEP 3 OF 3: Finish on the review decision",
+            "start": 215.04,
+            "end": 223.52,
+            "do": [
+              "Keep the original PR and proposed fix available while finishing the narration.",
+              "Show the closing flow slide. Leave both PRs open."
+            ],
+            "say": "We followed a security finding from the PR to its wider impact, prepared a proposed fix and identified what needs review before merging.",
+            "see": "Frame at 03:43 in 5a-security-engineering.mp4.",
+            "links": [
+              {
+                "label": "Flagship PR #4",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4"
+              },
+              {
+                "label": "Engineering Security fix: PR #11",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/11"
+              }
+            ]
+          }
+        ]
+      }
     },
-    "chat": {
-      "src": "/media/06-chat.mp4"
+    "application-security": {
+      "src": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/application-security.mp4",
+      "captions": "/captions/v3/application-security.vtt",
+      "poster": "/posters/v3/application-security.jpg",
+      "guide": {
+        "title": "Application Security — Do / Say / See",
+        "download": "/guides/v3/application-security.md",
+        "pdf": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/application-security.pdf",
+        "steps": [
+          {
+            "title": "Introduction / OPENING: Introduce the AppSec flow",
+            "start": 0,
+            "end": 21.14,
+            "do": [
+              "Show the Application Security flow slide, then switch to the existing repository scan."
+            ],
+            "say": "Let's look at security from the AppSec team's perspective. We'll start with the deep scan of the repository, explore the attack surface, and investigate a finding by following the evidence back to the code. Then we'll look at how Fix with AI turns that finding into a proposed patch. With test results, the team can inspect before deciding what to merge.",
+            "see": "Application Security flow: Deep Scan, Explore Attack Surface, Investigate a Finding, Fix with AI.",
+            "links": []
+          },
+          {
+            "title": "Deep Scan / STEP 1 OF 2: Open the repository scan setup",
+            "start": 21.14,
+            "end": 38.44,
+            "do": [
+              "Open CodeRabbit Security and select coderabbit-demo/demo-site-pr-examples.",
+              "Click Run AI Deep Scan and inspect the selected repository and setup options."
+            ],
+            "say": "We'll start with an application security review of this repository. The question is where customer data could be exposed and what evidence we have to investigate that risk. An AI deep scan examines committed code across the repository. Here we can choose the repository and review the scan setup.",
+            "see": "Frame at 00:32.710 in the consolidated video.",
+            "links": [
+              {
+                "label": "Deep Scan finding: CWE-89",
+                "url": "https://app.coderabbit.ai/security/code?owner=coderabbit-demo&repo=demo-site-pr-examples&findingId=5bbe54d1-f97b-48ba-9a95-9cc1300c4cdf"
+              },
+              {
+                "label": "Example repository",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples"
+              }
+            ]
+          },
+          {
+            "title": "Deep Scan / STEP 2 OF 2: Use the existing analysis",
+            "start": 39.12,
+            "end": 43.74,
+            "do": [
+              "Click Cancel or close the setup dialog.",
+              "Keep the existing scan results visible; this demonstration does not start a new scan."
+            ],
+            "say": "This demo already has scan results so I'll close the setup and use the existing analysis.",
+            "see": "Frame at 00:42.385 in the consolidated video.",
+            "links": []
+          },
+          {
+            "title": "Explore Attack Surface / STEP 1 OF 3: Open the application map",
+            "start": 44.64,
+            "end": 58.98,
+            "do": [
+              "Click Attack Surface in the Security navigation.",
+              "Scroll or fit the map to show entry points, controls and sensitive operations."
+            ],
+            "say": "Let's open attack surface. This gives us a view of the application's security relevant components and how they connect. We can use it to explore where requests enter, which controls apply and where sensitive operations happen.",
+            "see": "Frame at 00:54.185 in the consolidated video.",
+            "links": []
+          },
+          {
+            "title": "Explore Attack Surface / STEP 2 OF 3: Trace invoice search and tenant isolation",
+            "start": 59.72,
+            "end": 83.14,
+            "do": [
+              "Select the invoice-search component in the map.",
+              "Open its supporting evidence and scroll to authentication, search input and the database query.",
+              "Keep the customer boundary in view."
+            ],
+            "say": "For this example, we'll focus on invoice search. A customer signs in, sends a search request and receives matching invoices. The important question is whether those results stay within that customer's tenant. Authentication is one part of that path. The database query also needs to enforce the boundary between the customers. I'll use the map and its supporting evidence to examine how the request reaches that query.",
+            "see": "Frame at 01:15.790 in the consolidated video.",
+            "links": []
+          },
+          {
+            "title": "Explore Attack Surface / STEP 3 OF 3: Check the analyzed scope",
+            "start": 84.84,
+            "end": 93.88,
+            "do": [
+              "Close the component detail panel and read the map’s coverage/analysis context.",
+              "Keep the existing scan’s code scope distinct from later repository changes."
+            ],
+            "say": "The scan results describe the code that was analyzed. As we investigate, we need to keep that scope in mind, especially if the repository has changed since the scan.",
+            "see": "Frame at 01:30.910 in the consolidated video.",
+            "links": []
+          },
+          {
+            "title": "Investigate a Finding / STEP 1 OF 4: Open the SQL finding and priority evidence",
+            "start": 94.82,
+            "end": 111.92,
+            "do": [
+              "Click Findings in the Security sidebar. Select the same repository and the SQL injection finding.",
+              "Read High severity, Open, reachability and exploitability."
+            ],
+            "say": "Now let's open findings for this repository and select the SQL injection finding. It's marked high severity and open. The affected code is an invoice search. The finding also shows reachability and exploitability, which helps us prioritize the investigation.",
+            "see": "Frame at 01:46.235 in the consolidated video.",
+            "links": [
+              {
+                "label": "Deep Scan finding: CWE-89",
+                "url": "https://app.coderabbit.ai/security/code?owner=coderabbit-demo&repo=demo-site-pr-examples&findingId=5bbe54d1-f97b-48ba-9a95-9cc1300c4cdf"
+              }
+            ]
+          },
+          {
+            "title": "Investigate a Finding / STEP 2 OF 4: Trace input into the SQL command",
+            "start": 112.82,
+            "end": 139,
+            "do": [
+              "Scroll the detail panel to the evidence/call path.",
+              "Expand the cited request route and search function. Show search text and session user reaching the interpolated query."
+            ],
+            "say": "Here's the evidence. Search text comes from authenticated invoice search request. The application passes that text and the session user into the search function. The function then inserts both values directly into a SQL command. A crafted search can change the command and bypass the tenant condition. In this demo, that could expose an invoice belonging to another customer, which even though the request came from a signed-in user.",
+            "see": "Frame at 02:10.450 in the consolidated video.",
+            "links": []
+          },
+          {
+            "title": "Investigate a Finding / STEP 3 OF 4: Inspect cited code and reproduction",
+            "start": 140.3,
+            "end": 152.58,
+            "do": [
+              "Open the cited lines and inspect invoice-search.ts.",
+              "Scroll the finding to the seeded-invoice reproduction and parameter-binding recommendation."
+            ],
+            "say": "I can open the cited lines and inspect the query. The finding includes steps to reproduce the issue using the demo’s seeded invoices, along with the recommendation to bind the tenant ID and search text as parameters.",
+            "see": "Frame at 02:28.750 in the consolidated video.",
+            "links": []
+          },
+          {
+            "title": "Investigate a Finding / STEP 4 OF 4: Read the proposed correction",
+            "start": 153.66,
+            "end": 159.46,
+            "do": [
+              "Keep Recommendation expanded.",
+              "Show the SQL placeholders and separately supplied tenant/search values."
+            ],
+            "say": "That means passing the values separately from the SQL command, so the database treats them as data.",
+            "see": "Frame at 02:37.665 in the consolidated video.",
+            "links": []
+          },
+          {
+            "title": "Fix with AI / STEP 1 OF 4: Open the existing result",
+            "start": 160.32,
+            "end": 175.42,
+            "do": [
+              "Scroll to the finding’s action bar. In this completed run the action is View PR.",
+              "Click View PR to open the proposed fix; use the existing task link for the original context."
+            ],
+            "say": "Next is Fix with AI. This can turn the finding and its supporting context into a coding task for a proposed fix. We've already completed the task for this finding, so the action now says view PR. Let's open the proposed change and look at the result.",
+            "see": "Frame at 02:50.470 in the consolidated video.",
+            "links": [
+              {
+                "label": "Deep Scan finding: CWE-89",
+                "url": "https://app.coderabbit.ai/security/code?owner=coderabbit-demo&repo=demo-site-pr-examples&findingId=5bbe54d1-f97b-48ba-9a95-9cc1300c4cdf"
+              },
+              {
+                "label": "Recorded security-fix task",
+                "url": "https://app.coderabbit.ai/code/tasks/c4b2dfa1-bb4c-4d5d-b959-f1f6ea606cfb"
+              },
+              {
+                "label": "Security-fix PR #7",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/7"
+              }
+            ]
+          },
+          {
+            "title": "Fix with AI / STEP 2 OF 4: Inspect query and test changes",
+            "start": 176.28,
+            "end": 185.82,
+            "do": [
+              "On PR #7, click Files changed. Select src/services/invoice-search.ts.",
+              "Show bound parameters, then open the customer-isolation test and its normal assertion replacing it.fails."
+            ],
+            "say": "The patch replaces the interpolated values with query parameters. The customer isolation test also changes from an expected failure to a normal regression test.",
+            "see": "Frame at 03:02.900 in the consolidated video.",
+            "links": [
+              {
+                "label": "PR #7: files changed",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/7/files"
+              }
+            ]
+          },
+          {
+            "title": "Fix with AI / STEP 3 OF 4: Read the reported test result",
+            "start": 186.8,
+            "end": 199.2,
+            "do": [
+              "Open the completed coding task and scroll to its final summary.",
+              "Read the injection/normal-search result and 57 passing tests with five expected failures."
+            ],
+            "say": "The coding task reports that the injection attempt no longer returns another customer's invoices, while a normal search still works. It reports 57 passing tests with 5 unrelated expected failures.",
+            "see": "Frame at 03:15.965 in the consolidated video.",
+            "links": [
+              {
+                "label": "Recorded security-fix task",
+                "url": "https://app.coderabbit.ai/code/tasks/c4b2dfa1-bb4c-4d5d-b959-f1f6ea606cfb"
+              }
+            ]
+          },
+          {
+            "title": "Fix with AI / STEP 4 OF 4: Keep the fix reviewable and finish",
+            "start": 201.26,
+            "end": 223,
+            "do": [
+              "Return to PR #7 and inspect the patch/checks. Leave it open and unmerged.",
+              "Finish the narration and show the closing application-security flow slide."
+            ],
+            "say": "Those results give us something concrete to review. We still need to inspect the patch and the checks before accepting the change. For this demo, we'll leave the proposed fix unmerged. We've gone from a repository scan to the application's attack surface, followed a finding back to its code, and reviewed a proposed fix. That's the AppSec workflow we are showing here.",
+            "see": "Frame at 03:37.582 in the consolidated video.",
+            "links": [
+              {
+                "label": "Security-fix PR #7",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/7"
+              },
+              {
+                "label": "PR #7: files changed",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/7/files"
+              }
+            ]
+          }
+        ]
+      }
     },
-    "learnings": {
-      "src": "/media/07-learnings.mp4"
+    "automations": {
+      "src": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/automations.mp4",
+      "captions": "/captions/v3/automations.vtt",
+      "poster": "/posters/v3/automations.jpg",
+      "guide": {
+        "title": "Automations — Do / Say / See",
+        "download": "/guides/v3/automations.md",
+        "pdf": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/automations.pdf",
+        "steps": [
+          {
+            "title": "Introduction / OPENING: Introduce the flow",
+            "start": 0,
+            "end": 20.96,
+            "do": [
+              "Show the section’s flow slide. Keep the full slide visible and highlight each pillar as it comes up in the introduction.",
+              "At the end of the introduction, switch to the first demo screen."
+            ],
+            "say": "Here we'll use a reported discount bug to walk through an automation. I'll start with the GitHub issue trigger, define the task and its destination, then follow a run from the incoming issue to its result. We'll inspect the proposed fix and regression tests in the pull request. Finally, I'll return to the run history and show where to refine the instructions or pause the workflow.",
+            "see": "Frame at 00:09 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Slide deck",
+                "url": "https://docs.google.com/presentation/d/1zk6UD0ZoAxtGRqDTQL-MVulAWu5MH4nYmd-9xJBpU5Y/edit"
+              }
+            ]
+          },
+          {
+            "title": "Pick a Trigger / STEP 1 OF 3: Choose the issue template",
+            "start": 23.5,
+            "end": 35.66,
+            "do": [
+              "Open Automations Home and click Create PR from GitHub issue.",
+              "Keep the dedicated demo-site-automations repository in view while introducing the discount bug."
+            ],
+            "say": "I open automations and choose create PR from GitHub issue. Our example is a discount boundary bug. An order reaches the minimum quantity but the discount doesn't apply until the customer adds another item.",
+            "see": "Frame at 00:26 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Automations Home",
+                "url": "https://app.coderabbit.ai/automations"
+              },
+              {
+                "label": "Automations repository",
+                "url": "https://github.com/coderabbit-demo/demo-site-automations"
+              }
+            ]
+          },
+          {
+            "title": "Pick a Trigger / STEP 2 OF 3: Configure the trigger",
+            "start": 36.14,
+            "end": 43.96,
+            "do": [
+              "Name the automation Demo - Discount issue to PR.",
+              "Under When a GitHub event arrives, select GitHub, the demo repository and Issue opened."
+            ],
+            "say": "I select the demo repository and the issue opened event. That defines which GitHub event starts the work.",
+            "see": "Frame at 00:42 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Demo automation",
+                "url": "https://app.coderabbit.ai/automations/ui-bdb1428f-4e1e-4a2b-b222-3b8d3bac5520"
+              }
+            ]
+          },
+          {
+            "title": "Pick a Trigger / STEP 3 OF 3: Check the connection and move to instructions",
+            "start": 44.48,
+            "end": 59.44,
+            "do": [
+              "Read the GitHub connection, repository installation and event-sync indicators.",
+              "Scroll down to Tell CodeRabbit what to do."
+            ],
+            "say": "The connection status confirms that the GitHub app is connected, the repository is installed and the event is synced. GitHub can now send a matching event to CodeRabbit. The trigger tells the automation when to start. Next, I'll define the task it should carry out.",
+            "see": "Frame at 00:51 in 06-codeRabbit-automations.mp4.",
+            "links": []
+          },
+          {
+            "title": "Define the Task / STEP 1 OF 4: Enter the scoped task",
+            "start": 59.98,
+            "end": 77.58,
+            "do": [
+              "Click Tell CodeRabbit what to do and enter Agent instructions from the downloadable script appendix.",
+              "Scroll inside the field to the existing-fix check and below/at/above-minimum tests."
+            ],
+            "say": "In the instructions, I describe the work in plain language, investigate the reported problem, make a focused fix and test the result. I ask the agent to check whether the bug is already fixed before editing anything. If a change is needed, the test should cover an order below the minimum, exactly at it and above it.",
+            "see": "Frame at 01:12 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/automations.md"
+              }
+            ]
+          },
+          {
+            "title": "Define the Task / STEP 2 OF 4: Check preserved behavior",
+            "start": 78.26,
+            "end": 83.12,
+            "do": [
+              "Keep the instruction field visible and read the discount amount, expiration and checkout preservation requirements."
+            ],
+            "say": "I also specify the behavior to preserve, including the discount amount and expiration rule.",
+            "see": "Frame at 01:21 in 06-codeRabbit-automations.mp4.",
+            "links": []
+          },
+          {
+            "title": "Define the Task / STEP 3 OF 4: Set the GitHub destination",
+            "start": 83.7,
+            "end": 96.52,
+            "do": [
+              "Scroll to Post results back to GitHub and select demo-site-automations.",
+              "Enter the GitHub target instructions from the downloadable script appendix, including one PR, test evidence, issue link and no merge."
+            ],
+            "say": "For the destination, I select the GitHub repository and request one pull request with an explanation, test results and a link to the issue. The pull request should remain unmerged for review.",
+            "see": "Frame at 01:32 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/automations.md"
+              }
+            ]
+          },
+          {
+            "title": "Define the Task / STEP 4 OF 4: Review and save the configuration",
+            "start": 97.78,
+            "end": 104.18,
+            "do": [
+              "Read the completed task and destination instructions.",
+              "Click Save automation when reproducing the setup. For rehearsal, open the saved configuration."
+            ],
+            "say": "Those instructions will be reused for matching events so it's worth being clear about the scope and the evidence we want back.",
+            "see": "Frame at 01:42 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Demo automation",
+                "url": "https://app.coderabbit.ai/automations/ui-bdb1428f-4e1e-4a2b-b222-3b8d3bac5520"
+              }
+            ]
+          },
+          {
+            "title": "Run Always-On / STEP 1 OF 4: Check the active workflow",
+            "start": 104.9,
+            "end": 110.1,
+            "do": [
+              "Open the automation Overview and show the recorded Active state.",
+              "The saved demo is now paused; use the existing run for rehearsal."
+            ],
+            "say": "With the trigger, instructions and destination saved, I check that the automation is active.",
+            "see": "Frame at 01:49 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Demo automation",
+                "url": "https://app.coderabbit.ai/automations/ui-bdb1428f-4e1e-4a2b-b222-3b8d3bac5520"
+              }
+            ]
+          },
+          {
+            "title": "Run Always-On / STEP 2 OF 4: Inspect the triggering issue",
+            "start": 110.9,
+            "end": 130.24,
+            "do": [
+              "For rehearsal, keep the automation paused. Open the dedicated repository, click Issues, then inspect recorded issue #1 and the existing run only.",
+              "For a separate training run, first resume the saved automation and verify it is active. Then click New issue, enter the title/body from the downloadable script appendix, and Submit new issue once.",
+              "After the training run completes, pause the automation again and verify its paused state."
+            ],
+            "say": "Here's the issue used for this run. Its title identifies the missing discount at the exact minimum quantity. The description explains how to reproduce it and gives the expected behavior below, at and above the boundary. The issue also asks the fix to preserve the existing discount and checkout behavior.",
+            "see": "Frame at 02:01 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Triggering GitHub issue #1",
+                "url": "https://github.com/coderabbit-demo/demo-site-automations/issues/1"
+              },
+              {
+                "label": "Automations repository",
+                "url": "https://github.com/coderabbit-demo/demo-site-automations"
+              },
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/automations.md"
+              }
+            ]
+          },
+          {
+            "title": "Run Always-On / STEP 3 OF 4: Follow the run in Activity",
+            "start": 130.82,
+            "end": 141.76,
+            "do": [
+              "Return to Automations and click Activity.",
+              "Open the issue #1 run and scroll its activity/result details."
+            ],
+            "say": "I return to automations and open activity. This run was started by that GitHub issue using the instructions we saved. I can follow the agent's investigation and read the results here.",
+            "see": "Frame at 02:16 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Automations Activity",
+                "url": "https://app.coderabbit.ai/automations/activity"
+              }
+            ]
+          },
+          {
+            "title": "Run Always-On / STEP 4 OF 4: Read the result and follow the PR",
+            "start": 142.32,
+            "end": 151.5,
+            "do": [
+              "Open the completed run’s result and locate the threshold fix and regression-test summary.",
+              "Click its PR #2 link and switch to GitHub."
+            ],
+            "say": "The completed run reports that it opened a pull request containing the threshold fix and regression tests. I follow the result link to inspect what it produced.",
+            "see": "Frame at 02:26 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Automation result: PR #2",
+                "url": "https://github.com/coderabbit-demo/demo-site-automations/pull/2"
+              }
+            ]
+          },
+          {
+            "title": "Review Output / STEP 1 OF 4: Check the PR and comparison",
+            "start": 152.9,
+            "end": 163.66,
+            "do": [
+              "Read PR #2’s destination and issue link. Click Files changed.",
+              "Select src/services/promotions.ts and show > changing to >=."
+            ],
+            "say": "On GitHub, I check the pull request destination branch, changed files and link back to the issue. The code change includes the minimum quantity in the discount comparison.",
+            "see": "Frame at 02:42 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Automation result: PR #2",
+                "url": "https://github.com/coderabbit-demo/demo-site-automations/pull/2"
+              },
+              {
+                "label": "PR #2: files changed",
+                "url": "https://github.com/coderabbit-demo/demo-site-automations/pull/2/files"
+              }
+            ]
+          },
+          {
+            "title": "Review Output / STEP 2 OF 4: Inspect boundary and expiration tests",
+            "start": 164.32,
+            "end": 177.1,
+            "do": [
+              "Select the promotion test file in Files changed.",
+              "Scroll through quantities below, at and above both thresholds, then the expired-promotion case."
+            ],
+            "say": "I open the test to see how the boundary is covered. There are cases below, at and above the threshold, using two different minimum quantities. The tests also check that an expired promotion doesn't give a discount.",
+            "see": "Frame at 02:51 in 06-codeRabbit-automations.mp4.",
+            "links": []
+          },
+          {
+            "title": "Review Output / STEP 3 OF 4: Read validation evidence",
+            "start": 177.96,
+            "end": 187.76,
+            "do": [
+              "Return to the recorded run result and read 70 passed tests and five expected failures.",
+              "Return to PR #2, open Checks and inspect the GitHub validation result."
+            ],
+            "say": "The recorded run reports 70 passed tests and 5 existing expected failures for unrelated problems. GitHub's automated checks also passed.",
+            "see": "Frame at 03:03 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Automations Activity",
+                "url": "https://app.coderabbit.ai/automations/activity"
+              },
+              {
+                "label": "Automation result: PR #2",
+                "url": "https://github.com/coderabbit-demo/demo-site-automations/pull/2"
+              }
+            ]
+          },
+          {
+            "title": "Review Output / STEP 4 OF 4: Read the review limitation",
+            "start": 188.62,
+            "end": 208.88,
+            "do": [
+              "Click Conversation and scroll to CodeRabbit’s Review skipped response.",
+              "Read the author/reviewer-account explanation. Leave the PR open and unmerged."
+            ],
+            "say": "There is a separate review limitation here. CodeRabbit skipped its pull request review because the author is also the configured reviewer account. The passing tests don't stand in for that review. I leave the pull request open for the team to inspect. The automation has prepared a proposed fix and its evidence. The team still decides whether to accept it.",
+            "see": "Frame at 03:16 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Automation result: PR #2",
+                "url": "https://github.com/coderabbit-demo/demo-site-automations/pull/2"
+              }
+            ]
+          },
+          {
+            "title": "Tune & Track / STEP 1 OF 4: Inspect history and one run",
+            "start": 209.2,
+            "end": 227.4,
+            "do": [
+              "Return to the automation Overview, then click Activity.",
+              "Locate the recorded issue-triggered run. Read its time, trigger and agent minutes, then open the result details."
+            ],
+            "say": "I return to the automation's overview and open activity. The history shows when it ran, what triggered the work and the agent minutes used. Opening a run lets me read its result in context. That's where I'd look if a task reported a blocker or delivered something different from what I expected.",
+            "see": "Frame at 03:45 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Demo automation",
+                "url": "https://app.coderabbit.ai/automations/ui-bdb1428f-4e1e-4a2b-b222-3b8d3bac5520"
+              },
+              {
+                "label": "Automations Activity",
+                "url": "https://app.coderabbit.ai/automations/activity"
+              }
+            ]
+          },
+          {
+            "title": "Tune & Track / STEP 2 OF 4: Preview the configuration",
+            "start": 228.1,
+            "end": 233.4,
+            "do": [
+              "Return to the automation and click Edit.",
+              "Scroll through instructions and GitHub destination. Cancel or go Back without changing the saved configuration."
+            ],
+            "say": "I can return to the configuration to refine the instructions or destination for future runs.",
+            "see": "Frame at 03:52 in 06-codeRabbit-automations.mp4.",
+            "links": []
+          },
+          {
+            "title": "Tune & Track / STEP 3 OF 4: Show how to pause",
+            "start": 233.94,
+            "end": 237.56,
+            "do": [
+              "On Overview, show the Active/Pause control and the recorded Paused result.",
+              "For rehearsal, retain the existing paused state."
+            ],
+            "say": "If I want to stop processing new events, I can pause the automation.",
+            "see": "Frame at 03:57 in 06-codeRabbit-automations.mp4.",
+            "links": []
+          },
+          {
+            "title": "Tune & Track / STEP 4 OF 4: Close on the workflow result",
+            "start": 238.6,
+            "end": 248.12,
+            "do": [
+              "Keep the run history visible while finishing the narration.",
+              "Return to the flow slide for the silent ending."
+            ],
+            "say": "We've defined the task once and followed an incoming issue through to a proposed fix. The run history and configuration give us a way to improve that workflow as we see the results.",
+            "see": "Frame at 04:05 in 06-codeRabbit-automations.mp4.",
+            "links": [
+              {
+                "label": "Demo automation",
+                "url": "https://app.coderabbit.ai/automations/ui-bdb1428f-4e1e-4a2b-b222-3b8d3bac5520"
+              },
+              {
+                "label": "Automation result: PR #2",
+                "url": "https://github.com/coderabbit-demo/demo-site-automations/pull/2"
+              }
+            ]
+          }
+        ]
+      }
     },
-    "issue-validation": {
-      "src": "/media/08-issue-validation.mp4"
+    "coding-agent": {
+      "src": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/coding-agent.mp4",
+      "captions": "/captions/v3/coding-agent.vtt",
+      "poster": "/posters/v3/coding-agent.jpg",
+      "guide": {
+        "title": "Coding Agent — Do / Say / See",
+        "download": "/guides/v3/coding-agent.md",
+        "pdf": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/coding-agent.pdf",
+        "steps": [
+          {
+            "title": "Introduction / OPENING: Introduce the flow",
+            "start": 0,
+            "end": 23.62,
+            "do": [
+              "Show the section’s flow slide. Keep the full slide visible and highlight each pillar as it comes up in the introduction.",
+              "At the end of the introduction, switch to the first demo screen."
+            ],
+            "say": "I'll give the coding agent a focused task. Fix the invoice search vulnerability while preserving normal search behavior. We'll choose the repository and branch, select plan mode and review the approach before implementation. As the agent works, I'll follow its progress and add a test case. Then we'll inspect the patch and validation and open a pull request so the team can review the result.",
+            "see": "Frame at 00:09 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "Slide deck",
+                "url": "https://docs.google.com/presentation/d/1zk6UD0ZoAxtGRqDTQL-MVulAWu5MH4nYmd-9xJBpU5Y/edit"
+              }
+            ]
+          },
+          {
+            "title": "Start a Task / STEP 1 OF 3: Choose the repository and branch",
+            "start": 25.6,
+            "end": 40.12,
+            "do": [
+              "Open New coding task, then choose coderabbit-demo/demo-site-pr-recordings and codex/bulk-checkout-flagship.",
+              "Keep the original SQL finding available for context. For rehearsal, use the completed task."
+            ],
+            "say": "I open a coding task and select the repository and branch containing our invoice search feature. The problem is that search text is inserted directly into a database command. A crafted search could change that command and retrieve another customer's invoices.",
+            "see": "Frame at 00:29 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "Recorded Coding Agent task",
+                "url": "https://app.coderabbit.ai/code/tasks/19bb8d53-3b68-4a6a-ba65-29125b8e134b"
+              },
+              {
+                "label": "Recording repository",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings"
+              },
+              {
+                "label": "PR #4: SQL finding",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-examples/pull/4#discussion_r3991696811"
+              }
+            ]
+          },
+          {
+            "title": "Start a Task / STEP 2 OF 3: Enter the focused request",
+            "start": 40.86,
+            "end": 67.48,
+            "do": [
+              "Click the task description and enter the Recorded coding-task request from the downloadable script appendix.",
+              "Scroll within the field to verify tenant isolation, normal searches, order, limit, tests and excluded issues."
+            ],
+            "say": "My request describes the result we need. Keep search results within the customer's account and treat search text as data. I also describe the behavior to preserve. Customers should still be able to search using part of a product name and results should keep their existing order and limit. I ask for regression tests that demonstrate the fix. This task covers invoice search and its tests with the discount and invoice export issues left for separate work.",
+            "see": "Frame at 01:00 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/coding-agent.md"
+              }
+            ]
+          },
+          {
+            "title": "Start a Task / STEP 3 OF 3: Keep the task ready for planning",
+            "start": 68.14,
+            "end": 70.52,
+            "do": [
+              "Leave the composer unsubmitted while explaining that the approach will be reviewed first."
+            ],
+            "say": "Before implementation, I want to review the approach.",
+            "see": "Frame at 01:10 in 07-coding-agent.mp4.",
+            "links": []
+          },
+          {
+            "title": "Pick the Mode / STEP 1 OF 4: Select Plan and send",
+            "start": 70.9,
+            "end": 81.64,
+            "do": [
+              "Click Add files and more beside the description, then Plan mode.",
+              "Confirm the Plan chip and click Start task. Wait for workspace setup."
+            ],
+            "say": "I open the mode menu beside the task description and select plan. The label confirms that choice before I send the request. The agent reads the repository and proposes an approach.",
+            "see": "Frame at 01:14 in 07-coding-agent.mp4.",
+            "links": []
+          },
+          {
+            "title": "Pick the Mode / STEP 2 OF 4: Read the proposed plan",
+            "start": 81.9,
+            "end": 102.38,
+            "do": [
+              "Open the Plan card and scroll through Implementation, Tests, and Validation and Delivery.",
+              "Check parameter binding, normal searches and tenant isolation against the original request."
+            ],
+            "say": "I open the plan to check what it intends to change and how it will test the result. It proposes separating the search values from the SQL command, then checking both ordinary searches and attempts to cross the customer boundary. I compare that with my request. The plan needs to preserve useful search behavior as well as address the vulnerability.",
+            "see": "Frame at 01:33 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "Recorded Coding Agent task",
+                "url": "https://app.coderabbit.ai/code/tasks/19bb8d53-3b68-4a6a-ba65-29125b8e134b"
+              }
+            ]
+          },
+          {
+            "title": "Pick the Mode / STEP 3 OF 4: Inspect the approval gate",
+            "start": 102.88,
+            "end": 108.76,
+            "do": [
+              "Scroll to Implement this plan? and show both implementation and revision choices.",
+              "Pause on the choice before continuing."
+            ],
+            "say": "At the end, the agent asks whether to implement the plan. I can request changes here if the scope or approach needs work.",
+            "see": "Frame at 01:47 in 07-coding-agent.mp4.",
+            "links": []
+          },
+          {
+            "title": "Pick the Mode / STEP 4 OF 4: Approve the recorded approach",
+            "start": 109.28,
+            "end": 118.96,
+            "do": [
+              "For a training run, click Yes, implement this plan once. For rehearsal, inspect the saved approval.",
+              "Show the activity entry and task branch as implementation begins."
+            ],
+            "say": "For this task, I select yes, implement this plan. That starts the implementation in the task workspace. We'll inspect the finished patch before publishing it.",
+            "see": "Frame at 01:57 in 07-coding-agent.mp4.",
+            "links": []
+          },
+          {
+            "title": "Watch It Work / STEP 1 OF 4: Follow activity",
+            "start": 119.64,
+            "end": 132.58,
+            "do": [
+              "Open task activity and expand file/command entries.",
+              "Scroll to invoice-search.ts and the regression-test work."
+            ],
+            "say": "I open the task activity to follow the agent as it reads files, edits the code, and runs commands. The workspace keeps the implementation available for inspection while the agent works. These edits haven't yet been published to GitHub.",
+            "see": "Frame at 02:09 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "Recorded Coding Agent task",
+                "url": "https://app.coderabbit.ai/code/tasks/19bb8d53-3b68-4a6a-ba65-29125b8e134b"
+              }
+            ]
+          },
+          {
+            "title": "Watch It Work / STEP 2 OF 4: Add the specific test request",
+            "start": 133.3,
+            "end": 149.84,
+            "do": [
+              "Click the follow-up input and enter the Mid-task test request from the downloadable script appendix.",
+              "Click Send for a training run; for rehearsal, scroll to the recorded request."
+            ],
+            "say": "I add a specific test request. Check a product name containing an apostrophe and check that another customer's matching invoice stays out of the result. Those are useful cases because the fix needs to preserve ordinary text searches while maintaining the customer boundary.",
+            "see": "Frame at 02:25 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/coding-agent.md"
+              }
+            ]
+          },
+          {
+            "title": "Watch It Work / STEP 3 OF 4: Read the two-case response",
+            "start": 150.64,
+            "end": 155.38,
+            "do": [
+              "Scroll to the reply confirming the apostrophe search and other-customer exclusion.",
+              "Keep both results visible."
+            ],
+            "say": "When the task finishes, I read the response. The agent confirms that both cases passed.",
+            "see": "Frame at 02:33 in 07-coding-agent.mp4.",
+            "links": []
+          },
+          {
+            "title": "Watch It Work / STEP 4 OF 4: Check validation and its limit",
+            "start": 155.38,
+            "end": 167.32,
+            "do": [
+              "Scroll to the final task summary and dependency audit.",
+              "Read the note that optional CodeRabbit review was disabled before opening Changes."
+            ],
+            "say": "It also reports the overall test results and dependency audit. The optional CodeRabbit review was disabled for this task, so it didn't run. I'll keep that in mind as I open the patch and inspect the validation myself.",
+            "see": "Frame at 02:44 in 07-coding-agent.mp4.",
+            "links": []
+          },
+          {
+            "title": "Review the Patch / STEP 1 OF 4: Inspect the SQL patch",
+            "start": 168.68,
+            "end": 181.1,
+            "do": [
+              "Click Changes or the Changed files summary. Select src/services/invoice-search.ts.",
+              "Scroll to the query placeholders and separately supplied tenant/search values."
+            ],
+            "say": "I open the changed files and start with the invoice search query. The SQL command now uses placeholders. The customer account and search text are supplied separately, allowing the database to treat them as values.",
+            "see": "Frame at 02:59 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "Recorded Coding Agent task",
+                "url": "https://app.coderabbit.ai/code/tasks/19bb8d53-3b68-4a6a-ba65-29125b8e134b"
+              }
+            ]
+          },
+          {
+            "title": "Review the Patch / STEP 2 OF 4: Inspect the security regression",
+            "start": 181.94,
+            "end": 192.84,
+            "do": [
+              "Select tests/flagship.test.ts in the file list.",
+              "Scroll to the former it.fails case and show the normal assertion for the crafted cross-tenant search."
+            ],
+            "say": "Next, I open the regression tests. The test for the original security problem is now a normal assertion that must pass. It checks that a crafted search cannot retrieve another customer's invoices.",
+            "see": "Frame at 03:10 in 07-coding-agent.mp4.",
+            "links": []
+          },
+          {
+            "title": "Review the Patch / STEP 3 OF 4: Inspect normal search cases",
+            "start": 193.6,
+            "end": 201.74,
+            "do": [
+              "Select the invoice-search test file.",
+              "Scroll through partial names, apostrophe text, ordering and result-limit cases."
+            ],
+            "say": "I also inspect the ordinary cases. Partial name searches, a product name with an apostrophe, the expected result order, and the result limit.",
+            "see": "Frame at 03:20 in 07-coding-agent.mp4.",
+            "links": []
+          },
+          {
+            "title": "Review the Patch / STEP 4 OF 4: Review the evidence before delivery",
+            "start": 203.48,
+            "end": 224.24,
+            "do": [
+              "Return to the task summary. Read 76 passing tests, four expected failures and the dependency audit.",
+              "Keep the disabled-review note separate. Show the follow-up input where a revision could be requested."
+            ],
+            "say": "The recorded task reports 76 passed tests and 4 unrelated expected failures along with a clean dependency audit. The additional CodeRabbit review didn't run, as we saw in the task settings. If the patch missed the requirement, I could ask the agent to revise it here. For this example, the code and tests address the requested behavior, so I'll move to delivery.",
+            "see": "Frame at 03:32 in 07-coding-agent.mp4.",
+            "links": []
+          },
+          {
+            "title": "Deliver / STEP 1 OF 4: Create the review PR",
+            "start": 225.68,
+            "end": 238.86,
+            "do": [
+              "The initial task request does not authorize autonomous publishing: the agent must not commit, push, or open a PR on its own.",
+              "For a separate training run, finish reviewing the patch first. The operator then separately authorizes publication and manually selects Create PR, waits for publication, and checks the destination branch.",
+              "For rehearsal, open existing PR #10 only; do not select Commit and push or Create PR."
+            ],
+            "say": "The task offers commit and push or create PR. I choose create PR so the fix can have its own review. That action starts publishing the change. Once it finishes, I follow the link to GitHub and check the destination branch.",
+            "see": "Frame at 03:50 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "Recorded Coding Agent task",
+                "url": "https://app.coderabbit.ai/code/tasks/19bb8d53-3b68-4a6a-ba65-29125b8e134b"
+              },
+              {
+                "label": "Coding Agent result: PR #10",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/10"
+              }
+            ]
+          },
+          {
+            "title": "Deliver / STEP 2 OF 4: Verify the destination",
+            "start": 239.52,
+            "end": 245.72,
+            "do": [
+              "Read PR #10’s head/base line and confirm it targets the original feature branch.",
+              "Keep the branch information visible."
+            ],
+            "say": "This fix targets our original feature branch, keeping the invoice search correction separate from the larger feature.",
+            "see": "Frame at 04:04 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "Coding Agent result: PR #10",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/10"
+              }
+            ]
+          },
+          {
+            "title": "Deliver / STEP 3 OF 4: Inspect the published files",
+            "start": 246.36,
+            "end": 255.12,
+            "do": [
+              "Click Files changed. Open the invoice-search query and regression tests.",
+              "Compare the delivered patch with the task’s Changes view."
+            ],
+            "say": "I check that the pull request contains the expected query change and tests. These are the changes we inspected in the task, now available to the team.",
+            "see": "Frame at 04:12 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "PR #10: files changed",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/10/files"
+              }
+            ]
+          },
+          {
+            "title": "Deliver / STEP 4 OF 4: Read validation and review status",
+            "start": 255.62,
+            "end": 274.32,
+            "do": [
+              "Return to Conversation and read the delivery summary and skipped-review explanation.",
+              "Use the task link for earlier test evidence; the delivery did not rerun validation.",
+              "Leave the PR open and return to the flow slide."
+            ],
+            "say": "The delivery step didn't rerun validation. The earlier results are recorded in the coding task. Automatic review was also skipped for this feature branch destination. We've scoped the work, reviewed a plan, followed the implementation and inspected the patch before delivery. The pull request remains open for the team's review.",
+            "see": "Frame at 04:31 in 07-coding-agent.mp4.",
+            "links": [
+              {
+                "label": "Recorded Coding Agent task",
+                "url": "https://app.coderabbit.ai/code/tasks/19bb8d53-3b68-4a6a-ba65-29125b8e134b"
+              },
+              {
+                "label": "Coding Agent result: PR #10",
+                "url": "https://github.com/coderabbit-demo/demo-site-pr-recordings/pull/10"
+              }
+            ]
+          }
+        ]
+      }
     },
-    "coding-guidelines": {
-      "src": "/media/09-coding-guidelines.mp4"
-    },
-    "cross-repo": {
-      "src": "/media/10-cross-repo.mp4"
-    },
-    "summary": {
-      "src": "/media/11-summary.mp4"
+    "slack-agent": {
+      "src": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/media/v3/slack-agent.mp4",
+      "captions": "/captions/v3/slack-agent.vtt",
+      "poster": "/posters/v3/slack-agent.jpg",
+      "guide": {
+        "title": "CodeRabbit Agent for Slack — Do / Say / See",
+        "download": "/guides/v3/slack-agent.md",
+        "pdf": "https://o6mfxpkyyfleovxb.public.blob.vercel-storage.com/v3-2026-09-30/guides/v3/slack-agent.pdf",
+        "steps": [
+          {
+            "title": "Introduction / OPENING: Introduce the flow",
+            "start": 0,
+            "end": 23.08,
+            "do": [
+              "Show the section’s flow slide. Keep the full slide visible and highlight each pillar as it comes up in the introduction.",
+              "At the end of the introduction, switch to the first demo screen."
+            ],
+            "say": "We'll start in Slack where the team is discussing a customer's missing discount. I'll give CodeRabbit the Jira report and repository, then follow the evidence from the ticket into the code. We'll agree on a focused plan and inspect the resulting fix, tests and pull request. Finally, I'll ask CodeRabbit to remember the business rule and check whether it can recall that decision in a new conversation.",
+            "see": "Frame at 00:09 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Slide deck",
+                "url": "https://docs.google.com/presentation/d/1zk6UD0ZoAxtGRqDTQL-MVulAWu5MH4nYmd-9xJBpU5Y/edit"
+              }
+            ]
+          },
+          {
+            "title": "Ask in Channel / STEP 1 OF 3: Open the team conversation",
+            "start": 24.8,
+            "end": 32.5,
+            "do": [
+              "Open #demo-site in Slack and the recorded investigation conversation.",
+              "Keep the missing-discount question visible."
+            ],
+            "say": "In Slack, I open the conversation about a customer's missing discount. The order has reached the minimum quantity but the promotion hasn't applied.",
+            "see": "Frame at 00:30 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "#demo-site in Slack",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2"
+              },
+              {
+                "label": "Slack investigation thread",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790456735329639"
+              }
+            ]
+          },
+          {
+            "title": "Ask in Channel / STEP 2 OF 3: Include the ticket and repository",
+            "start": 33.2,
+            "end": 48,
+            "do": [
+              "In the composer, mention @CodeRabbit and enter the Investigation request from the downloadable script appendix, including CDB-4 and demo-site-slack main.",
+              "Click Send for a training run. For rehearsal, use the recorded message."
+            ],
+            "say": "I ask CodeRabbit to investigate linking the Jira report and naming the repository. The ticket contains the reported problem, expected behavior and acceptance criteria. For this first request, I want an explanation with links to the evidence. I'll review that before asking for a code change.",
+            "see": "Frame at 00:44 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Jira CDB-4",
+                "url": "https://coderabbit-demo.atlassian.net/browse/CDB-4"
+              },
+              {
+                "label": "Slack demo repository",
+                "url": "https://github.com/coderabbit-demo/demo-site-slack"
+              },
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/slack-agent.md"
+              }
+            ]
+          },
+          {
+            "title": "Ask in Channel / STEP 3 OF 3: Open the response thread",
+            "start": 48.56,
+            "end": 53.72,
+            "do": [
+              "Click the message’s reply count to open its thread.",
+              "Scroll to the answer and its ticket/code references."
+            ],
+            "say": "When the response arrives, I open the thread and follow its references to the ticket and implementation.",
+            "see": "Frame at 00:52 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Slack source-access evidence",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790458495085939"
+              }
+            ]
+          },
+          {
+            "title": "Connect the Evidence / STEP 1 OF 4: Read the expected boundary",
+            "start": 54.4,
+            "end": 63.94,
+            "do": [
+              "Scroll the response to the Jira evidence and the 9/10/11 item table.",
+              "The ticket link opens the original requirements."
+            ],
+            "say": "The ticket describes an unexpired promotion with a minimum of 10 items and 10% discount. 9 items should not qualify, 10 and 11 should.",
+            "see": "Frame at 01:02 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Jira CDB-4",
+                "url": "https://coderabbit-demo.atlassian.net/browse/CDB-4"
+              },
+              {
+                "label": "Slack source-access evidence",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790458495085939"
+              }
+            ]
+          },
+          {
+            "title": "Connect the Evidence / STEP 2 OF 4: Follow the source link",
+            "start": 65.52,
+            "end": 76.94,
+            "do": [
+              "Scroll to the promotions.ts comparison, then click its code citation.",
+              "Switch to GitHub and inspect the original > condition at lines 20-23."
+            ],
+            "say": "CodeRabbit points to a comparison that requires the quantity to be greater than the minimum. Greater than 10 excludes 10 itself which explains the missing discount. I follow the code link and check that condition.",
+            "see": "Frame at 01:16 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Original discount code, lines 20-23",
+                "url": "https://github.com/coderabbit-demo/demo-site-slack/blob/75b415d25e6238047dfdd051beac634b27be7a3b/src/services/promotions.ts#L20-L23"
+              }
+            ]
+          },
+          {
+            "title": "Connect the Evidence / STEP 3 OF 4: Inspect the known failing test",
+            "start": 77.4,
+            "end": 92.34,
+            "do": [
+              "Return to the response and click the flagship.test.ts citation.",
+              "On GitHub, scroll to the exact-minimum it.fails case. Keep it visible while explaining that inspection is not a passing test run."
+            ],
+            "say": "The response also identifies a test for that exact minimum that's marked as an expected failure. The test records the known problem. At this stage, CodeRabbit has inspected the code and test. We haven't established a passing result for a fix.",
+            "see": "Frame at 01:25 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Original expected-failure test",
+                "url": "https://github.com/coderabbit-demo/demo-site-slack/blob/75b415d25e6238047dfdd051beac634b27be7a3b/tests/flagship.test.ts#L164-L168"
+              }
+            ]
+          },
+          {
+            "title": "Connect the Evidence / STEP 4 OF 4: Return to the conclusion",
+            "start": 93.66,
+            "end": 98.02,
+            "do": [
+              "Switch back to Slack and scroll to the evidence summary.",
+              "Keep the ticket and code citations available before planning."
+            ],
+            "say": "The ticket and implementation now give us a specific boundary to correct.",
+            "see": "Frame at 01:37 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Slack source-access evidence",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790458495085939"
+              }
+            ]
+          },
+          {
+            "title": "Plan the Fix / STEP 1 OF 3: Request the inclusive-boundary plan",
+            "start": 98.58,
+            "end": 115.16,
+            "do": [
+              "In the conversation, mention @CodeRabbit and enter the Plan request from the downloadable script appendix.",
+              "Click Send for a training run; for rehearsal, open the saved plan."
+            ],
+            "say": "Back in the thread, I ask for a plan. The minimum must be inclusive so an order of exactly 10 items qualifies. I want a small change with tests below, at and above the boundary. The existing expected failure test should become a normal passing test.",
+            "see": "Frame at 01:50 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Slack planning conversation",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790458861537939"
+              },
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/slack-agent.md"
+              }
+            ]
+          },
+          {
+            "title": "Plan the Fix / STEP 2 OF 3: Read preservation requirements",
+            "start": 116.36,
+            "end": 124.56,
+            "do": [
+              "Scroll through the proposed plan to the expected-failure conversion, discount percentage and expiration cases.",
+              "Hold the exact-expiration rule on screen."
+            ],
+            "say": "I also ask the plan to preserve the discount percentage and expiration behavior. At the exact expiration time, the promotion should remain expired.",
+            "see": "Frame at 02:02 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Plan the Fix / STEP 3 OF 3: Check the proposed scope",
+            "start": 125.84,
+            "end": 137.04,
+            "do": [
+              "Read the plan’s validation and excluded work.",
+              "Keep the conversation visible before requesting implementation."
+            ],
+            "say": "I read the proposed approach and check it against those requirements. The plan gives us a defined scope and a way to judge the result. With that agreed, we are ready to request implementation.",
+            "see": "Frame at 02:13 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Deliver the Fix / STEP 1 OF 4: Request implementation",
+            "start": 137.04,
+            "end": 144.88,
+            "do": [
+              "Mention @CodeRabbit and enter the Implementation request from the downloadable script appendix.",
+              "Click Send for a training run. For rehearsal, open the existing delivery conversation."
+            ],
+            "say": "I ask CodeRabbit to implement the plan in a demo repository, run the relevant checks and open a pull request on a new branch.",
+            "see": "Frame at 02:23 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Slack planning conversation",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790458861537939"
+              },
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/slack-agent.md"
+              }
+            ]
+          },
+          {
+            "title": "Deliver the Fix / STEP 2 OF 4: Follow the implementation channel and PR",
+            "start": 145.84,
+            "end": 154.54,
+            "do": [
+              "Click the linked #fix-cdb-4-promotion-boundary channel.",
+              "Scroll through the implementation summary and click its PR #1 link. Switch to GitHub."
+            ],
+            "say": "The response links to a dedicated code channel for the implementation. I follow it to inspect the changed files and validation, then open the pull request.",
+            "see": "Frame at 02:33 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Slack-delivered PR #1",
+                "url": "https://github.com/coderabbit-demo/demo-site-slack/pull/1"
+              }
+            ]
+          },
+          {
+            "title": "Deliver the Fix / STEP 3 OF 4: Inspect the patch and validation",
+            "start": 154.98,
+            "end": 172.34,
+            "do": [
+              "Click Files changed and inspect the inclusive comparison and quantity/expiration tests.",
+              "Return to the recorded task summary for 65 passed tests and five expected failures.",
+              "On GitHub, inspect Checks and the CodeRabbit review result."
+            ],
+            "say": "The patch includes the inclusive comparison and regression tests for the quantity and expiration boundaries. In this recorded run, CodeRabbit reports 65 passed tests and 5 unchanged expected failures. GitHub's validation checks passed and CodeRabbit approved the pull request.",
+            "see": "Frame at 02:39 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "PR #1: files changed",
+                "url": "https://github.com/coderabbit-demo/demo-site-slack/pull/1/files"
+              },
+              {
+                "label": "Slack-delivered PR #1",
+                "url": "https://github.com/coderabbit-demo/demo-site-slack/pull/1"
+              }
+            ]
+          },
+          {
+            "title": "Deliver the Fix / STEP 4 OF 4: Follow the Jira handoff",
+            "start": 173.08,
+            "end": 181.84,
+            "do": [
+              "Return to Slack’s delivery message and show its Jira link and validation summary.",
+              "Use the direct comment link to inspect the handoff. Return to PR #1 and show that it remains open."
+            ],
+            "say": "The delivery message links the result back to Jira with the validation summary. The ticket and pull request remain open, ready for the team to review and decide what to accept.",
+            "see": "Frame at 03:01 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Jira CDB-4: delivery comment",
+                "url": "https://coderabbit-demo.atlassian.net/browse/CDB-4?focusedCommentId=10266"
+              },
+              {
+                "label": "Slack-delivered PR #1",
+                "url": "https://github.com/coderabbit-demo/demo-site-slack/pull/1"
+              }
+            ]
+          },
+          {
+            "title": "Remember the Decision / STEP 1 OF 4: Ask to remember the rule",
+            "start": 182.72,
+            "end": 188.86,
+            "do": [
+              "Return to the original Slack conversation. Mention @CodeRabbit and enter the Remember request from the downloadable script appendix.",
+              "Click Send for a training run; for rehearsal, read the recorded request."
+            ],
+            "say": "I return to Slack and ask CodeRabbit to remember the promotion rule and the regression cases future changes should cover.",
+            "see": "Frame at 03:07 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Slack planning conversation",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790458861537939"
+              },
+              {
+                "label": "Operator-request appendix (downloadable script)",
+                "url": "/guides/v3/slack-agent.md"
+              }
+            ]
+          },
+          {
+            "title": "Remember the Decision / STEP 2 OF 4: Read the saved record and limitation",
+            "start": 189.48,
+            "end": 204.46,
+            "do": [
+              "Scroll to the saved knowledge-base acknowledgment.",
+              "Keep the inclusive minimum, boundary tests, preservation requirements and unavailable live remote check visible."
+            ],
+            "say": "The response identifies a saved knowledge-base record containing the inclusive minimum, boundary tests and the requirement to preserve discount and expiration behavior. Its live remote check was unavailable in this run, so I also ask recall in a new conversation.",
+            "see": "Frame at 03:16 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": []
+          },
+          {
+            "title": "Remember the Decision / STEP 3 OF 4: Ask in a new conversation",
+            "start": 206.24,
+            "end": 212.92,
+            "do": [
+              "Return to #demo-site’s main composer outside the existing thread.",
+              "Mention @CodeRabbit and enter the Recall question without supplying the answer. Click Send for a training run.",
+              "For rehearsal, open the saved fresh recall thread."
+            ],
+            "say": "I ask which promotion rule we agreed on and which tests a future change should include without repeating the answer.",
+            "see": "Frame at 03:31 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "#demo-site in Slack",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2"
+              },
+              {
+                "label": "Fresh Slack recall conversation",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790461194095169"
+              }
+            ]
+          },
+          {
+            "title": "Remember the Decision / STEP 4 OF 4: Read recall and finish",
+            "start": 212.92,
+            "end": 233.16,
+            "do": [
+              "Scroll to the new answer and its saved-record reference.",
+              "Show the inclusive rule and 9/10/11 cases, then finish on the flow slide."
+            ],
+            "say": "CodeRabbit returns the inclusive rule, the 9, 10 and 11 item cases and a reference to the saved record. We followed a customer report from Slack into the evidence, agreed on a fix and inspected its delivery. The team also brings that business rule into its next conversation.",
+            "see": "Frame at 03:51 in 08-coderabbit-agent-for-slack.mp4.",
+            "links": [
+              {
+                "label": "Fresh Slack recall conversation",
+                "url": "https://coderabbitdemo.slack.com/archives/C0C1XHM10H2/p1790461194095169"
+              }
+            ]
+          }
+        ]
+      }
     }
   },
   "navigation": [
     {
-      "id": "pull-request-review",
-      "title": "Pull request review",
-      "children": [
-        {
-          "id": "introduction",
-          "title": "Introduction",
-          "description": "Four capabilities, one control layer — and where the PR Author fits.",
-          "mediaId": "introduction"
-        },
-        {
-          "id": "reviewing-local-changes",
-          "title": "Reviewing local changes",
-          "description": "Catch issues in your editor and from Claude Code, before you open a pull request.",
-          "mediaId": "reviewing-local-changes"
-        },
-        {
-          "id": "walkthroughs",
-          "title": "Walkthroughs",
-          "description": "A plain-English summary, a layered file walkthrough, an effort estimate, and a sequence diagram.",
-          "mediaId": "walkthroughs"
-        },
-        {
-          "id": "pre-merge-checks",
-          "title": "Pre-merge checks",
-          "description": "Automated quality gates that block the merge until your rules pass.",
-          "mediaId": "pre-merge-checks"
-        },
-        {
-          "id": "anatomy-of-a-finding",
-          "title": "The anatomy of a finding",
-          "description": "Every finding explained — category, severity, static analysis, a repro script, and a fix. Even for Terraform.",
-          "mediaId": "anatomy-of-a-finding"
-        },
-        {
-          "id": "chat",
-          "title": "Chat is your friend",
-          "description": "Delegate to the bot — ask it to generate unit tests in their own pull request.",
-          "mediaId": "chat"
-        },
-        {
-          "id": "learnings",
-          "title": "Learnings",
-          "description": "Turn a review thread into durable, attributed rules your future reviews apply.",
-          "mediaId": "learnings"
-        },
-        {
-          "id": "issue-validation",
-          "title": "Issue validation",
-          "description": "Check the change against its linked issue's acceptance criteria, and flag out-of-scope work.",
-          "mediaId": "issue-validation"
-        },
-        {
-          "id": "coding-guidelines",
-          "title": "Coding guidelines & standards",
-          "description": "Enforce a shared standard from another repo, citing the exact rule you violated.",
-          "mediaId": "coding-guidelines"
-        },
-        {
-          "id": "cross-repo",
-          "title": "Avoiding cross-repo breaking changes",
-          "description": "Follow the contract across repos and name the exact call site that breaks.",
-          "mediaId": "cross-repo"
-        },
-        {
-          "id": "summary",
-          "title": "Summary",
-          "mediaId": "summary",
-          "description": "A recap of the review that rides with your code from editor to merge gate — and a look ahead to the reviewer's seat."
-        }
-      ]
+      "id": "platform",
+      "title": "Platform overview",
+      "description": "An introduction to the CodeRabbit platform.",
+      "mediaId": "platform"
+    },
+    {
+      "id": "pr-review",
+      "title": "PR Review",
+      "description": "Follow a pull request from local review through merge checks.",
+      "mediaId": "pr-review"
+    },
+    {
+      "id": "triage",
+      "title": "Triage",
+      "description": "Find the next review and understand why it needs your attention.",
+      "mediaId": "triage"
+    },
+    {
+      "id": "change-stack",
+      "title": "Change Stack",
+      "description": "Inspect code, findings, and review context in one workspace.",
+      "mediaId": "change-stack"
+    },
+    {
+      "id": "engineering-security",
+      "title": "Engineering Security",
+      "description": "Investigate security findings in the engineering workflow.",
+      "mediaId": "engineering-security"
+    },
+    {
+      "id": "application-security",
+      "title": "Application Security",
+      "description": "Explore the attack surface, investigate a finding, and inspect a proposed fix.",
+      "mediaId": "application-security"
+    },
+    {
+      "id": "automations",
+      "title": "Automations",
+      "description": "Configure and inspect recurring development workflows.",
+      "mediaId": "automations"
+    },
+    {
+      "id": "coding-agent",
+      "title": "Coding Agent",
+      "description": "Follow a coding task from request to reviewable change.",
+      "mediaId": "coding-agent"
+    },
+    {
+      "id": "slack-agent",
+      "title": "CodeRabbit Agent for Slack",
+      "description": "Bring repository context and development work into Slack.",
+      "mediaId": "slack-agent"
     }
   ]
 }

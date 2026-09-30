@@ -802,3 +802,151 @@ h1 {
     display: none;
   }
 }
+
+/* A stable player beside a manually scrolled companion guide. */
+.script-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+.script-toolbar > span {
+  color: var(--muted);
+}
+.script-toolbar button {
+  background: transparent;
+}
+.script-toolbar button[aria-expanded="true"] {
+  border-color: var(--accent);
+}
+.demo-workspace {
+  min-width: 0;
+}
+.demo-workspace .demo-stage {
+  min-width: 0;
+  align-self: start;
+}
+.script-panel {
+  min-width: 0;
+  background: var(--sidebar);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+.script-panel[hidden] {
+  display: none;
+}
+.script-heading {
+  padding: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.script-heading h2 {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+.script-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  font-size: 12px;
+}
+.script-downloads a,
+.script-links a {
+  text-underline-offset: 3px;
+}
+.script-downloads a:hover,
+.script-links a:hover {
+  color: var(--accent);
+}
+.script-body {
+  padding: 0 20px;
+  max-height: 65dvh;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+}
+.script-body:focus-visible {
+  outline-offset: -3px;
+}
+.script-step {
+  padding: 24px 0;
+}
+.script-step + .script-step {
+  border-top: 1px solid var(--line);
+}
+.script-time {
+  font:
+    400 11px Hack,
+    ui-monospace,
+    monospace;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.script-step h3 {
+  margin: 0 0 20px;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 600;
+  text-wrap: balance;
+}
+.script-step dl {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.script-step dt {
+  font:
+    700 12px Hack,
+    ui-monospace,
+    monospace;
+  margin-bottom: 6px;
+}
+.script-step dd {
+  margin: 0 0 20px;
+  max-width: 70ch;
+}
+.script-step dd:last-child {
+  margin-bottom: 0;
+}
+.script-step ul {
+  padding-left: 20px;
+  margin: 0;
+}
+.script-step li + li {
+  margin-top: 8px;
+}
+.script-narration {
+  white-space: pre-line;
+}
+.script-links {
+  font-size: 12px;
+  line-height: 1.7;
+  padding-top: 18px;
+}
+@media (min-width: 1400px) {
+  .demo-workspace.with-script {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr);
+    gap: 20px;
+  }
+  .script-panel {
+    margin-top: 0;
+  }
+  .script-body {
+    max-height: max(320px, calc(100dvh - 425px));
+  }
+}
+@media (min-width: 1000px) {
+  .menu-collapsed .demo-workspace.with-script {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr);
+    gap: 20px;
+  }
+  .menu-collapsed .script-panel {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,298 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.200
+Once I've chosen a pull request,
+
+00:00:02.400 --> 00:00:04.980
+I want to understand how
+its changes fit together.
+
+00:00:05.360 --> 00:00:08.420
+I'll open Change Stack, walk
+through the layers and connect
+
+00:00:08.420 --> 00:00:11.200
+the invoice search and discount
+behavior to the code and tests.
+
+00:00:11.700 --> 00:00:15.400
+Then I'll filter the findings and ask
+a question about the relevant code.
+
+00:00:15.860 --> 00:00:17.860
+We'll finish with the
+review options and the
+
+00:00:17.860 --> 00:00:20.200
+conditions that need to
+be met before a merge.
+
+00:00:21.170 --> 00:00:24.190
+From the pull request card in
+Triage, I open Change Stack.
+
+00:00:24.190 --> 00:00:29.050
+This is our checkout and invoice change
+and overview is the starting point.
+
+00:00:29.790 --> 00:00:32.110
+I read the summary to understand
+what the feature is trying
+
+00:00:32.110 --> 00:00:34.630
+to do and then look at the
+areas that need attention.
+
+00:00:35.070 --> 00:00:37.290
+For this application, I'm
+checking two promises.
+
+00:00:37.970 --> 00:00:40.290
+Customers should see their own invoices and
+
+00:00:40.290 --> 00:00:42.050
+qualifying orders should
+receive a discount.
+
+00:00:42.750 --> 00:00:44.990
+I also check which review
+version I'm reading.
+
+00:00:45.450 --> 00:00:47.930
+The findings belong to
+that version of the code.
+
+00:00:48.550 --> 00:00:51.790
+If the author pushes an update,
+I need to inspect the newer
+
+00:00:51.790 --> 00:00:54.410
+review before deciding whether
+the issue is addressed.
+
+00:00:55.010 --> 00:00:58.810
+I open the layers to work through
+related changes in smaller groups.
+
+00:00:59.310 --> 00:01:03.170
+The promotion pricing layer shows how
+discount eligibility is calculated.
+
+00:01:03.910 --> 00:01:06.450
+Bulk discount shows where
+that behavior is used.
+
+00:01:07.150 --> 00:01:09.330
+Invoice search and export
+cover another part of the
+
+00:01:09.330 --> 00:01:12.070
+feature with tests and
+documentation in their own layer.
+
+00:01:12.730 --> 00:01:15.550
+I select the invoice layer and
+scroll to the search query.
+
+00:01:15.550 --> 00:01:18.450
+The customer supplies search text and the
+
+00:01:18.450 --> 00:01:20.530
+application uses it to retrieve invoices.
+
+00:01:21.130 --> 00:01:24.610
+I check how the text and the
+customer's identity enter the query.
+
+00:01:25.120 --> 00:01:27.400
+Next, I look at the discount comparison.
+
+00:01:27.840 --> 00:01:30.660
+The requirement includes an
+order of exactly 10 items
+
+00:01:30.660 --> 00:01:33.320
+while the strict, greater
+than condition excludes it.
+
+00:01:34.660 --> 00:01:38.420
+That discount discussion is retained
+in this demo's review history.
+
+00:01:38.700 --> 00:01:42.880
+I use it to examine the behavior without
+presenting it as a newly open finding.
+
+00:01:43.700 --> 00:01:45.640
+Finally, I look at the related tests.
+
+00:01:45.780 --> 00:01:48.500
+I want to see whether they
+check the behavior we expect
+
+00:01:48.500 --> 00:01:51.840
+at the boundary as well as
+an ordinary successful case.
+
+00:01:52.540 --> 00:01:55.300
+I open the findings
+controls and set a minimum
+
+00:01:55.300 --> 00:01:58.060
+severity to focus on the
+more serious concerns.
+
+00:01:59.340 --> 00:02:02.380
+Then, I open the security finding
+beside the affected query.
+
+00:02:02.380 --> 00:02:07.520
+The explanation describes how search text
+can become part of a database command.
+
+00:02:08.100 --> 00:02:12.160
+I read it alongside the code and check
+what that means for the customer's data.
+
+00:02:12.880 --> 00:02:16.310
+A useful correction needs to keep the
+search within the customer's account,
+
+00:02:16.340 --> 00:02:20.640
+including when the input contains
+characters with special meaning in SQL.
+
+00:02:21.340 --> 00:02:24.680
+I can also include resolved
+and outdated threads to
+
+00:02:24.680 --> 00:02:28.120
+revisit earlier discussions,
+such as the discount example.
+
+00:02:28.120 --> 00:02:33.160
+Their status matters when I am
+deciding what still needs work.
+
+00:02:34.980 --> 00:02:37.040
+Before finishing the review,
+I check the filters again
+
+00:02:37.040 --> 00:02:39.420
+so I don't overlook another
+finding I need to read.
+
+00:02:39.880 --> 00:02:41.560
+On the discount's inline item,
+
+00:02:41.620 --> 00:02:44.420
+I select Continue to open a
+conversation about that code.
+
+00:02:45.140 --> 00:02:49.360
+I see what happens when an order
+contains 10 items and the minimum is 10.
+
+00:02:49.620 --> 00:02:52.700
+I also ask about tests and
+expirations because a quantity
+
+00:02:52.700 --> 00:02:55.660
+fix should leave an expired
+promotion ineligible.
+
+00:02:56.360 --> 00:02:58.700
+The first answer needs clarification.
+
+00:02:59.120 --> 00:03:03.580
+I restate the rule at least 10 items
+and only before the expiration time.
+
+00:03:04.200 --> 00:03:07.020
+Then, I compare the follow-up
+with the condition in the code.
+
+00:03:07.960 --> 00:03:09.720
+The checks we need are straightforward,
+
+00:03:10.060 --> 00:03:13.130
+below the minimum, exactly
+at it and above it.
+
+00:03:13.160 --> 00:03:16.000
+At the expiration time, the
+promotion should no longer apply.
+
+00:03:16.720 --> 00:03:19.280
+I ask for a short summary
+of those expectations.
+
+00:03:19.760 --> 00:03:23.080
+That gives me concrete behavior
+to verify in a proposed fix.
+
+00:03:23.580 --> 00:03:26.740
+This conversation belongs to
+the review where it started.
+
+00:03:26.780 --> 00:03:30.600
+If the code changes, I'll open a new
+conversation on the updated review.
+
+00:03:31.920 --> 00:03:33.720
+I open the review options.
+
+00:03:34.300 --> 00:03:38.220
+From this reviewer account, I can choose
+comment, approve or request changes.
+
+00:03:38.920 --> 00:03:41.620
+The invoice search concern
+still needs investigation.
+
+00:03:42.140 --> 00:03:45.000
+For this demo, I will
+leave the pull request open
+
+00:03:45.000 --> 00:03:47.560
+and preview the choices
+without submitting a review.
+
+00:03:48.420 --> 00:03:52.800
+In a working review, I request
+changes needed to address the concern,
+
+00:03:52.920 --> 00:03:55.960
+then inspect the updated code
+and tests before approving.
+
+00:03:56.480 --> 00:03:58.900
+I also check the repository's
+merge requirements.
+
+00:03:59.280 --> 00:04:02.800
+CodeRabbit's assessment informs
+the decision while the provider's
+
+00:04:02.800 --> 00:04:06.420
+branch rules determine which
+checks and approvals are enforced.
+
+00:04:07.600 --> 00:04:11.620
+A request for changes on its own
+doesn't prove that a merge is blocked.
+
+00:04:11.940 --> 00:04:14.320
+I need to confirm the rules
+that apply to this branch.
+
+00:04:14.320 --> 00:04:17.020
+We follow the change through its layers,
+
+00:04:17.460 --> 00:04:20.120
+check the findings and
+clarify the expected behavior.
+
+00:04:20.840 --> 00:04:24.940
+We can now explain what needs to
+happen before the team accepts it.

@@ -118,6 +118,83 @@ afterEach(async () => {
 });
 
 describe("tour navigation", () => {
+  it("shows the guide without resetting playback and retains the preference between demos", async () => {
+    const guide = {
+      title: "Follow the review",
+      download: "/guides/review.md",
+      pdf: "/guides/review.pdf",
+      steps: [
+        {
+          title: "Open review",
+          start: 0,
+          end: 20,
+          do: ["Open the pull request"],
+          say: "Review together.",
+          see: "The review appears.",
+          links: [
+            { label: "Documentation", url: "https://docs.coderabbit.ai" },
+          ],
+        },
+      ],
+    };
+    await load({
+      ...manifest("/demo.mp4"),
+      media: {
+        demo: { src: "/demo.mp4", guide },
+        other: { src: "/other.mp4" },
+      },
+      navigation: [
+        { id: "one", title: "First feature", mediaId: "demo" },
+        { id: "two", title: "Second feature", mediaId: "other" },
+      ],
+    });
+    const video = element("video", HTMLVideoElement);
+    Object.defineProperty(video, "duration", { value: 60 });
+    await event(video, "loadedmetadata");
+    video.currentTime = 15;
+    const pause = vi.spyOn(video, "pause").mockClear();
+    const panel = element("#demo-script", HTMLElement);
+    expect(panel.hidden).toBe(true);
+    const toggle = button("Show script");
+    await click(toggle);
+    expect(toggle.getAttribute("aria-expanded")).toBe("true");
+    expect(panel.hidden).toBe(false);
+    expect(panel.textContent).toContain("Review together.");
+    expect(element("a[download]", HTMLAnchorElement).getAttribute("href")).toBe(
+      "/guides/review.md",
+    );
+    expect(element("video", HTMLVideoElement)).toBe(video);
+    expect(video.currentTime).toBe(15);
+    expect(pause).not.toHaveBeenCalled();
+    await click(button("Hide script"));
+    expect(panel.hidden).toBe(true);
+    expect(element("video", HTMLVideoElement)).toBe(video);
+    expect(pause).not.toHaveBeenCalled();
+    await click(button("Show script"));
+    await click(button("Next feature"));
+    expect(container.querySelector("#demo-script")).toBeNull();
+    expect(container.textContent).not.toContain("Hide script");
+    await click(button("Previous"));
+    expect(element("#demo-script", HTMLElement).hidden).toBe(false);
+  });
+
+  it.each([
+    ["introduction", "platform"],
+    ["summary", "platform"],
+    ["walkthroughs", "pr-review"],
+    ["cross-repo", "pr-review"],
+  ])("maps the legacy %s link to %s", async (legacy, current) => {
+    window.history.replaceState(null, "", `/?feature=${legacy}`);
+    await load({
+      ...manifest(),
+      navigation: [
+        { id: "platform", title: "Platform", mediaId: "demo" },
+        { id: "pr-review", title: "PR Review", mediaId: "demo" },
+      ],
+    });
+    expect(window.location.search).toBe(`?feature=${current}`);
+  });
+
   it("opens nested ancestors, renders pending media, and navigates with shareable URLs", async () => {
     window.history.replaceState(null, "", "/?feature=one");
     await load();

@@ -17,7 +17,7 @@ Open the local URL printed by Vite. See [AGENTS.md](AGENTS.md) for the mandatory
 
 Edit [public/tour.json](public/tour.json). Array order controls display and playback order; `children` creates a category. Move objects between arrays to reorganize the menu. Keep IDs stable when renaming or moving features so shared links keep working.
 
-The tour contains 11 maintainer-supplied recordings, from the introduction through the summary, stored in `public/media/`. Set a future recording's `src` to `null` to display “Demo coming soon.”
+The tour contains nine Version 3 recordings served from Vercel Blob, with captions and optional side-by-side Do / Say / See scripts. Eight flows include illustrated PDF guides; Platform uses its introduction transcript. Original recordings in `public/media/` remain preserved. Set a future recording's `src` to `null` to display “Demo coming soon.”
 
 See [the content guide](docs/content.md) for the full manifest format and publishing steps.
 
