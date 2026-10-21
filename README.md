@@ -28,7 +28,7 @@ npm run check
 npm run security:check
 ```
 
-`check` runs formatting, type-aware lint, strict TypeScript, manifest validation, a production build, tests, and coverage. Coverage gates require 100% of application lines and functions, at least 98% of statements, and 95% of branches. The goal remains full coverage; the branch allowance covers defensive DOM lifecycle guards. Bootstrap mounting and test setup are excluded from unit coverage and checked in the browser instead.
+`check` runs formatting, type-aware lint, strict TypeScript, manifest validation, a production build, tests, and coverage. Coverage gates require 100% of application lines and functions, at least 98% of statements, and 95% of branches. The goal remains full coverage; the branch allowance covers defensive DOM lifecycle guards. Bootstrap mounting and test setup are excluded from coverage. Focused integration tests verify bootstrap analytics initialization; browser checks verify the deployed script and page-view requests.
 
 `security:check` runs npm's dependency audit and requires registry access. Python checks are inapplicable because the application contains no Python. Do not install additional checks or dependencies without individual maintainer approval.
 
@@ -39,6 +39,12 @@ Import `coderabbit-demo/demo-site` as a Vite project. Set Node.js to 24, the ins
 Feature links use `/?feature=introduction`, so static hosting does not need a catch-all route rewrite. The browser fetches `tour.json` with revalidation; a repository content change takes effect after its reviewed deployment. No database or API credentials are needed.
 
 Large recordings should live on HTTPS media storage with byte-range support and CORS for the site's origin. Small approved recordings can also be placed under `public/media/`. Supply readable recordings and caption files; avoid real credentials or private customer data in demo footage.
+
+## Web Analytics
+
+The application mounts Vercel Web Analytics once at the root using `@vercel/analytics/react`. Vite production builds collect page views; local development and tests use the SDK's development mode and do not send analytics data.
+
+Enable Web Analytics in the Vercel project's Analytics tab before deploying this integration. The existing `coderabbitai/fe-demo-site` project already has Web Analytics enabled. After a reviewed deployment, visit the site and verify that the analytics script loads and a page-view request succeeds in the browser's Network panel. Data then appears in the project's Analytics dashboard. See [Vercel's setup guide](https://vercel.com/docs/analytics/quickstart).
 
 ## Playback behavior
 
